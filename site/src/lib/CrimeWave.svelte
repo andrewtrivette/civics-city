@@ -336,7 +336,8 @@ function init() {
                         }
                     },
                     scales: {
-                        y: {
+                        y: {beginAtZero: true,
+                            max: 300,
                             title: {
                                 text: 'Police Incidents per 10,000',
                                 display: true
@@ -370,6 +371,8 @@ function init() {
                     },
                     scales: {
                         y: {
+                            beginAtZero: true,
+                            max: 50,
                             title: {
                                 text: 'Police Incidents per 10,000',
                                 display: true
@@ -408,6 +411,8 @@ function init() {
                     },
                     scales: {
                         y: {
+                            beginAtZero: true,
+                            max: 65,
                             title: {
                                 text: 'Police Incidents per 10,000',
                                 display: true
@@ -582,7 +587,8 @@ function init() {
                                 color: 'rgba(153, 102, 255, 1)'
                             }
                         },
-                        yAxis: {
+                        yAxis: {beginAtZero: true,
+                            max: 300,
                             title: {
                                 text: 'Police Incidents per 10,000',
                                 display: true

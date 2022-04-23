@@ -1,6 +1,6 @@
 <svelte:head>
     <title>City Council Member | Civics.City Atlanta</title>
-    <meta property="og:image" content="%svelte.assets%/default.jpg">
+    <meta property="og:image" content="https://atlanta.civics.city/default.jpg">
 </svelte:head>
 <script context="module">
     export async function load({ url, params }) {

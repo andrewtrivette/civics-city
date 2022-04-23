@@ -1,6 +1,6 @@
 <svelte:head>
     <title>Meeting Minutes | Civics.City Atlanta</title>
-    <meta property="og:image" content="{assets}/default.jpg">
+    <meta property="og:image" content="https://atlanta.civics.city/default.jpg">
 </svelte:head>
 
 <div class="meeting py-4">

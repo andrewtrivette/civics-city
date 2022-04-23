@@ -106,6 +106,8 @@ onMount(() => {
                 },
                 scales: {
                     y: {
+                        beginAtZero: true,
+                        max: 300,
                         title: {
                             text: 'Police Incidents per 10,000',
                             display: true

@@ -1,6 +1,6 @@
 <svelte:head>
     <title>Atlanta Crime | Civics.City Atlanta</title>
-    <meta property="og:image" content="{assets}/default.jpg">
+    <meta property="og:image" content="https://atlanta.civics.city/default.jpg">
 </svelte:head>
 
 <div class="container mt-4">

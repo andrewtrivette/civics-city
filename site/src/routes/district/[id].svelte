@@ -19,7 +19,7 @@
     
 <svelte:head>
     <title>City Council District {id} | Civics.City Atlanta</title>
-    <meta property="og:image" content="%svelte.assets%/default.jpg">    
+    <meta property="og:image" content="https://atlanta.civics.city/default.jpg">    
 </svelte:head>
 
 <div class="container">

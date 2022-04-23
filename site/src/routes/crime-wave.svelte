@@ -1,6 +1,10 @@
 <svelte:head>
     <title>Atlanta Crime Wave | Civics.City Atlanta</title>
-    <meta property="og:image" content="{assets}/crime-wave.jpg">
+    <meta name="description" content="Let's Talk About the Atlanta Crime Wave">
+    <meta property="og:title" content="Atlanta Crime Wave | Civics.City Atlanta">
+    <meta property="og:image" content="https://atlanta.civics.city/crime-wave.jpg">
+    <meta property="og:description" content="Let's Talk About the Atlanta Crime Wave">
+    <meta property="og:url" content="https://atlanta.civics.city/crime-wave">
 </svelte:head>
 
 

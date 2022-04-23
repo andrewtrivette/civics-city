@@ -1,6 +1,9 @@
 <svelte:head>
 	<title>Home | Civics.City Atlanta</title>
-	<meta property="og:image" content="{assets}/default.jpg">
+	<meta property="og:image" content="https://atlanta.civics.city/default.jpg">
+	<meta name="description" content="Government Impacts Everyone">
+    <meta property="og:title" content="Civics.City Atlanta">
+    <meta property="og:url" content="https://atlanta.civics.city">
 </svelte:head>
 <script context="module">
 	export const prerender = true;
@@ -13,29 +16,6 @@
 				<h3>Who Represents Me?</h3>
 			</div>
 			<Represents showCouncil={true} />
-		</div>
-	</div>
-</div>
-<div class="demographics section">
-	<div class="container">
-		<div class="row">
-			<div class="col-12 text-center">
-				<h3>Atlanta By The Numbers</h3>
-			</div>
-			<Demographics />
-		</div>
-	</div>
-</div>
-<div class="crime section">
-	<div class="container">
-		<div class="row">
-			<div class="col-12 text-center">
-				<h3>Crime In Atlanta</h3>
-			</div>
-			<CrimeSummary />
-			<div class="col-12 text-center mt-4">
-				<a href="/crime-wave" class="btn btn-primary">Crime Wave Data</a>
-			</div>
 		</div>
 	</div>
 </div>
@@ -82,7 +62,7 @@
 <GoogleAnalytics properties={[ 'UA-1097544-80' ]} />
 <style>
 
-	.represents {
+	.resources {
 		background-color: #360030;
 	}
 	.crime {
@@ -91,7 +71,6 @@
 </style>
 
 <script>
-	import Demographics from "$lib/Demographics.svelte";
 	import Hero from "$lib/Hero.svelte"
 	import Represents from "$lib/Represents.svelte";
 	import CrimeSummary from "$lib/CrimeSummary.svelte"

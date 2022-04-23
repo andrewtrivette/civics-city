@@ -73,7 +73,7 @@ onMount(() => {
             }
             html += '<div class="item level-1">'+dateDisplay+'<div><b>'+item.Department.Name+'</b><br>'+dateArr[4]+', '+dateArr[3]+'<br><b>'+text+'</div></div>';
             if( date >= Date.now() ) {
-                councilUpcoming += html;
+                councilUpcoming = html + councilUpcoming;
             }
             else
             {

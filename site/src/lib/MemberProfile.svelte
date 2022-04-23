@@ -57,7 +57,7 @@
                             </div>
                     {:else if activeVoteType }
                         <div class="d-flex justify-content-center">
-                            <div><b>Retrieving voting history...</b></div><br>
+                            <div><b>Retrieving latest voting history...</b></div><br>
                             <div class="spinner-border text-info" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>

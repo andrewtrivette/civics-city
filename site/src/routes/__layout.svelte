@@ -12,11 +12,27 @@
 			  </button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item">
-						<a class="nav-link" href="/city-council">City Council</a>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							City Council
+						  </a>
+						  <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+							<li><a sveltekit:reload class="nav-link" href="/city-council">District Map</a></li>
+							<li><a sveltekit:reload class="nav-link" href="/city-council#members">Members</a></li>
+							<li><a sveltekit:reload class="nav-link" href="/city-council#agendas">Agendas & Minutes</a></li>
+						  </ul>
+						
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/crime">Crime</a>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Reports
+						  </a>
+						  <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+							<li><a sveltekit:reload class="nav-link" href="/demographics">Demographics</a></li>
+							<li><a sveltekit:reload class="nav-link" href="/crime">Crime</a></li>
+							<li><a sveltekit:reload class="nav-link" href="/crime-wave">Crime Wave</a></li>
+						  </ul>
+						
 					</li>
 				</ul>
 			  </div>

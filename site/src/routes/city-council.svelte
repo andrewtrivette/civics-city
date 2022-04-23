@@ -1,6 +1,6 @@
 <svelte:head>
     <title>City Council Districts | Civics.City Atlanta</title>
-    <meta property="og:image" content="{assets}/default.jpg">
+    <meta property="og:image" content="https://atlanta.civics.city}/default.jpg">
 </svelte:head>
 
 <div class="container pt-5">
@@ -11,9 +11,10 @@
         <Represents type="districts" showControls={false} />
     </div>
 </div>
-<a name="members"></a>
+
 <div class="councilmembers section">
     <div class="container">
+        <a name="members"></a>
 		<div class="row justify-content-center">
 			<div class="col-12 text-center mb-4">
 				<h3>City Council Members</h3>
@@ -26,6 +27,15 @@
 <div class="agenda section">
 	<AgendaList />
 </div>
+<style>
+
+	.agenda {
+		background-color: #360030;
+	}
+	.councilmembers {
+		background-color: #151515;
+	}
+</style>
 <GoogleAnalytics properties={[ 'UA-1097544-80' ]} />
 <script>
     import AgendaList from "$lib/AgendaList.svelte";
