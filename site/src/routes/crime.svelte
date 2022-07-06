@@ -9,7 +9,7 @@
 			<h1>Atlanta Crime Statistics</h1>
         </div>
         <div class="col-12 text-center mt-4">
-            <a href="/crime-wave" class="btn btn-primary">Crime Wave Data</a>
+            <a href="/crime-wave" class="btn btn-primary">Crime Data in Context</a>
         </div>
         <div class="col-12">
             <CrimeSummary />

@@ -175,28 +175,27 @@ input[type="text"] {
     font-size: 10px;
 }
 
-#council-calendar-upcoming .item.level-1,
-#council-calendar-past .item.level-1 {
+.council .item.level-1 {
     margin-bottom: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
 }
-#council-calendar-upcoming .item.level-1::after,
-#council-calendar-past .item.level-1::after {
-    content: '';
-    display: table-cell;
+.council .item.level-1 .info {
+    width: calc( 100% - 95px );
+    margin-bottom: 15px;
 }
-
 .date {
     font-size: 14pt;
     width: 80px;
     text-align: center;
     font-weight: bold;
-    float: left;
-    margin-top: 0.25rem;
+    margin: 0.25rem 15px 15px 0;
 }
 .cal {
     border: 1px solid white;
     border-radius: 10px;
-    margin: 0 15px 0 0;
+    
+    overflow: hidden;
 }
 .cal .month,
 .cal .day,
@@ -224,4 +223,59 @@ input[type="text"] {
 }
 .kpi .label {
     font-size: 14pt;
+}
+
+.text-lg {
+    font-size: 1.5rem;
+    line-height: 1.7;
+}
+.chart {
+    height: 700px;
+}
+@media only screen and (max-width: 640px) {
+    .text-lg {
+        font-size: 1.1rem;
+    }
+    .chart {
+        height: 500px;
+    }
+}
+
+aside {
+    border: 2px solid white;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    padding: 1rem 2rem;
+    margin: 2rem 0 1rem 0;
+    position: relative;
+    font-size:1rem;
+}
+aside.concern {
+    border-color: #6c0000;
+}
+aside::before {
+    position: absolute;
+    top: -1.4rem;
+    left: -2px;
+    color: white;
+    font-size: 0.8rem;
+    line-height: 1;
+    padding: 0.3rem .5rem;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-weight: bold;
+}
+aside.concern::before {
+    content: 'CONCERN';
+    background-color: #6c0000;
+    color: white;
+}
+aside.note::before {
+    content: 'NOTE';
+    background-color: white;
+    color: black;
+}
+.youtube-video {
+    width: 100%;
+    aspect-ratio: 16/9;
 }

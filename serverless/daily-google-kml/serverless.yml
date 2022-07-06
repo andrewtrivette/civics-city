@@ -1,4 +1,4 @@
-service: daily-crime-update
+service: daily-google-kml
 
 frameworkVersion: '2 || 3'
 
@@ -12,6 +12,6 @@ provider:
 functions:
   cronHandler:
     handler: handler.run
-    #events:
-      # Invoke Lambda function every day at 1am
-      #- schedule: cron(0 1 * * ? *)
+    # events:
+    #   # Invoke Lambda function every day at 1am
+    #   - schedule: cron(0 1 * * ? *)

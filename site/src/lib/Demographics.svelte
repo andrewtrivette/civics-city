@@ -58,7 +58,7 @@
 </div>
 
 <script>
-    export let ready;
+    // export let ready;
     import { get } from "$lib/_helpers";
     import { onMount } from 'svelte';
     import Chart from "chart.js/auto/auto.js";
@@ -92,6 +92,8 @@ function init() {
                     'rgba(153, 192, 86, 1)'
                     ]
         var ctx = document.querySelector('#demoChart').getContext('2d');
+        Chart.defaults.color = 'white';
+        Chart.defaults.font.size = 16;
         new Chart(ctx, {
             type: 'bar',
             data: {

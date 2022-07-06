@@ -23,7 +23,7 @@
         </div>
     </div>
 </div>
-<a name="agendas"></a>
+<a name="agendas" aria-hidden></a>
 <div class="agenda section">
 	<AgendaList />
 </div>

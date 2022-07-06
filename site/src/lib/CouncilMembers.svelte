@@ -33,13 +33,6 @@
 
 
 <style>
-.councilmember {
-    display: flex;
-    justify-content: flex-start;
-    line-height: 2.2;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
-    padding-bottom: 30px;
-}
 .circle {
     border-radius: 100%;
     overflow: hidden;

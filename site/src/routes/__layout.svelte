@@ -18,8 +18,8 @@
 						  </a>
 						  <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
 							<li><a sveltekit:reload class="nav-link" href="/city-council">District Map</a></li>
-							<li><a sveltekit:reload class="nav-link" href="/city-council#members">Members</a></li>
-							<li><a sveltekit:reload class="nav-link" href="/city-council#agendas">Agendas & Minutes</a></li>
+							<li><a sveltekit:reload class="nav-link" href="/city-council/#members">Members</a></li>
+							<li><a sveltekit:reload class="nav-link" href="/meeting/">Agendas & Minutes</a></li>
 						  </ul>
 						
 					</li>
@@ -28,9 +28,19 @@
 							Reports
 						  </a>
 						  <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+							<!-- <li><a sveltekit:reload class="nav-link" href="/fixing-atl-traffic">Fixing ATL Traffic</a></li> -->
+							<li><a sveltekit:reload class="nav-link" href="/crime-wave">Understanding Crime Trends</a></li>
+						  </ul>
+						
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Dashboards
+						  </a>
+						  <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
 							<li><a sveltekit:reload class="nav-link" href="/demographics">Demographics</a></li>
 							<li><a sveltekit:reload class="nav-link" href="/crime">Crime</a></li>
-							<li><a sveltekit:reload class="nav-link" href="/crime-wave">Crime Wave</a></li>
+							<li><a sveltekit:reload class="nav-link" href="/mobility">Transportation</a></li>
 						  </ul>
 						
 					</li>

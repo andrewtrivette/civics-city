@@ -7,6 +7,7 @@
 </svelte:head>
 <script context="module">
 	export const prerender = true;
+	import { GoogleAnalytics } from '@beyonk/svelte-google-analytics'
 </script>
 <Hero/>
 <div class="represents section">
@@ -61,12 +62,8 @@
 </div>
 <GoogleAnalytics properties={[ 'UA-1097544-80' ]} />
 <style>
-
 	.resources {
 		background-color: #360030;
-	}
-	.crime {
-		background-color: #151515;
 	}
 </style>
 
@@ -76,8 +73,7 @@
 	import CrimeSummary from "$lib/CrimeSummary.svelte"
 	import { onMount } from 'svelte';
 	import { base, assets } from '$app/paths';
-export const prerender = true;
-import { GoogleAnalytics } from '@beyonk/svelte-google-analytics'
+
 onMount(() => {
 
 

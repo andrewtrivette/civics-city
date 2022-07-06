@@ -1,18 +1,21 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
 		<div class="col-12 text-center">
-			<h1>Let's Talk About The Crime Wave</h1>
+			<h1>Understanding Atlanta Crime Trends</h1>
         </div>
         <div class="col-12 col-lg-8 mt-4 text-lg">
-            <p>Much has been made of the crime wave here in Atlanta. It's been a concern for citizens, a political football, and used as a reason for drastic changes like breaking the city itself apart.</p>
+            <p>Much is often made of crime trends here in Atlanta. It's been a concern for citizens when news headlines focus on it, a political football, and used as a reason for drastic changes like breaking the city itself apart.</p>
             <p><b>Let's take a look at what the data can tell us!</b></p>
-            <p>First though, let's start with an important note. Data adds to our understanding, and gives us important contexts. But as we look at trends, we do well to remember them in their full context: a story of lives interrupted with fear and tragedy, not just a string of data points.</p>
         </div>
         <div class="col-12"><hr></div>
         <div class="col-12 col-lg-8 mt-5 text-center">
-            <h2>The Wave</h2>
+            <h2>The 2021 Wave</h2>
         </div>
-        <div class="col-12 mt-3">
+        <div class="col-12 col-lg-8 mt-4 text-lg">
+            <p>There were a ton of bad narratives around the 2021 increase in crime.  So let's use that as our example.</p>
+        </div>
+        <div class="col-12 mt-3 text-lg">
+            
             <div class="block">
                 <div class="title text-center">2019 - 2021 Aggravated Assaults & Homicides Per Capita</div>
                 <div class="content">
@@ -71,7 +74,7 @@
         </div>
         <div class="col-12 col-lg-8 mt-4 text-lg">
             <p>There is no direct correlary between the number of cops we have on the streets and the number of crimes.</p>
-            <p>This is unsurprising. Studies have shown that <a href="" target="_blank">crime has decreased</a> over the last several decades regardless of <a href="https://www.ojp.gov/ncjrs/virtual-library/abstracts/relationship-between-police-presence-and-crime-deterrence" target="_blank">head counts.</a> <a href="https://www.washingtonpost.com/politics/2020/06/07/over-past-60-years-more-spending-police-hasnt-necessarily-meant-less-crime/" target="_blank">Spending doesn't have a direct correlation either.</a></p>
+            <p>This is unsurprising. Studies have shown that <a href="https://www.washingtonpost.com/politics/2020/06/07/over-past-60-years-more-spending-police-hasnt-necessarily-meant-less-crime/" target="_blank">crime has decreased</a> over the last several decades regardless of <a href="https://www.ojp.gov/ncjrs/virtual-library/abstracts/relationship-between-police-presence-and-crime-deterrence" target="_blank">head counts.</a> <a href="https://www.washingtonpost.com/politics/2020/06/07/over-past-60-years-more-spending-police-hasnt-necessarily-meant-less-crime/" target="_blank">Spending doesn't have a direct correlation either.</a></p>
             <p>Cops serve important civil functions, and many find an increased presence of cops comforting. But cops are not the only factor in crime rates. To the extent they are a factor, it's far more important <b>how</b> officers are deployed, and <b>what tools</b> they are given.</p>
             <p>Violent altercations amongst friends, nearly 1,800 guns being stolen from the cars of irresponsible gun owners, these are things no number of cops will completely prevent. Our safety is dependent on far more social factors than just enforcement.</p>
         </div>
@@ -165,23 +168,6 @@
         </div>
     </div>
 </div>
-<style>
-    .text-lg {
-        font-size: 1.5rem;
-        line-height: 1.7;
-    }
-    .chart {
-        height: 700px;
-    }
-    @media only screen and (max-width: 640px) {
-        .text-lg {
-            font-size: 1.1rem;
-        }
-        .chart {
-            height: 500px;
-        }
-    }
-</style>
 
 <script>
     // export let ready;
@@ -192,6 +178,8 @@
     import { browser } from "$app/env";
     
 let domain = 'https://civics.city/atlanta/data';
+var d = new Date();
+var currYear = d.getFullYear();
 var assault = {
     2019: 0,
     2020: 0
@@ -210,6 +198,7 @@ function init() {
     {
         Chart.register(annotationPlugin);
         var population = {
+            2022: 532695,
             2021: 524100,
             2020: 515400,
             2019: 506800,
@@ -242,6 +231,10 @@ function init() {
 
         get( domain+'/COBRA/year-aggregate.json', function(data) 
         {
+            if( data[currYear] )
+            {
+                delete data[currYear]
+            }
             var yearKeys = Object.keys(data);
             var datasets = {};
             var totalCrimes = {};

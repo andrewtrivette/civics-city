@@ -7,8 +7,25 @@
             <div class="block">
                 <div class="title">Upcoming Meetings</div>
                 <div class="content">
-                    <div class="list">
-                        <div id="council-calendar-upcoming">{@html councilUpcoming}</div>
+                    <div class="list council">
+                        {#each councilUpcoming as item (item.Meeting.ID) }
+                            <div class="item level-1">
+                                <div class="date">
+                                    <div class="cal">
+                                        <span class="month">{item.Meeting.Date[0]}</span>
+                                        <span class="day">{item.Meeting.Date[1]}</span>
+                                        <span class="year">{item.Meeting.Date[2]}</span>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <b>{item.Meeting.Department.Name}</b>
+                                    <br>{item.Meeting.Date[4]}, {item.Meeting.Date[3]}<br>
+                                    {#if item.hasOwnProperty('Agenda') }
+                                        <b><a sveltekit:reload href="/meeting/?agenda={item.Meeting.ID}">Agenda</a></b>
+                                    {/if}
+                                </div>
+                            </div>
+                        {/each}
                     </div>
                 </div>
             </div>
@@ -17,8 +34,27 @@
             <div class="block">
                 <div class="title">Past Meetings</div>
                 <div class="content">
-                    <div class="list">
-                        <div id="council-calendar-past">{@html councilPast}</div>
+                    <div class="list council">
+                        {#each councilPast as item (item.Meeting.ID) }
+                            <div class="item level-1">
+                                <div class="date">
+                                    <div class="cal">
+                                        <span class="month">{item.Meeting.Date[0]}</span>
+                                        <span class="day">{item.Meeting.Date[1]}</span>
+                                        <span class="year">{item.Meeting.Date[2]}</span>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <b>{item.Meeting.Department.Name}</b>
+                                    <br>{item.Meeting.Date[4]}, {item.Meeting.Date[3]}<br>
+                                    {#if item.hasOwnProperty('Minutes') }
+                                        <b><a sveltekit:reload href="/meeting/?minutes={item.Meeting.ID}">Minutes</a></b>
+                                    {:else}
+                                        <b><a sveltekit:reload href="/meeting/?agenda={item.Meeting.ID}">Agenda</a></b>
+                                    {/if}
+                                </div>
+                            </div>
+                        {/each}
                     </div>
                 </div>
             </div>
@@ -30,8 +66,8 @@
 <script>
 import { get, setCookie, getCookie, deleteCookie } from "$lib/_helpers";
 import { onMount } from 'svelte';
-let councilUpcoming = '';
-let councilPast = '';
+let councilUpcoming = [];
+let councilPast = [];
 onMount(() => {
     var startDate = new Date();
     startDate.setDate(startDate.getDate()-15);
@@ -41,13 +77,14 @@ onMount(() => {
     var eDateString = endDate.getFullYear()+'-'+(endDate.getMonth()+1)+'-'+endDate.getDate();
     get('https://br430b48d1.execute-api.us-east-1.amazonaws.com/prod/api/Meeting?range='+sDateString+'~'+eDateString+'&Group=AllMeetings', function(result3) 
     {
-        
+        var councilUpcomingTemp = [];
+        var councilPastTemp = [];
+        console.log(result3);
         for( var i=0; i<result3.length; i++ )
         {
-            var html = '';
-            var item = result3[i].Meeting;
-            var date = Date.parse( item.Date );
-            var dateArr = [
+            var item = result3[i];
+            var date = Date.parse( item.Meeting.Date );
+            item.Meeting.Date = [
                 new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date),
                 new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(date),
                 new Intl.DateTimeFormat('en-US', { year: 'numeric' }).format(date),
@@ -55,31 +92,16 @@ onMount(() => {
                 new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(date),
             ];
 
-            var dateDisplay = '<div class="date">\
-                <div class="cal">\
-                    <span class="month">'+dateArr[0]+'</span>\
-                    <span class="day">'+dateArr[1]+'</span>\
-                    <span class="year">'+dateArr[2]+'</span>\
-                </div>\
-            </div>';
-            var text = '';
-            if ( result3[i].hasOwnProperty('Minutes') )
-            {
-                text = '<a href="meeting/?minutes='+result3[i].Meeting.ID+'">Minutes</a>';
-            }
-            else if( result3[i].hasOwnProperty('Agenda') )
-            {
-                text = '<a href="meeting/?agenda='+result3[i].Meeting.ID+'">Agenda</a>';
-            }
-            html += '<div class="item level-1">'+dateDisplay+'<div><b>'+item.Department.Name+'</b><br>'+dateArr[4]+', '+dateArr[3]+'<br><b>'+text+'</div></div>';
             if( date >= Date.now() ) {
-                councilUpcoming = html + councilUpcoming;
+                councilUpcomingTemp.push(item);
             }
             else
             {
-                councilPast += html;
+                councilPastTemp.push(item);
             }
         }
+        councilUpcoming = councilUpcomingTemp.reverse();
+        councilPast = councilPastTemp;
     });
 });
     

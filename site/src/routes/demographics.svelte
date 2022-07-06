@@ -6,6 +6,7 @@
     <meta property="og:url" content="https://atlanta.civics.city/demographics">
 </svelte:head>
 <script context="module">
+	import { GoogleAnalytics } from '@beyonk/svelte-google-analytics'
 	export const prerender = true;
 </script>
 <div class="demographics section">
@@ -26,11 +27,10 @@
 	import Demographics from "$lib/Demographics.svelte";
 	import { onMount } from 'svelte';
 	import { base, assets } from '$app/paths';
-export const prerender = true;
-import { GoogleAnalytics } from '@beyonk/svelte-google-analytics'
-onMount(() => {
+	
+	onMount(() => {
 
 
-});
+	});
 
 </script>
