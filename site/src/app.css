@@ -253,6 +253,9 @@ aside {
 aside.concern {
     border-color: #6c0000;
 }
+aside.action {
+    border-color: #76AAF9;
+}
 aside::before {
     position: absolute;
     top: -1.4rem;
@@ -275,6 +278,12 @@ aside.note::before {
     background-color: white;
     color: black;
 }
+aside.action::before {
+    content: 'ACTION';
+    background-color: #76AAF9;
+    color: black;
+}
+
 .youtube-video {
     width: 100%;
     aspect-ratio: 16/9;

@@ -28,7 +28,7 @@
 							Reports
 						  </a>
 						  <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-							<!-- <li><a sveltekit:reload class="nav-link" href="/fixing-atl-traffic">Fixing ATL Traffic</a></li> -->
+							<li><a sveltekit:reload class="nav-link" href="/moving-atlanta-traffic-forward">Moving ATL Traffic Forward</a></li>
 							<li><a sveltekit:reload class="nav-link" href="/crime-wave">Understanding Crime Trends</a></li>
 						  </ul>
 						

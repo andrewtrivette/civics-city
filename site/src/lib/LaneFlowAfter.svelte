@@ -3,80 +3,105 @@
         <div class="road north">
             <div class="lane">
                 <div class="car"></div>
-                <div class="car"></div>
-                <div class="car"></div>
             </div>
             <div class="lane">
-                <div class="car"></div>
-                <div class="car"></div>
                 <div class="car"></div>
             </div>
             <div class="lane"></div>
             <div class="lane"></div>
         </div>
         <div class="road west cross">
+            <div class="lane bikes"></div>
             <div class="lane"></div>
             <div class="lane"></div>
             <div class="lane">
                 <div class="car"></div>
                 <div class="car"></div>
                 <div class="car"></div>
-            </div>
-            <div class="lane">
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
                 <div class="car"></div>
                 <div class="car"></div>
                 <div class="car"></div>
             </div>
+            <div class="lane bikes"></div>
         </div>
         <div class="road east cross">
-            <div class="lane">
-                <div class="car"></div>
-                <div class="car"></div>
-                <div class="car"></div>
+            <div class="lane bikes">
             </div>
             <div class="lane">
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
+                <div class="car"></div>
                 <div class="car"></div>
                 <div class="car"></div>
                 <div class="car"></div>
             </div>
             <div class="lane"></div>
             <div class="lane"></div>
-            
+            <div class="lane bikes"></div>
         </div>
         <div class="road south">
             <div class="lane"></div>
             <div class="lane"></div>
             <div class="lane">
                 <div class="car"></div>
-                <div class="car"></div>
-                <div class="car"></div>
             </div>
             <div class="lane">
-                <div class="car"></div>
-                <div class="car"></div>
                 <div class="car"></div>
             </div>
         </div>
         <div class="center"></div>
-
     </div>
+    <caption>After: 3 lanes optimized for traffic flow, w/ bike lanes to further reduce # of cars on road</caption>
 </figure>
 
 <style>
 figure {
     width: 1024px;
     aspect-ratio: 2/1;
-    margin: 20px 0;
+    margin: 20% 0;
     max-width: 100%;
     filter: saturate(.5);
     --stripe-width: 3px;
     --stop-width: 15px;
+    transform: scale(1.25);
 }
 @media (max-width: 768px) {
     figure {
         --strip-width: 1px;
         --stop-width: 5px;
     }
+}
+caption {
+    width: 100%;
+    font-size: 16px;
+    color: white;
+    background-color: #111;
+    display: block;
+    text-align: center;
 }
 .wrapper {
     /* width: 1024px; */
@@ -124,7 +149,7 @@ figure {
     grid-row: 2 / span 1;
 }
 .lane {
-    border: var(--stripe-width) dashed white;
+    border: 3px dashed white;
     border-width: 0 var(--stripe-width);
     width: 25%;
     display: flex;
@@ -137,6 +162,11 @@ figure {
     height: 25%;
     border-width: var(--stripe-width) 0;
     align-content: space-around;
+    justify-content:  flex-start;
+}
+.road.cross .lane.bikes {
+    height: 12.5%;
+    background-color: green;
 }
 .lane:nth-child(2) {
     border-right: var(--stripe-width) solid yellow;
@@ -147,16 +177,19 @@ figure {
     margin-left: var(--stripe-width);
 }
 .road.cross .lane:nth-child(2) {
-    border-bottom: var(--stripe-width) solid yellow;
+    border-bottom: none;
     border-right-width: 0;
-    margin-bottom: var(--stripe-width);
     margin-right: 0;
 }
 .road.cross .lane:nth-child(3) {
-    border-top: var(--stripe-width) solid yellow;
-    border-left-width: 0;;
-    margin-top: var(--stripe-width);
+    border: var(--stripe-width) solid yellow;
+    border-width: var(--stripe-width) 0;
     margin-left: 0;
+}
+.road.cross .lane:nth-child(4) {
+    border-top: none;
+    border-right-width: 0;
+    margin-right: 0;
 }
 .road.west .lane:nth-child(1n+3) {
     border-right: var(--stop-width) solid white;
@@ -170,14 +203,8 @@ figure {
     border-bottom: var(--stop-width) solid white;
     flex-direction: column-reverse;
 }
-.road.east .lane:nth-child(-n+2) {
+.road.east .lane:nth-child(-n+3) {
     border-left: var(--stop-width) solid white;
-}
-.cars {
-    grid-column: 1 / span 3;
-    grid-row: 1 / span 3;
-    background-color: white;
-    opacity: 0.5;
 }
 .car {
     aspect-ratio: 9/16;
@@ -190,43 +217,50 @@ figure {
     flex-direction: column;
     position: relative;
     transform-origin: center center;
+    border-color: rgb(184, 0, 0);
+    --window-height: 10px;
+    --window-slope: 3px;
 }
-.car:before {
-    content: '';
-    height: 16px;
-    border: 10px solid #222;
-    width: 70%;
-    border-color: #222 transparent #222 transparent;
-    border-width: 16px 3px 16px 3px ;
-    display: block;
+@media (max-width: 768px) {
+    .car {
+        --window-height: 6px;
+        --window-slope: 2px;
+    }
 }
-
 .road.cross .car {
     height: 60%;
     width: auto;
     flex-direction: row;
     aspect-ratio: 16/9;
 }
+/* Car Windows */
+.car:before {
+    content: '';
+    height: 50%;
+    border: 10px solid #222;
+    width: 80%;
+    border-color: #222 transparent #222 transparent;
+    border-width: var(--window-height) var(--window-slope);
+    display: block;
+}
 .road.cross .car:before {
     border-color: transparent #222 transparent #222;
-    border-width: 3px 10px 3px 10px;
+    border-width:  var(--window-slope) var(--window-height);
     width:50%;
     height: 80%;
 }
-.car {
-    border-color: rgb(184, 0, 0);
-}
+
+/* Tail Lights */
 .road .lane .car::after {
     content: '';
     display: block;
-    position: absolute;
-    border-radius: 15px;    
-    height: 5px;
-    width: calc( 100% - 30px );
+    position: absolute;    
+    height: 8%;
+    width:100%;
     top: auto;
     bottom: 0;
     border: 5px solid rgb(184, 0, 0);
-    border-width: 0 15px;
+    border-width: 0 var(--window-height);
 }
 .road.north .lane .car::after {
     top: 0;
@@ -234,16 +268,18 @@ figure {
 }
 .road.east .lane .car::after,
 .road.west .lane .car::after {
-    width: 5px;
-    height: calc( 100% - 30px );
+    top:0;
+    width: 8%;
+    height: auto;
+    bottom: 0;
     left: 0;
-    border-width: 15px 0;
+    border-width: var(--window-height) 0;
 }
 .road.east .lane .car::after {
     left: auto;
     right: 0;
 }
-.road.west .lane:nth-child(3) .car:nth-child(1)::after {
+.road.west .lane:nth-child(4) .car:nth-child(1)::after {
     animation: turnSignalLeft 1s linear infinite;
 }
 @keyframes turnSignalLeft {
@@ -257,11 +293,48 @@ figure {
         border-top-color: inherit;
     }
 }
+.road.west .lane:nth-child(4) .car:nth-child(1) {
+    animation: firstCarTurnLeft 15s linear infinite;
+    margin-right: 100px;
+}
+@keyframes firstCarTurnLeft {
+    0% {
+        transform: rotate(-45deg) translate(-0px, 0px);
+    }
+    /* 10% {
+        transform: rotate(-45deg) translate(100px, 0px);
+    } */
+    10% {
+        transform: rotate(0deg) translate(100px, -170%);
+    }
+    100% {
+        transform: rotate(0deg) translate(100px, -170%);
+    }
+}
+.road.west .lane:nth-child(4) .car:nth-child(2) {
+    margin-right: 100px;
+}
+.road.west .lane:nth-child(4) .car:nth-child(n+2) {
+    animation: westCarsForward 15s linear infinite;
+}
+@keyframes westCarsForward {
+    0% {
+        transform: translate(0, 0);
+    }
+    5% {
+        transform: translate(50px, 0);
+    }
+    100% {
+        transform: translate(1800px,0);
+    }
+}
+
+
 
 .road.east .lane:nth-child(2) .car:nth-child(1)::after {
-    animation: turnSignalRight 1s linear infinite;
+    animation: eastTurnSignalLeft 1s linear infinite;
 }
-@keyframes turnSignalRight {
+@keyframes eastTurnSignalLeft {
     0% {
         border-bottom-color: inherit;
     }
@@ -272,156 +345,39 @@ figure {
         border-bottom-color: inherit;
     }
 }
-
+.road.east .lane:nth-child(2) .car:nth-child(1) {
+    animation: eastFirstCarTurnLeft 15s linear infinite;
+    margin-left: 100px;
+}
+@keyframes eastFirstCarTurnLeft {
+    0% {
+        transform: rotate(-45deg) translate(-0px, 0px);
+    }
+    /* 10% {
+        transform: rotate(-45deg) translate(-100px, 0px);
+    } */
+    10% {
+        transform: rotate(0deg) translate(-100px, 170%);
+    }
+    100% {
+        transform: rotate(0deg) translate(-100px, 170%);
+    }
+}
 .road.east .lane:nth-child(2) .car:nth-child(2) {
-    animation: secondCarLeft 15s linear infinite;
+    margin-left: 100px;
 }
-@keyframes secondCarLeft {
+.road.east .lane:nth-child(2) .car:nth-child(n+2) {
+    animation: eastCarsForward 15s linear infinite;
+}
+@keyframes eastCarsForward {
     0% {
-        transform: rotate(0deg) translate(0px, 0px);
+        transform: translate(0, 0);
     }
-    20% {
-        transform: rotate(45deg) translate(0px, 0px);
-    }
-    30% {
-        transform: rotate(0deg) translate(-100px, -85px);
+    5% {
+        transform: translate(-50px, 0);
     }
     100% {
-        transform: translate(-800px, -90px);
-    }
-}
-
-.road.east .lane:nth-child(2) .car:nth-child(3) {
-    animation: thirdCarLeft 15s linear infinite;
-}
-@keyframes thirdCarLeft {
-    0% {
-        transform: rotate(0deg) translate(0px, 0px);
-    }
-    40% {
-        transform: rotate(45deg) translate(0px, 0px);
-    }
-    50% {
-        transform: rotate(0deg) translate(-100px, -90px );
-    }
-    100% {
-        transform: translate(-600px, -85px);
-    }
-}
-
-.road.east .lane:nth-child(1) .car:nth-child(1) {
-    animation: flowFirstCar 15s linear infinite;
-}
-@keyframes flowFirstCar {
-    0% {
-        transform: translate(0px, 0px);
-    }
-    100% {
-        transform: translate( -1000px, 0px);
-    }
-}
-
-.road.east .lane:nth-child(1) .car:nth-child(2) {
-    animation: flowSecondCar 15s linear infinite;
-}
-@keyframes flowSecondCar {
-    10% {
-        transform: translate(0px, 0px);
-    }
-    100% {
-        transform: translate(-900px, 0px );
-    }
-}
-
-.road.east .lane:nth-child(1) .car:nth-child(3) {
-    animation: flowThirdCar 15s linear infinite;
-}
-@keyframes flowThirdCar {
-    0% {
-        transform: translate(0px, 0px);
-    }
-    30% {
-        transform: translate(0px, 0px);
-    }
-    100% {
-        transform: translate(-700px, 0px );
-    }
-}
-
-
-
-.road.west .lane:nth-child(3) .car:nth-child(2) {
-    animation: secondCarLeft1 15s linear infinite;
-}
-@keyframes secondCarLeft1 {
-    0% {
-        transform: rotate(0deg) translate(0px, 0px);
-    }
-    20% {
-        transform: rotate(45deg) translate(0px, 0px);
-    }
-    30% {
-        transform: rotate(0deg) translate(100px, 85px);
-    }
-    100% {
-        transform: translate(800px, 90px);
-    }
-}
-
-.road.west .lane:nth-child(3) .car:nth-child(3) {
-    animation: thirdCarLeft1 15s linear infinite;
-}
-@keyframes thirdCarLeft1 {
-    0% {
-        transform: rotate(0deg) translate(0px, 0px);
-    }
-    40% {
-        transform: rotate(45deg) translate(0px, 0px);
-    }
-    50% {
-        transform: rotate(0deg) translate(100px, 90px );
-    }
-    100% {
-        transform: translate(600px, 85px);
-    }
-}
-
-.road.west .lane:nth-child(4) .car:nth-child(1) {
-    animation: flowFirstCar1 15s linear infinite;
-}
-@keyframes flowFirstCar1 {
-    0% {
-        transform: translate(0px, 0px);
-    }
-    100% {
-        transform: translate( 1000px, 0px);
-    }
-}
-
-.road.west .lane:nth-child(4) .car:nth-child(2) {
-    animation: flowSecondCar1 15s linear infinite;
-}
-@keyframes flowSecondCar1 {
-    10% {
-        transform: translate(0px, 0px);
-    }
-    100% {
-        transform: translate(900px, 0px );
-    }
-}
-
-.road.west .lane:nth-child(4) .car:nth-child(3) {
-    animation: flowThirdCar1 15s linear infinite;
-}
-@keyframes flowThirdCar1 {
-    0% {
-        transform: translate(0px, 0px);
-    }
-    30% {
-        transform: translate(0px, 0px);
-    }
-    100% {
-        transform: translate(700px, 0px );
+        transform: translate(-1800px,0);
     }
 }
 

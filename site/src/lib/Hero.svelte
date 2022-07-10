@@ -23,7 +23,6 @@
     .hero .svg {
         width: 100%;
         opacity: 0.2;
-        padding-top: 100px;
         position: absolute;
         bottom: 0;
     }

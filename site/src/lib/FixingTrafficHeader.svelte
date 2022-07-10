@@ -1,3 +1,8 @@
+<svelte:head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Codystar&display=swap" rel="stylesheet">
+</svelte:head>
 <figure>
     <div class="road">
         <div class="lane"></div>
@@ -75,8 +80,6 @@
 </figure>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Codystar&display=swap');
-
 figure {
     background-image: linear-gradient(45deg,rgb(0,16,51),#4f0074,rgb(255,255,159));
     padding: 0;
@@ -231,7 +234,7 @@ figure {
     left: 20%;
     width: 60%;
     top: 5%;
-    font-size: 2vw;
+    font-size: 2.4vw;
     font-weight: bold;
     text-align: center;
     height: calc( 4vw + 1%);
