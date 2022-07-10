@@ -1,4 +1,4 @@
-service: daily-google-kml
+service: dailyGoogleKml
 
 frameworkVersion: '2 || 3'
 
@@ -10,7 +10,7 @@ provider:
   timeout: 300
 
 functions:
-  cronHandler:
+  archive:
     handler: handler.run
     # events:
     #   # Invoke Lambda function every day at 1am

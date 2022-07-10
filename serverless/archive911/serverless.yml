@@ -1,4 +1,4 @@
-service: scrapeGDOT
+service: archive911
 
 frameworkVersion: '2 || 3'
 
@@ -13,5 +13,4 @@ functions:
   cronHandler:
     handler: handler.handler
     events:
-      # Invoke Lambda function every day at 1am
-      - schedule: rate(30 days)
+      - schedule: cron(0 1 * * ? *)

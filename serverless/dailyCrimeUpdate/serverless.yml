@@ -1,0 +1,17 @@
+service: daily-crime-update
+
+frameworkVersion: '2 || 3'
+
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  timeout: 300
+
+functions:
+  cronHandler:
+    handler: handler.run
+    events:
+      # Invoke Lambda function every day at 1am
+      - schedule: cron(0 1 * * ? *)

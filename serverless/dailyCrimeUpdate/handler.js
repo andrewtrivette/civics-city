@@ -186,7 +186,7 @@ module.exports.run = async (event, context, callback) => {
 							ACL: 'public-read',
 							Body: JSON.stringify(summaryFiles[file]), 
 							Bucket: 'civics.city', 
-							Key: 'atlanta/data/COBRA/'+year+'-'+file+'-summary.json',
+							Key: 'atlanta/data/COBRA/'+year+'-'+file+'-summary-test.json',
 							ContentType: 'application/json'
 						};
 						s3.putObject(opts, (err, data) => {
@@ -202,7 +202,7 @@ module.exports.run = async (event, context, callback) => {
 							ACL: 'public-read',
 							Body: JSON.stringify(files[file]), 
 							Bucket: 'civics.city', 
-							Key: 'atlanta/data/COBRA/'+file+'.json',
+							Key: 'atlanta/data/COBRA/'+file+'-test.json',
 							ContentType: 'application/json'
 						};
 						s3.putObject(opts, (err, data) => {
@@ -217,7 +217,7 @@ module.exports.run = async (event, context, callback) => {
 						ACL: 'public-read',
 						Body: JSON.stringify(yearFile), 
 						Bucket: 'civics.city', 
-						Key: 'atlanta/data/COBRA/'+year+'-summary.json',
+						Key: 'atlanta/data/COBRA/'+year+'-summary-test.json',
 						ContentType: 'application/json'
 					};
 					s3.putObject(opts, (err, data) => {
@@ -232,7 +232,7 @@ module.exports.run = async (event, context, callback) => {
 						ACL: 'public-read',
 						Body: JSON.stringify(files), 
 						Bucket: 'civics.city', 
-						Key: 'atlanta/data/COBRA/'+year+'-aggregate.json',
+						Key: 'atlanta/data/COBRA/'+year+'-aggregate-test.json',
 						ContentType: 'application/json'
 					};
 					s3.putObject(opts, (err, data) => {
@@ -247,7 +247,7 @@ module.exports.run = async (event, context, callback) => {
 					return new Promise((resolve, reject) => {
 						s3.getObject({
 							Bucket: "civics.city", 
-							Key: "atlanta/data/COBRA/year-aggregate.json"
+							Key: "atlanta/data/COBRA/year-aggregate-test.json"
 						}, function(err, data) {
 							if (err) console.log(err, err.stack); // an error occurred
 							var json = JSON.parse(data.Body.toString('utf-8'));

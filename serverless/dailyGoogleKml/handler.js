@@ -11,17 +11,16 @@ module.exports.run = async (event, context, callback) => {
 
 	return new Promise((resolve, reject) => {
 		// Get zip file from url
-		return new Promise((resolve, reject) => {
-			const file = fs.createWriteStream("/tmp/google-map.kmz");
-			https.get('https://www.google.com/maps/d/kml?mid=1rIxBqs46TPEBA-qBkrUKyMWewgXwrmc', response => {
-				console.log('statusCode:', response.statusCode);
-				console.log('headers:', response.headers);
-				response.pipe(file);
-				file.on('finish', () => {
 
-						resolve();
+		const file = fs.createWriteStream("/tmp/google-map.kmz");
+		https.get('https://www.google.com/maps/d/kml?mid=1rIxBqs46TPEBA-qBkrUKyMWewgXwrmc', response => {
+			console.log('statusCode:', response.statusCode);
+			console.log('headers:', response.headers);
+			response.pipe(file);
+			file.on('finish', () => {
 
-				});
+					resolve();
+
 			});
 		});
 	}).then(() => {
@@ -39,14 +38,14 @@ module.exports.run = async (event, context, callback) => {
 			.pipe(unzipper.Parse())
 			.on('entry', function (entry) {
 			  const fileName = entry.path;
-			  console.log(filename);
+			  console.log(fileName);
 			//   const type = entry.type; // 'Directory' or 'File'
 			//   const size = entry.vars.uncompressedSize; // There is also compressedSize;
-			//   if (fileName.endsWith('kml')) {
+			  if (fileName.endsWith('kml')) {
 				entry.pipe(file);
-			//   } else {
-			// 	entry.autodrain();
-			//   }
+			  } else {
+				entry.autodrain();
+			  }
 			});
 		});
 	}).then((file_buffer) => {
