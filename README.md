@@ -6,11 +6,11 @@ This site is built on [SvelteKit](https://kit.svelte.dev/), and uses [Leaflet](h
 
 ## /serverless/archive911
 
-This Lambda function captures and archives 911 incidents in S3
+This function captures and archives 911 incidents in S3
 
 ## /serverless/archiveGDOT
 
-This Lambda function captures and archives GDOT crash incidents
+This function captures and archives GDOT crash incidents
 
 ## /serverless/cityProxy
 
@@ -29,3 +29,8 @@ This function captures a KML file from Google MyMaps and saves it to S3. Not cur
 ## /serverless/summarize911
 
 Takes the archived 911 data captured by /serverless/archive911 and summarizes it by date
+
+
+![Creative Commons License](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)
+
+This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 International License](http://creativecommons.org/licenses/by-nc/4.0/).
