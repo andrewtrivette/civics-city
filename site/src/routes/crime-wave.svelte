@@ -7,13 +7,11 @@
     <meta property="og:url" content="https://atlanta.civics.city/crime-wave">
 </svelte:head>
 
-
 <CrimeWave />
 <GoogleAnalytics properties={[ 'UA-1097544-80' ]} />
 
 <script>
-import CrimeWave from '$lib/CrimeWave.svelte';
-import { base, assets } from '$app/paths';
-export const prerender = true;
-import { GoogleAnalytics } from '@beyonk/svelte-google-analytics'
+    import CrimeWave from '$lib/CrimeWave.svelte';
+    export const prerender = true;
+    import { GoogleAnalytics } from '@beyonk/svelte-google-analytics'
 </script>

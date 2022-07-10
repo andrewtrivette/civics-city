@@ -1,6 +1,6 @@
 <svelte:head>
     <title>City Council Districts | Civics.City Atlanta</title>
-    <meta property="og:image" content="https://atlanta.civics.city}/default.jpg">
+    <meta property="og:image" content="https://atlanta.civics.city/default.jpg">
 </svelte:head>
 
 <div class="container pt-5">
@@ -27,6 +27,7 @@
 <div class="agenda section">
 	<AgendaList />
 </div>
+
 <style>
 
 	.agenda {
@@ -37,16 +38,11 @@
 	}
 </style>
 <GoogleAnalytics properties={[ 'UA-1097544-80' ]} />
+
 <script>
     import AgendaList from "$lib/AgendaList.svelte";
-import Represents from '$lib/Represents.svelte';
-import CouncilMembers from "$lib/CouncilMembers.svelte";
-import { onMount } from 'svelte';
-import { base, assets } from '$app/paths';
-export const prerender = true;
-import { GoogleAnalytics } from '@beyonk/svelte-google-analytics'
-onMount(() => {
-
-
-});
+	import Represents from '$lib/Represents.svelte';
+	import CouncilMembers from "$lib/CouncilMembers.svelte";
+	export const prerender = true;
+	import { GoogleAnalytics } from '@beyonk/svelte-google-analytics'
 </script>

@@ -17,14 +17,10 @@
     </div>
 </div>
 <GoogleAnalytics properties={[ 'UA-1097544-80' ]} />
+
 <script>
 import CrimeSummary from '$lib/CrimeSummary.svelte';
-import { onMount } from 'svelte';
-import { base, assets } from '$app/paths';
 export const prerender = true;
 import { GoogleAnalytics } from '@beyonk/svelte-google-analytics'
-onMount(() => {
 
-
-});
 </script>

@@ -47,6 +47,7 @@
     {/if}
 </div>
 <GoogleAnalytics properties={[ 'UA-1097544-80' ]} />
+
 <style>
     .search input {
         width: 100%;
@@ -72,6 +73,7 @@
         aspect-ratio: 4/3;
     }
 </style>
+
 <script>
     import { get } from "$lib/_helpers";
     import AgendaList from "$lib/AgendaList.svelte";
@@ -127,12 +129,6 @@
                         {
                             var title = item.Title.match(/(.*) : (.*)/);
 
-                            // if( item.VideoSeekTime )
-                            // {
-                            //     title += ' ('+item.VideoSeekTime+')';
-                            // }
-                            // console.log(title);
-                            // html += toggleIcons+title[2];
                             html += '<span class="badge white-text">'+title[1]+'</span>';
                             html += toggleIcons+title[2]+' <a data-gaCategory="external" data-gaAction="'+item.ItemType+'" data=gaLabel="http://atlantacityga.iqm2.com/Citizens/Detail_LegiFile.aspx?Frame=SplitView&MeetingID='+meetingID+'&ID='+item.ReferencedItem.ID+'" href="http://atlantacityga.iqm2.com/Citizens/Detail_LegiFile.aspx?Frame=SplitView&MeetingID='+meetingID+'&ID='+item.ReferencedItem.ID+'" target="_blank">('+item.ItemType+')</a>';
                         }
@@ -272,7 +268,6 @@
                     });
             });
             d.getElementById('agenda').classList.add('search');
-            // ga('send', 'event', 'form', 'search', event.target.value );
         }
         else
         {

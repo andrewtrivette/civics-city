@@ -6,6 +6,7 @@
       };
     }
 </script>
+
 <script>
     import DistrictDemographics from "$lib/DistrictDemographics.svelte";
     import DistrictMap from "$lib/DistrictMap.svelte";

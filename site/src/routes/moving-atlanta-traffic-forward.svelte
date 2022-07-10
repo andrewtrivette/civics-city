@@ -150,7 +150,6 @@
 import RateOfFlowNacto from '$lib/RateOfFlowNacto.svelte';
 import LaneFlowBefore from '$lib/LaneFlowBefore.svelte';
 import LaneFlowAfter from '$lib/LaneFlowAfter.svelte';
-import { base, assets } from '$app/paths';
 export const prerender = true;
 import { GoogleAnalytics } from '@beyonk/svelte-google-analytics'
 import FixingTrafficHeader from '$lib/FixingTrafficHeader.svelte';

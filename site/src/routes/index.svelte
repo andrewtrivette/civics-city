@@ -5,10 +5,12 @@
     <meta property="og:title" content="Civics.City Atlanta">
     <meta property="og:url" content="https://atlanta.civics.city">
 </svelte:head>
+
 <script context="module">
 	export const prerender = true;
 	import { GoogleAnalytics } from '@beyonk/svelte-google-analytics'
 </script>
+
 <Hero/>
 <div class="represents section">
 	<div class="container">
@@ -61,6 +63,7 @@
 	</div>
 </div>
 <GoogleAnalytics properties={[ 'UA-1097544-80' ]} />
+
 <style>
 	.resources {
 		background-color: #360030;
@@ -70,13 +73,4 @@
 <script>
 	import Hero from "$lib/Hero.svelte"
 	import Represents from "$lib/Represents.svelte";
-	import CrimeSummary from "$lib/CrimeSummary.svelte"
-	import { onMount } from 'svelte';
-	import { base, assets } from '$app/paths';
-
-onMount(() => {
-
-
-});
-
 </script>
