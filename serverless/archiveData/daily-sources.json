@@ -1,0 +1,83 @@
+[
+	{
+		"type": "quarterly",
+		"source": "https://gis.atlantaga.gov/dpcd/rest/services/OpenDataService/FeatureServer/2/query?outFields=*&where=1%3D1&f=geojson",
+		"destination": "data/council-districts.geojson"
+	},
+	{
+		"type": "quarterly",
+		"source": "https://arcgis.atlantaregional.com/arcgis/rest/services/OpenData/FeatureServer/377/query?outFields=*&f=geojson&where=Name%3D%27Atlanta%27",
+		"destination": "data/atlanta-demographics.json"
+	},
+	{
+		"type": "yearly",
+		"source": "https://atlantacityga.iqm2.com/api/Department/1000/members",
+		"destination": "data/council-members.json"
+	},
+	{
+		"type": "quarterly",
+		"source": "https://gis.atlantaga.gov/dpcd/rest/services/OpenDataService/FeatureServer/2/query?outFields=*&where=NAME%3D[district]&f=geojson",
+		"destination": "data/council-district-[district].geojson",
+		"variables": {
+			"district": [1,2,3,4,5,6,7,8,9,10,11,12]
+		}
+	},
+	{
+		"type": "quarterly",
+		"source": "https://arcgis.atlantaregional.com/arcgis/rest/services/OpenData/FeatureServer/65/query?where=NAME%3D%27District+[district]%27&outFields=*&returnGeometry=false&f=pjson",
+		"destination": "data/demographics/council-district-[district].json",
+		"variables": {
+			"district": [1,2,3,4,5,6,7,8,9,10,11,12]
+		}
+	},
+	{
+		"type": "yearly",
+		"source": "https://gis.atlantaga.gov/dpcd/rest/services/OpenDataService/FeatureServer/4/query?outfields=*&f=geojson",
+		"destination": "data/npu.geojson"
+	},
+	{
+		"type": "yearly",
+		"source": "https://gis.atlantaga.gov/dpcd/rest/services/EnerGovGIS/MapServer/4/query?where=1%3D1&f=geojson&outFields=*",
+		"destination": "data/police-precincts.geojson"
+	},
+	{
+		"type": "yearly",
+		"source": "https://gis.atlantaga.gov/dpcd/rest/services/OpenDataService/FeatureServer/22/query?where=1%3D1&f=geojson&outFields=*",
+		"destination": "data/zoning.geojson"
+	},
+	{
+		"type": "manual",
+		"source": "https://arcgis.atlantaregional.com/arcgis/rest/services/OpenData/FeatureServer/74/query?where=1%3D1&geometry=-84.930%2C33.559%2C-83.751%2C33.959&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Foot&outFields=*&f=geojson",
+		"destination": "data/state-reps.geojson",
+		"note": "not used yet"
+	},
+	{
+		"type": "manual",
+		"source": "https://arcgis.atlantaregional.com/arcgis/rest/services/OpenData/FeatureServer/75/query?where=1%3D1&outFields=*&geometry=-84.930%2C33.559%2C-83.751%2C33.959&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outSR=4326&f=json",
+		"destination": "data/state-senate.geojson",
+		"note": "not used yet"
+	},
+	{
+		"type": "manual",
+		"source": "https://opendata.atlantaregional.com/datasets/929e158242f24c9fb260606526b7d80e_23/explore?location=32.796236%2C-83.276700%2C7.86",
+		"destination": "data/Expressways_Georgia.geojson",
+		"note": "needs simplification for size, using turfjs"
+	},
+	{
+		"type": "manual",
+		"source": "https://geo.dot.gov/server/rest/services/NTAD/Congressional_Districts/MapServer/0",
+		"destination": "data/congressional-districts.geojson",
+		"note": "not used yet"
+	},
+	{
+		"type": "yearly",
+		"source": "https://gis.atlantaga.gov/dpcd/rest/services/LandUsePlanning/IncentiveZone/MapServer/4/query?where=1%3D1&f=geojson&outFields=*",
+		"destination": "data/cdia.geojson"
+	},
+	{
+		"type": "daily",
+		"source": "https://services.arcgis.com/jIL9msH9OI208GCb/ArcGIS/rest/services/HOLC_Neighborhood_Redlining/FeatureServer/0/query?where=City%3D%27Atlanta%27&f=geojson&outFields=*",
+		"destination": "data/redlining.geojson",
+		"note": "source: ArcGIS Living Atlas https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/announcements/redlining-data-now-in-arcgis-living-atlas/ "
+	}
+]

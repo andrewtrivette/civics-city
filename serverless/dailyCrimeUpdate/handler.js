@@ -92,19 +92,15 @@ module.exports.run = async (event, context, callback) => {
 		});
 	}).then((data) => {
 		return new Promise((resolve, reject) => {
-			var groups = {
-                district: {},
-                npu: {}
-            };
-			var sum = {};
+
 			var files = {};
 			var summaryFiles = {};
-			var yearFile = Object.assign({sum}, groups);
+			var yearFile = Object.assign({}, { sum: {}, district: {}, npu: {} });
 			
 			
 			var year = new Date().getFullYear();
 			var yearSumKey = year+'-summary';
-			files[yearSumKey] = Object.assign({sum}, groups);
+			files[yearSumKey] = Object.assign({}, { sum: {}, district: {}, npu: {} });
             
 			var districts = JSON.parse(fs.readFileSync('./council-districts.geojson'));
 
@@ -135,12 +131,14 @@ module.exports.run = async (event, context, callback) => {
 					// var monthSumKey = filename+'-summary';
 					if( !summaryFiles.hasOwnProperty(month))
 					{
-						summaryFiles[month] = Object.assign({sum}, groups);
+						summaryFiles[month] = Object.assign({}, { sum: {}, district: {}, npu: {} });
 					}
-					for( var group in groups )
+					var code = row['UC2_Literal'];
+
+					['district', 'npu'].forEach( group => 
 					{
 						var key = row[group];
-						var code = row['UC2_Literal'];
+						
 						// Refactor as function that accepts filename key and object
 						// Add to Monthly Summaries
 						if( !summaryFiles[month][group].hasOwnProperty(key) )
@@ -153,11 +151,7 @@ module.exports.run = async (event, context, callback) => {
 						}
 						summaryFiles[month][group][key][code]++
 
-						if( !summaryFiles[month]['sum'].hasOwnProperty(code) )
-						{
-							summaryFiles[month]['sum'][code] = 0;
-						}
-						summaryFiles[month]['sum'][code]++;
+						
 
 						// Add to Yearly Summary
 						if( !yearFile[group].hasOwnProperty(key) )
@@ -170,12 +164,20 @@ module.exports.run = async (event, context, callback) => {
 						}
 						yearFile[group][key][code]++
 
-						if( !yearFile['sum'].hasOwnProperty(code) )
-						{
-							yearFile['sum'][code] = 0;
-						}
-						yearFile['sum'][code]++;
+						
+					});
+
+					if( !summaryFiles[month]['sum'].hasOwnProperty(code) )
+					{
+						summaryFiles[month]['sum'][code] = 0;
 					}
+					summaryFiles[month]['sum'][code]++;
+					
+					if( !yearFile['sum'].hasOwnProperty(code) )
+					{
+						yearFile['sum'][code] = 0;
+					}
+					yearFile['sum'][code]++;
 				});
 
 
@@ -186,7 +188,7 @@ module.exports.run = async (event, context, callback) => {
 							ACL: 'public-read',
 							Body: JSON.stringify(summaryFiles[file]), 
 							Bucket: 'civics.city', 
-							Key: 'atlanta/data/COBRA/'+year+'-'+file+'-summary-test.json',
+							Key: 'atlanta/data/COBRA/'+year+'-'+file+'-summary.json',
 							ContentType: 'application/json'
 						};
 						s3.putObject(opts, (err, data) => {
@@ -202,7 +204,7 @@ module.exports.run = async (event, context, callback) => {
 							ACL: 'public-read',
 							Body: JSON.stringify(files[file]), 
 							Bucket: 'civics.city', 
-							Key: 'atlanta/data/COBRA/'+file+'-test.json',
+							Key: 'atlanta/data/COBRA/'+file+'.json',
 							ContentType: 'application/json'
 						};
 						s3.putObject(opts, (err, data) => {
@@ -217,7 +219,7 @@ module.exports.run = async (event, context, callback) => {
 						ACL: 'public-read',
 						Body: JSON.stringify(yearFile), 
 						Bucket: 'civics.city', 
-						Key: 'atlanta/data/COBRA/'+year+'-summary-test.json',
+						Key: 'atlanta/data/COBRA/'+year+'-summary.json',
 						ContentType: 'application/json'
 					};
 					s3.putObject(opts, (err, data) => {
@@ -230,9 +232,9 @@ module.exports.run = async (event, context, callback) => {
 				promises.push(new Promise((resolve, reject) => {
 					var opts = {
 						ACL: 'public-read',
-						Body: JSON.stringify(files), 
+						Body: JSON.stringify(summaryFiles), 
 						Bucket: 'civics.city', 
-						Key: 'atlanta/data/COBRA/'+year+'-aggregate-test.json',
+						Key: 'atlanta/data/COBRA/'+year+'-aggregate.json',
 						ContentType: 'application/json'
 					};
 					s3.putObject(opts, (err, data) => {
@@ -247,7 +249,7 @@ module.exports.run = async (event, context, callback) => {
 					return new Promise((resolve, reject) => {
 						s3.getObject({
 							Bucket: "civics.city", 
-							Key: "atlanta/data/COBRA/year-aggregate-test.json"
+							Key: "atlanta/data/COBRA/year-aggregate.json"
 						}, function(err, data) {
 							if (err) console.log(err, err.stack); // an error occurred
 							var json = JSON.parse(data.Body.toString('utf-8'));
@@ -257,7 +259,7 @@ module.exports.run = async (event, context, callback) => {
 								ACL: 'public-read',
 								Body: JSON.stringify(json), 
 								Bucket: 'civics.city', 
-								Key: 'atlanta/data/COBRA/year-aggregate-test.json',
+								Key: 'atlanta/data/COBRA/year-aggregate.json',
 								ContentType: 'application/json'
 							};
 							// Save updated aggregate data
@@ -317,7 +319,7 @@ module.exports.run = async (event, context, callback) => {
 							ACL: 'public-read',
 							Body: JSON.stringify(summary), 
 							Bucket: 'civics.city', 
-							Key: 'atlanta/data/COBRA/totals-test.json',
+							Key: 'atlanta/data/COBRA/totals.json',
 							ContentType: 'application/json'
 						};
 						// Save updated aggregate data
