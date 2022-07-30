@@ -1,5 +1,6 @@
 <svelte:head>
     <title>Meeting Minutes | Civics.City Atlanta</title>
+    <meta name="description" content="City Council Meeting Minutes">
     <meta property="og:image" content="https://atlanta.civics.city/default.jpg">
 </svelte:head>
 

@@ -6,20 +6,16 @@
 
 <svelte:head>
 	<title>Atlanta Cycling Infrastructure | Civics.City Atlanta</title>
-	<meta name="description" content="The State of Road Safety in Atlanta" />
-	<meta property="og:title" content="Atlanta Crash Dashboard | Civics.City Atlanta" />
-	<meta property="og:description" content="The State of Road Safety in Atlanta" />
-	<meta property="og:url" content="https://atlanta.civics.city/mobility" />
-	<meta property="og:image" content="https://atlanta.civics.city/civics-city-social-crash.jpg" />
+	<meta name="description" content="Bike Lanes, Paths, & Complete Streets" />
+	<meta property="og:title" content="Atlanta Cycling Infrastructure | Civics.City Atlanta" />
+	<meta property="og:description" content="Bike Lanes, Paths, & Complete Streets" />
+	<meta property="og:url" content="https://atlanta.civics.city/mobility-infrastructure" />
+	<meta property="og:image" content="https://atlanta.civics.city/mobility-infrastructure.png" />
 
 	<script
 		src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
 		integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
 		crossorigin=""></script>
-	<script
-		src="https://unpkg.com/leaflet-webgl-heatmap@0.2.7/src/webgl-heatmap/webgl-heatmap.js"></script>
-	<script
-		src="https://unpkg.com/leaflet-webgl-heatmap@0.2.7/dist/leaflet-webgl-heatmap.min.js"></script>
 	<link
 		rel="stylesheet"
 		href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css"

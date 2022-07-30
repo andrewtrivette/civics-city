@@ -288,3 +288,32 @@ aside.action::before {
     width: 100%;
     aspect-ratio: 16/9;
 }
+/* .leaflet-pane {
+    inset: 0;
+    pointer-events: none;
+}
+.leaflet-popup.overlay {
+    transform: none !important;
+    bottom: 0 !important;
+    top: 0;
+    left: auto !important;
+    right: 0;
+    pointer-events: all;
+    margin-bottom: 0;
+}
+.overlay .leaflet-popup-content-wrapper {
+    border-radius: 0;
+    height: 100%;
+    background-color: #340034;
+    color: white;
+    padding: 10px;
+    font-family: 'Lato', sans-serif;
+}
+.leaflet-popup-tip-container {
+    display: none;
+}
+.leaflet-popup.overlay a.leaflet-popup-close-button,
+.leaflet-popup.overlay a.leaflet-popup-close-button:hover {
+    color: white;
+    font-size: 28px;
+} */

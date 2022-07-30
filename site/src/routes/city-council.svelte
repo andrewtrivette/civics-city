@@ -1,6 +1,7 @@
 <svelte:head>
     <title>City Council Districts | Civics.City Atlanta</title>
-    <meta property="og:image" content="https://atlanta.civics.city/default.jpg">
+	<meta name="description" content="Atlanta City Council">
+    <meta property="og:image" content="https://atlanta.civics.city/city-council.png">
 </svelte:head>
 
 <div class="container pt-5">

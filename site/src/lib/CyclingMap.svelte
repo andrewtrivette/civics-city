@@ -1,42 +1,48 @@
-<div class="col-12 mt-4 text-center">
-    <h2>Cycling Paths</h2>
-</div>
-<div class="col-12 col-lg-4 mt-4">
+<div class="col-12 col-lg-3 mt-4">
     <div class="block">
-        <div class="title">Filters</div>
+        <div class="title">Existing Bike Lanes</div>
         <div class="content">
             <div class="form-check mb-2">
-                <input class="form-check-input" id="incidentAll" name="incidentType" type="checkbox" bind:group={incidentType} value={"all"} checked on:change={updateMap} />
-                <label class="form-check-label" for="incidentAll">All Bike Infrastructure</label>
+                <input class="form-check-input" name="laneType" id="protectedLanes" type="checkbox" bind:group={layers.lanes.active} value={"protected"} on:change={updateMap}  />
+                <label class="form-check-label" for="protectedLanes">Protected Bike Lanes</label>
             </div>
             <div class="form-check mb-2">
-                <input class="form-check-input bg-vru" name="incidentType" id="incidentVRU" type="checkbox" bind:group={incidentType} value={"vru"} on:change={updateMap} />
-                <label class="form-check-label" for="incidentVRU"><abbr title="All Ages and Abilities">AAA</abbr> Infrastructure</label>
+                <input class="form-check-input" name="laneType" id="unprotectedLanes" type="checkbox" bind:group={layers.lanes.active} value={"unprotected"} on:change={updateMap}  />
+                <label class="form-check-label" for="unprotectedLanes">Unprotected Bike Lanes</label>
             </div>
             <div class="form-check mb-2">
-                <input class="form-check-input bg-cars" name="incidentType" id="incidentCars" type="checkbox" bind:group={incidentType} value={"cars"} on:change={updateMap}  />
-                <label class="form-check-label" for="incidentCars">Dedicated Bike Paths</label>
-            </div>
-            <div class="form-check mb-2">
-                <input class="form-check-input bg-cars" name="incidentType" id="futureRoutes" type="checkbox"  />
-                <label class="form-check-label" for="futureRoutes">Future Infrastructure</label>
+                <input class="form-check-input" name="laneType" id="currentPaths" type="checkbox" bind:group={layers.lanes.active} value={"paths"} on:change={updateMap} />
+                <label class="form-check-label" for="currentPaths">Non-road Paths</label>
             </div>
         </div>
-        <!-- <div class="content">
-            <select class="form-select" name="incidentCouncil" bind:value={councilDistrict} on:change={updateMap}>
-                <option value={""} selected>All Council Districts</option>
-                {#each councilDistricts as item (item.id) }
-                    <option value={item.id}>{item.name.replace('City Council ', '')}</option>
+    </div>
+    <div class="block">
+        <div class="title">Planned Bike Lanes</div>
+        <div class="content">
+            <div class="form-check mb-2">
+                <input class="form-check-input" name="projectType" id="projectAccessibility" type="checkbox" bind:group={layers.projects.active} value={"complete"} on:change={updateMap}  />
+                <label class="form-check-label" for="projectAccessibility">Complete Streets</label>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" name="projectType" id="projectTrails" type="checkbox" bind:group={layers.projects.active} value={"trails"} on:change={updateMap}  />
+                <label class="form-check-label" for="projectTrails">Multi-use Trails</label>
+            </div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="title">Council Districts</div>
+        <div class="content">
+            <select class="form-select" name="incidentCouncil" bind:value={layers.districts.active} on:change={updateMap}>
+                <option value={"all"} selected>All Council Districts</option>
+                {#each [...Array(12).keys()] as item }
+                    <option value={item+1}>District {item+1}</option>
                 {/each}
             </select>
-        </div> -->
+        </div>
     </div>
-    <p><small>Updated Daily</small></p>
-    <p><small>Source: <a href="https://openstreetmaps.org" target="_blank">OpenStreetMap</a></small></p>
 </div>
-<div class="col-12 col-lg-8 my-4">
-    <div id="map1" class="map-tall" on:blur={mapBlur} on:focus={mapFocus}></div>
-    
+<div class="col-12 col-lg-9 my-4">
+    <div bind:this={mapEl} class="map"></div>
 </div>
 <div class="col-12">
     <hr />
@@ -44,17 +50,8 @@
 
 
 <style>
-    #map1 {
-        height: 350px;
-    }
-    #map1.map-tall {
+    .map {
         height: 800px;
-    }
-    .bg-cars {
-        background-color: rgba(54, 162, 235, 1);
-    }
-    .bg-vru {
-        background-color: rgba(255, 99, 132, 1);
     }
 </style>
 
@@ -64,120 +61,173 @@
 
     import 'leaflet/dist/leaflet.css';
     import { browser } from "$app/env";
-    import * as turf from '@turf/turf';
 
     let domain = 'https://civics.city/atlanta/data';
-    let incidents = {};
-    let incidentsGroup = null
-    let councilDistricts = [];
-    let councilGroups = null;
-    let councilFeatures = null;
+    let mapEl = null;
+    let map = null;
 
-    let map1 = null;
-    let councilDistrict = '';
-    let minDate = "2022-06-28";
-    let maxDate = new Date().toISOString().split('T')[0];
-    let incidentType = 'all';
-    let incidentCount = 0;
+    let layers = {
+        districts: {
+            source: domain+'/council-districts-simplified.geojson',
+            // sourceCallback: (geoJSON) => {
 
-    function isVRU(title) {
-        title = title.toLowerCase();
-        return ( title.includes('pedestrian') ||
-                title.includes('bicyclist') ||
-                title.includes('struck by vehicle') ||
-                title.includes('bicycle') ||
-                title.includes('scooter') );
-            
-    }
+            // },
+            dataset: null,
+            layerGroup: null,
+            featureOpts: {
+                style: function (feature) {
+                    return {color: 'rgba(255,0,255,.5)', fillOpacity: 0.1};
+                }
+            },
+            active: 'all',
+            filters: [
+                ( dataset ) => {
+                    dataset.features = dataset.features.filter(item => {
+                        return ( layers.districts.active == 'all' ) ? false : item.properties.NAME == layers.districts.active
+                    });
+                    return dataset;
+                }
+            ]
+        },
+        cityLimits: {
+            source: domain+'/atl-city-limits.geojson',
+            dataset: null,
+            layerGroup: null,
+            featureOpts: {
+                style: function (feature) {
+                    return {color: 'rgba(255,0,255,.5)', fillOpacity: 0.1};
+                }
+            },
+            filters: [
+                ( dataset ) => {
+                    dataset.features = dataset.features.filter(item => {
+                        return ( layers.districts.active == 'all' ) ? true : false
+                    });
+                    return dataset;
+                }
+            ]
+        },
+        lanes: {
+            source: domain+'/atldot-bike-lanes.geojson',
+            dataset: null,
+            layerGroup: null,
+            featureOpts: {
+                style: function (feature) {
+                    return {color: 'rgba(255,255,0,.5)', fillOpacity: 0.2};
+                },
+                onEachFeature: function(feature, layer) {
+                    var properties = feature.properties
+                    console.log(properties.YEAR_INSTALLED)
+                    layer.bindPopup(`<div>
+                        <h3>${properties.NAME}</h3>
+                        <p><b>${properties.LENGTH_MILES.toFixed(2)} ${(properties.PROTECTION == 'High') ? 'protected':'unprotected'} miles</b> of ${properties.FACILITY_TYPE}. Installed in ${properties.YEAR_INSTALLED}</p>
+                    </div>`, {maxWidth: 600, className: 'overlay', autoPan: false})
+                }
+            },
+            active: ['protected', 'paths'],
+            filters: [
+                ( dataset ) => {
+                    dataset.features = dataset.features.filter(item => {
+                        var status = item.properties.STATUS;
+                        var type = item.properties.FACILITY_TYPE;
+                        return ( status == 'Existing' 
+                                && type != 'Shared Lane Markings' 
+                                && type != 'Sharrows') 
+                                ? true : false;
+                    })
+                    return dataset;
+                },
+                (dataset) => {
+                    
+                    dataset.features = dataset.features.filter(item => {
+                        var include = false;
+                        var protection = item.properties.PROTECTION;
+                        var onroad = item.properties.ON_OFFROAD;
+                        let laneType = layers.lanes.active;
+                        if( laneType.includes('protected') 
+                            && protection == 'High' 
+                            && onroad == 'On' ) {
+                            include = true;
+                        }
+                        if( laneType.includes('unprotected') 
+                            && protection != 'High' 
+                            && onroad == 'On' ) {
+                            include = true;
+                        }
+                        if( laneType.includes('paths') 
+                            && onroad == 'Off' ) {
+                            include = true;
+                        }
+                        return include;
+                    });
+                    return dataset;
+                }
+            ]
+        },
+        projects: {
+            source: domain+'/atldot-active-projects-cycling-pedestrian.geojson',
+            dataset: null,
+            layerGroup: null,
+            featureOpts: {
+                style: function (feature) {
+                    return {color: 'rgba(255,255,255,.5)', fillOpacity: 0.2};
+                },
+                onEachFeature: function(feature, layer) {
+                    var properties = Object.entries(feature.properties).reduce(( prevValue, currValue ) => {
+                        return (['id', 'ref'].indexOf(currValue[0])) ? prevValue+'<tr><td>'+currValue.join('</td><td>')+'</tr>' : prevValue;
+                    }, '');
+                    layer.bindPopup('<table>'+properties+'</table>', {maxWidth: 600})
+                }
+            },
+            active: [],
+            filters: [
+                ( dataset ) => {
+                    dataset.features = dataset.features.filter(item => {
+                        var category = item.properties.PROJECT_CATEGORY;
+                        var include = false;
+                        let projectType = layers.projects.active;
+                        if( projectType.includes('complete') 
+                            && category.includes('Complete')) { 
+                            include = true;
+                        }
+                        if( projectType.includes('trails') 
+                            && category.includes('Trails')) { 
+                            include = true;
+                        }
+                        return include;
+                    })
+                    return dataset;
+                }
+            ]
+        }
+    };
+
 
     let updateMap = function() {
-        incidentsGroup.eachLayer((layer) => {
-            layer.remove();
-        });
-        councilGroups.eachLayer((layer) => {
-            console.log(layer);
-            layer.remove();
-        });
-        let tempCouncilGeoJSON = councilFeatures;
-        // if( councilDistrict != '' )
-        // {
-        //     tempCouncilGeoJSON = councilFeatures.features.filter((feature) => {
-        //         return feature.properties.NAME == councilDistrict
-        //     });
-        // }
-        let districts = L.geoJSON(tempCouncilGeoJSON, {
-            style: function (feature) {
-                return {color: 'rgba(255,0,255,0.3)', fillOpacity: 0.2};
-            }
-        }).addTo(map1);
-        councilGroups.addLayer(districts);
-
-        // map1.fitBounds( districts.getBounds(), { padding: [ 30, 30]} );
-
-        // var tempIncidents = incidents['Traffic Related'];
-        // Object.keys(filters).forEach(filter => {
-        //     tempIncidents = tempIncidents.filter(item => {
-        //         return filters[filter](item);
-        //     })
-        // })
-        // incidentCount = tempIncidents.length;
-        // tempIncidents.forEach((incident) => {
-        //     var title = incident.title.toLowerCase();
-
-        //     var marker = L.circle(incident.location, {
-        //         color: 'transparent',
-        //         fillColor: !isVRU(title) ? 'rgba(54, 162, 235, 1)' : 'rgba(255, 99, 132, 1)',
-        //         fillOpacity: 1,
-        //         radius: 100
-        //     }).addTo(map1);
-        //     incidentsGroup.addLayer(marker);
-        //     var d = new Date(incident.time).toLocaleString('en-us');
-        //     marker.bindPopup(`<div><b>${incident.title}</b><br>${d}<br/><a href="https://citizen.com/${incident.key}" target="_blank">Additional Details</a></div>`);
-        // })
-        
-    }
-
-    let filters = {
-        incidentType: function( item )
-        {
-            if( incidentType == 'all' )  { return true; }
-            if( incidentType == 'cars' ) { return !isVRU(item.title); }
-            if( incidentType == 'vru' ) { return isVRU(item.title); }
-        },
-        incidentDateStart: function( item )
-        {
-            var d = new Date(item.time);
-            var startDate = new Date(minDate);
-            return ( d >= startDate ) ? true : false;
-        },
-        incidentDateEnd: function( item )
-        {
-            var d = new Date(item.time);
-            var endDate = new Date(maxDate);
-            return ( d < endDate ) ? true : false;
-        },
-        councilDistricts: function( item )
-        {
-            var include = true;
-            if( councilDistrict != '' )
-            {
-                var feature = councilFeatures.features.filter((feature) => {
-                    return feature.properties.NAME == councilDistrict
+        Object.keys(layers).forEach((layerKey) => {
+            if( layers[layerKey].layerGroup ) {
+                layers[layerKey].layerGroup.eachLayer((layer) => {
+                    layer.remove();
                 });
-                var pt = turf.point([item.location[1], item.location[0]]);
-                include = turf.booleanPointInPolygon(pt, feature[0])
             }
-            return include            
-        },
-        excluded: function( item )
-        {
-            return !item.title.toLowerCase().includes('unfounded');
-        }
+        })
+
+        Object.entries( layers ).forEach(([key, layer]) => {
+            let dataset = layer.dataset;
+            var tempDataset = Object.assign({}, dataset);
+            if( layers.hasOwnProperty(key) && layers[key].hasOwnProperty('filters') && layers[key].filters.length > 0 ) {
+                layers[key].filters.forEach(filter => {
+                    tempDataset = filter(tempDataset);
+                })
+            }
+            let features = L.geoJSON(tempDataset, layers[key].featureOpts).addTo(map);
+            layers[key].layerGroup.addLayer(features);
+            if( Object.keys(features._layers).length > 0 && !['lanes', 'projects'].includes(key) ) {
+                map.fitBounds( features.getBounds(), { padding: [ 30, 30]} );
+            }
+            
+        });
     }
-
-    function mapFocus() { map1.scrollWheelZoom.enable(); }
-    function mapBlur() { map1.scrollWheelZoom.disable(); }
-
 
     onMount( async () => {
         if( browser ) {
@@ -187,56 +237,32 @@
                 tileSize: 512,
                 zoomOffset: -1
             });
-            map1 = L.map('map1', {
+            map = L.map(mapEl, {
                 attributionControl: true,
                 zoomControl: true,
                 gestureHandling: true,
                 dragging: true,
                 zoomSnap: 0,
-                zoomDelta: 0.5,
-                // minZoom: 11,
-                // maxZoom: 15
+                zoomDelta: 0.5
             })
             .addLayer(mapboxTiles)
             .setView([33.776, -84.42], 12);
-            councilGroups = L.layerGroup();
-            incidentsGroup = L.layerGroup();
-            
-            
-            get( domain+'/osm_data.geojson', function(councilGeoJSON) 
-            {
-                councilFeatures = councilGeoJSON;
-                var districts = L.geoJSON(councilGeoJSON, {
-                    style: function (feature) {
-                        return {color: 'rgba(255,0,255,.5)', fillOpacity: 0.2};
-                    },
-                    onEachFeature: function(feature, layer) {
-                        console.log(feature.properties);
-                        var properties = Object.entries(feature.properties).reduce(( prevValue, currValue ) => {
-                            return (['id', 'ref'].indexOf(currValue[0])) ? prevValue+'<tr><td>'+currValue.join('</td><td>')+'</tr>' : prevValue;
-                        }, '');
-                        console.log('<table>'+properties+'</table>');
-                        layer.bindPopup('<table>'+properties+'</table>')
-                    },
-                    filter: function(feature) {
-                        return feature?.properties?.network != 'ncn' && feature?.properties?.network != 'rcn'
-                    }
-                }).addTo(map1);
-                councilGroups.addLayer(districts);
-
-                // map1.fitBounds( districts.getBounds(), { padding: [ 30, 30]} );
-
-                councilDistricts = councilGeoJSON.features.map(function(feature, index) {
-                    return {
-                        id: feature.properties.NAME,
-                        name: feature.properties.GEOTYPE + ' ' + feature.properties.NAME
-                    }
-                });
-                councilDistricts = councilDistricts.sort((a, b) => {
-                    return parseInt(a.id) > parseInt(b.id) ? 1: -1;
-                })
-                
-                // map.sexMaxBounds( mapLayers['districts'].getBounds())
+            let promises = [];
+            Object.entries(layers).forEach(([key, layer]) => {
+                promises.push(new Promise((resolve, reject) => {
+                    get( layer.source, function(geoJSON) 
+                    {
+                        layers[key].dataset = geoJSON;
+                        layers[key].layerGroup = L.layerGroup();
+                        if( layer.hasOwnProperty('sourceCallback') ) {
+                            layer.sourceCallback(geoJSON)
+                        }
+                        resolve();
+                    });
+                }));
+            })
+            Promise.all( promises ).then((data) => {
+                updateMap();
             });
         }
     });

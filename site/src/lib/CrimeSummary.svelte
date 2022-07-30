@@ -2,7 +2,7 @@
     <div class="block">
         <div class="title text-center">2009 - 2021 Crime Trends Per Capita</div>
         <div class="content">
-            <div id="crime" class="chart">
+            <div  class="chart">
                 <canvas id="crimeChart"></canvas>
             </div>
             <div class="text-end">
@@ -12,11 +12,23 @@
         </div>
     </div>
     <br/>
-    <div class="block">
-        <div class="title text-center">{currYear} Crime Trends By Month</div>
+    <div class="block mb-5">
+        <div class="title text-center">{currYear} Crime Trends By Month Per Capita</div>
         <div class="content">
-            <div id="crime1" class="chart">
+            <div class="chart">
                 <canvas id="crimeChart1"></canvas>
+            </div>
+            <div class="text-end">
+                <small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank">Source: APD Crime Data</a></small>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="block mb-5">
+        <div class="title text-center">YoY Crime Trend By Month Per Capita</div>
+        <div class="content">
+            <div class="chart">
+                <canvas id="crimeChart2"></canvas>
             </div>
             <div class="text-end">
                 <small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank">Source: APD Crime Data</a></small>
@@ -31,7 +43,7 @@
     import Chart from "chart.js/auto/auto.js";
     import { onMount } from 'svelte';
 
-let domain = 'https://civics.city/atlanta/data';
+let domain = 'https://s3.amazonaws.com/civics.city/atlanta/data';
 var d = new Date();
 var currYear = d.getFullYear();
 var currMonth = (d.getMonth() + 1 ).toString().padStart(2, '0');
@@ -53,6 +65,24 @@ onMount(() => {
         2010: 429400,
         2009: 428000
     };
+
+    Chart.defaults.color = 'white';
+    Chart.defaults.font.size = 16;
+    Chart.overrides.line.borderColor = [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+        'rgba(153, 192, 86, 1)',
+        'rgba(75, 162, 132, 1)',
+        'rgba(255, 102, 64, 1)',
+        'rgba(54, 192, 64, 1)',
+        'rgba(255,255,255, 1)',
+        'rgba(0, 99, 255, 1)',
+        'rgba(255, 0, 126, 1)'
+    ];
     
     get( domain+'/COBRA/year-aggregate.json', function(data) 
     {
@@ -95,27 +125,9 @@ onMount(() => {
                 var val = crime/population[yearKey]*10000;
                 datasets[crimeKey].data.push([yearKey, val])
             })
-            // datasets.push([year[0], sum])
             
         });
-        // console.log(Object.values(datasets));
-        Chart.defaults.color = 'white';
-        Chart.defaults.font.size = 16;
-        Chart.overrides.line.borderColor = [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(153, 192, 86, 1)',
-            'rgba(75, 162, 132, 1)',
-            'rgba(255, 102, 64, 1)',
-            'rgba(54, 192, 64, 1)',
-            'rgba(255,255,255, 1)',
-            'rgba(0, 99, 255, 1)',
-            'rgba(255, 0, 126, 1)'
-        ];
+
 
         var ctx = document.querySelector('#crimeChart').getContext('2d');
         new Chart(ctx, {
@@ -164,7 +176,11 @@ onMount(() => {
         }
         var monthKeys = Object.keys(data);
         var datasets = {};
+        var totals = {};
+        totals[`${currYear}_People`] = { label: `${currYear} Crime Against People`, data: [], tension: 0.2 };
+        totals[`${currYear}_Property`] = { label: `${currYear} Crime Against Property`, data: [], tension: 0.2 };
         var max = 0;
+        var totalsMax = 0;
         monthKeys.forEach((monthKey) => {
             
                 var month = data[monthKey];
@@ -188,42 +204,54 @@ onMount(() => {
                         delete month.sum[crimeKey];
                     }
                 })
+                var totalProperty = 0;
+                var totalPeople = 0;
                 Object.keys(month.sum).forEach((crimeKey) => {
                     var crime = month.sum[crimeKey];
                     if( !datasets.hasOwnProperty(crimeKey) )
                     {
                         datasets[crimeKey] = { label: crimeKey, data: [], tension: 0.2 }
                     }
-                    var val = crime;
+                    var val = crime/population[currYear]*10000;
                     max = Math.max(max, val);
+
+                    if( crimeKey.includes('AGG ASSAULT') || crimeKey.includes('ROBBERY') || crimeKey.includes('HOMICIDE') )
+                    {
+                        totalPeople += val;
+                        totalsMax = Math.max(totalsMax, totalPeople);
+                    }
+                    else
+                    {
+                        totalProperty += val;
+                        totalsMax = Math.max(totalsMax, totalProperty);
+                    }
+
                     datasets[crimeKey].data.push([monthKey, val])
+                    datasets[crimeKey].data.sort(( a, b ) => {
+                        return parseInt(a[0]) - parseInt(b[0])
+                    })
+                })
+                totals[`${currYear}_People`].data.push([monthKey, totalPeople])
+                totals[`${currYear}_People`].data.sort(( a, b ) => {
+                    return parseInt(a[0]) - parseInt(b[0])
+                })
+                totals[`${currYear}_Property`].data.push([monthKey, totalProperty])
+                totals[`${currYear}_Property`].data.sort(( a, b ) => {
+                    return parseInt(a[0]) - parseInt(b[0])
                 })
                 // datasets.push([year[0], sum])
             
         });
+        console.log({totals})
         console.log(datasets);
-        Chart.overrides.line.borderColor = [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(153, 192, 86, 1)',
-            'rgba(75, 162, 132, 1)',
-            'rgba(255, 102, 64, 1)',
-            'rgba(54, 192, 64, 1)',
-            'rgba(255,255,255, 1)',
-            'rgba(0, 99, 255, 1)',
-            'rgba(255, 0, 126, 1)'
-        ];
 
+       
         var ctx = document.querySelector('#crimeChart1').getContext('2d');
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: Object.keys(data),
-                datasets: Object.values(datasets)
+                labels: Object.keys(data).sort(),
+                datasets: Object.values( datasets )
             },
             options: {
                 elements: {
@@ -237,7 +265,7 @@ onMount(() => {
                     y: {
                         beginAtZero: true,
                         title: {
-                            text: 'Police Incidents',
+                            text: 'Police Incidents per 10,000',
                             display: true
                         }
                     }
@@ -252,6 +280,80 @@ onMount(() => {
                 }
             }
         });
+
+        var prevYear = currYear - 1;
+        get(`${domain}/COBRA/${prevYear}-aggregate.json`, function(data) {
+
+            var monthKeys = Object.keys(data);
+            var max = 0;
+            totals[`${prevYear}_People`] = { label: `${prevYear} Crime Against People`, data: [], tension: 0.2 };
+            totals[`${prevYear}_Property`] = { label: `${prevYear} Crime Against Property`, data: [], tension: 0.2 };
+
+            
+            monthKeys.forEach((monthKey) => {
+                var totalProperty = 0;
+                var totalPeople = 0;
+                var month = data[monthKey];
+                Object.keys(month.sum).forEach((crimeKey) => {
+                    var crime = month.sum[crimeKey];
+                    var val = crime/population[prevYear]*10000;
+                    if( crimeKey.includes('AGG ASSAULT') || crimeKey.includes('ROBBERY') || crimeKey.includes('HOMICIDE') )
+                    {
+                        totalPeople += val;
+                        totalsMax = Math.max(totalsMax, totalPeople);
+                    }
+                    else
+                    {
+                        totalProperty += val;
+                        totalsMax = Math.max(totalsMax, totalProperty);
+                    }
+                })
+                totals[`${prevYear}_People`].data.push([monthKey, totalPeople])
+                totals[`${prevYear}_People`].data.sort(( a, b ) => {
+                    return parseInt(a[0]) - parseInt(b[0])
+                })
+                totals[`${prevYear}_Property`].data.push([monthKey, totalProperty])
+                totals[`${prevYear}_Property`].data.sort(( a, b ) => {
+                    return parseInt(a[0]) - parseInt(b[0])
+                })
+            });
+            
+
+            var ctx = document.querySelector('#crimeChart2').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(data).sort(),
+                    datasets: Object.values( totals )
+                },
+                options: {
+                    elements: {
+                        point: {
+                            borderColor: 'rgba(255, 255, 255, 0.7)'
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                text: 'Police Incidents per 10,000',
+                                display: true
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 40
+                            }
+                        }
+                    }
+                }
+            });
+        })
     });
 })
 </script>

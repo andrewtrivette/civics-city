@@ -1,7 +1,7 @@
 <svelte:head>
-	<title>Home | Civics.City Atlanta</title>
-	<meta property="og:image" content="https://atlanta.civics.city/default.jpg">
-	<meta name="description" content="Government Impacts Everyone">
+	<title>Civics.City Atlanta | Home</title>
+	<meta property="og:image" content="https://atlanta.civics.city/index.png">
+	<meta name="description" content="A Citizen's View of Atlanta">
     <meta property="og:title" content="Civics.City Atlanta">
     <meta property="og:url" content="https://atlanta.civics.city">
 </svelte:head>

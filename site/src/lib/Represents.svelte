@@ -31,7 +31,9 @@
                 <button class="btn btn-light { findLocationActive || 'disabled' }" type="submit" name="action" id="findLocation" on:click={ clickLocationHandler}>Find My Regions
                     <i class="material-icons right">my_location</i>
                 </button> 
-                <a id="clearLocation" class="{ findLocationActive && 'hide' }" on:click={clearLocation}><span class="px-3">Clear</span></a>
+                {#if !findLocationActive }
+                    <a id="clearLocation" on:click={clearLocation}><span class="px-3">Clear</span></a>
+                {/if}
             </div>
         </div>
         {#if repDistrict || repPrecinct || npuRep }
@@ -131,6 +133,7 @@
     import * as turf from '@turf/turf';
     // import * as L from 'leaflet';
     import 'leaflet/dist/leaflet.css';
+    import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
     import { onMount } from 'svelte';
     import { browser } from "$app/env";
 
@@ -149,6 +152,7 @@
     onMount(async () => {
         if( browser ) {
             const L = await import('leaflet');
+            const { GestureHandling } = await import('leaflet-gesture-handling') 
             console.log('init');
             var cookieLoc = getCookie('location');
             if( cookieLoc ) {
@@ -162,7 +166,7 @@
                     attributionControl: false,
                     zoomControl: true,
                     minZoom: 10,
-                    scrollWheelZoom: false,
+                    gestureHandling: true,
                     dragging: false
                 }).setView([33.776, -84.42], 11);
             }

@@ -129,8 +129,8 @@
         </div>
         <div class="col-6 col-lg-3 text-center my-4">
             <div class="kpi py-4">
-                <div class="value">{homicideRisk[2020]}%</div>
-                <div class="label">2020 Homicide Risk</div>
+                <div class="value">{homicideRisk[2021]}%</div>
+                <div class="label">2021 Homicide Risk</div>
             </div>
         </div>
         <div class="col-6 col-lg-3 text-center my-4">
@@ -141,13 +141,14 @@
         </div>
         <div class="col-6 col-lg-3 text-center my-4">
             <div class="kpi py-4">
-                <div class="value">{assault[2020]}%</div>
-                <div class="label">2020 Agg. Assault Risk</div>
+                <div class="value">{assault[2021]}%</div>
+                <div class="label">2021 Agg. Assault Risk</div>
             </div>
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-12 col-lg-8 mt-4 mb-5 text-lg">
+            <p>Even these risk numbers do not take into account the fact that <b>millions of people enter Atlanta every day</b> for work and pleasure. The risk is actually spread out across that functional population, not just residents. This drops the actual risk per person down <b>by a factor of maybe 4x</b>.</p>
             <p>Even as concerning as the increases may be, the increase in risk to any given citizen is practically a rounding error on what was already a low risk.</p>
         </div>
         <div class="col-12"><hr></div>
@@ -182,11 +183,13 @@ var d = new Date();
 var currYear = d.getFullYear();
 var assault = {
     2019: 0,
-    2020: 0
+    2020: 0,
+    2021: 0
 };
 var homicideRisk = {
     2019: 0,
-    2020: 0
+    2020: 0,
+    2021: 0
 };
 onMount(() => {
     init();
@@ -293,9 +296,9 @@ function init() {
                 return p.toFixed(2);
             }
             homicideRisk[2019] = capitaToPercent( crimeWave['HOMICIDE'].data[0][1], 2019 );
-            homicideRisk[2020] = capitaToPercent( crimeWave['HOMICIDE'].data[1][1], 2020 );
+            homicideRisk[2021] = capitaToPercent( crimeWave['HOMICIDE'].data[1][1], 2021 );
             assault[2019] = capitaToPercent( crimeWave['AGG ASSAULT'].data[0][1], 2019 );
-            assault[2020] = capitaToPercent( crimeWave['AGG ASSAULT'].data[1][1], 2020 );
+            assault[2021] = capitaToPercent( crimeWave['AGG ASSAULT'].data[1][1], 2021 );
             Chart.defaults.color = 'white';
             Chart.defaults.font.size = 16;
             Chart.overrides.line.borderColor = [

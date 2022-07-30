@@ -1,40 +1,35 @@
 <div class="col-12 mt-4 text-center">
     <h2>Recent Crashes - 911 Reported</h2>
 </div>
-<div class="col-12 col-lg-4 mt-4">
+<div class="col-12 col-lg-3 mt-4">
     <div class="block">
-        <div class="title">Filters</div>
         <div class="content">
             <div class="form-check mb-2">
-                <input class="form-check-input" id="incidentAll" name="incidentType" type="radio" bind:group={incidentType} value={"all"} checked on:change={updateMap} />
+                <input class="form-check-input" id="incidentAll" name="incidentType" type="radio" bind:group={layers.incidents.active} value={"all"} checked on:change={updateMapHandler} />
                 <label class="form-check-label" for="incidentAll">All Incidents</label>
             </div>
             <div class="form-check mb-2">
-                <input class="form-check-input bg-vru" name="incidentType" id="incidentVRU" type="radio" bind:group={incidentType} value={"vru"} on:change={updateMap} />
+                <input class="form-check-input bg-vru" name="incidentType" id="incidentVRU" type="radio" bind:group={layers.incidents.active} value={"vru"} on:change={updateMapHandler} />
                 <label class="form-check-label" for="incidentVRU">Pedestrians & Cyclists</label>
             </div>
             <div class="form-check mb-2">
-                <input class="form-check-input bg-cars" name="incidentType" id="incidentCars" type="radio" bind:group={incidentType} value={"cars"} on:change={updateMap}  />
+                <input class="form-check-input bg-cars" name="incidentType" id="incidentCars" type="radio" bind:group={layers.incidents.active} value={"cars"} on:change={updateMapHandler}  />
                 <label class="form-check-label" for="incidentCars">Cars</label>
             </div>
-        </div>
-        <div class="content">
             <div class="input-group mb-2">
                 <label class="input-group-text" for="incidentDateStart">Start</label>
-                <input class="form-control" id="incidentDateStart" name="incidentDateStart" type="date" bind:value={minDate} min="2022-06-28" on:change={updateMap} />
+                <input class="form-control" id="incidentDateStart" name="incidentDateStart" type="date" bind:value={minDate} min="2022-06-28" on:change={updateMapHandler} />
                 
             </div>
             <div class="input-group mb-2">
                 <label class="input-group-text" for="incidentDateEnd">End</label>
-                <input class="form-control" id="incidentDateEnd" name="incidentDateEnd" type="date" bind:value={maxDate} max={new Date().toISOString().split('T')[0]}  on:change={updateMap} />
+                <input class="form-control" id="incidentDateEnd" name="incidentDateEnd" type="date" bind:value={maxDate} max={new Date().toISOString().split('T')[0]}  on:change={updateMapHandler} />
                 
             </div>
-        </div>
-        <div class="content">
-            <select class="form-select" name="incidentCouncil" bind:value={councilDistrict} on:change={updateMap}>
-                <option value={""} selected>All Council Districts</option>
-                {#each councilDistricts as item (item.id) }
-                    <option value={item.id}>{item.name.replace('City Council ', '')}</option>
+            <select class="form-select" name="incidentCouncil" bind:value={layers.districts.active} on:change={updateMapHandler}>
+                <option value={"all"} selected>All Council Districts</option>
+                {#each [...Array(12).keys()] as item }
+                    <option value={item+1}>District {item+1}</option>
                 {/each}
             </select>
         </div>
@@ -43,24 +38,58 @@
         <div class="title"># of Incidents</div>
         <div class="content text-center"><h2>{incidentCount.toLocaleString('en-US')}</h2></div>
     </div>
-    <p><small>Updated Daily</small></p>
-    <p><small>Source: 911 reports via <a href="https://citizen.com" target="_blank">Citizen.com</a></small></p>
-</div>
-<div class="col-12 col-lg-8 my-4">
-    <div id="map1" class="map-tall" on:blur={mapBlur} on:focus={mapFocus}></div>
+    <div class="block">
+        <div class="title">Average Incidents/Day</div>
+        <div class="content text-center"><h2>{(incidentCount/days).toFixed(2).toLocaleString('en-US')}</h2></div>
+    </div>
+    <div class="block">
+        <div class="title text-center">Days Since a Crash</div>
+        <div class="content text-center"><h2>{daysSinceVRUCrash}</h2></div>
+    </div>
+    <div class="block">
+        <div class="title text-center"># of Days without a Crash</div>
+        <div class="content text-center"><h2>{crashFreeDays} of {days}</h2></div>
+    </div>
     
 </div>
+<div class="col-12 col-lg-9 my-4">
+    <ul class="nav" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" href="#" role="tab" aria-controls="home" aria-selected="true">Map</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="profile-tab"  data-bs-toggle="tab" data-bs-target="#list" href="" role="tab" aria-controls="profile" aria-selected="false">List</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div bind:this={mapEl} class="map"></div>
+        </div>
+        <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="profile-tab">
+            <table>
+                {#each layers.incidents.tempDataset.features as item (item.properties.key) }
+                    <tr>
+                        <td><a href="https://citizen.com/{item.properties.key}" target="_blank">{item.properties.title}</a></td>
+                        <td>{new Date(item.properties.time).toLocaleString('en-US', { timeZone: 'America/New_York'})}</td>
+                    </tr>
+                {/each}
+            </table>
+        </div>
+    </div>
+</div>
 <div class="col-12">
-    <hr />
+    <p class="text-end"><small>Updated Daily</small> | <small>Source: 911 reports via <a href="https://citizen.com" target="_blank">Citizen.com</a></small></p>
+    <hr /> 
 </div>
 
-
 <style>
-    #map1 {
-        height: 350px;
+    .map,
+    #list {
+        height: 1000px;
     }
-    #map1.map-tall {
-        height: 800px;
+    #list {
+        overflow-y: scroll;
+        padding: .5rem;
     }
     .bg-cars {
         background-color: rgba(54, 162, 235, 1);
@@ -68,185 +97,213 @@
     .bg-vru {
         background-color: rgba(255, 99, 132, 1);
     }
+    #myTab .nav-link {
+        color:rgba(54, 162, 235, 1)
+    }
+    .active {
+        box-shadow: none;
+        background-color: rgba(0,0,0,0.5);
+    }
 </style>
 
 <script>
-    import { get } from "$lib/_helpers";
     import { onMount } from 'svelte';
-
-    import 'leaflet/dist/leaflet.css';
-    import { browser } from "$app/env";
     import * as turf from '@turf/turf';
+    import 'leaflet/dist/leaflet.css';
+    import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
+    import { browser } from "$app/env";
+    import MapHelper from "$lib/_mapHelpers"
 
-    let domain = 'https://civics.city/atlanta/data';
-    let incidents = {};
-    let incidentsGroup = null
-    let councilDistricts = [];
-    let councilGroups = null;
-    let councilFeatures = null;
-
-    let map1 = null;
-    let councilDistrict = '';
     let minDate = "2022-06-28";
-    let maxDate = new Date().toISOString().split('T')[0];
-    let incidentType = 'all';
+    let maxDate = new Date().toLocaleDateString('id', { timeZone: 'America/New_York', month: '2-digit', day: '2-digit', year: 'numeric'}).split('/').reverse().join('-')
+    let days = (new Date(maxDate) - new Date(minDate))/(1000*60*60*24);
+    console.log({days})
     let incidentCount = 0;
+    let domain = 'https://civics.city/atlanta/data';
+    domain = 'https://s3.amazonaws.com/civics.city/atlanta/data'
+    let mapEl = null;
+    let map = null;
+    let daysSinceVRUCrash = 0;
+    let crashFreeDays = 0;
+    
 
-    function isVRU(title) {
-        title = title.toLowerCase();
-        return ( title.includes('pedestrian') ||
-                title.includes('bicyclist') ||
-                title.includes('struck by vehicle') ||
-                title.includes('bicycle') ||
-                title.includes('scooter') );
-            
-    }
+    let layers = {
+        districts: {
+            source: domain+'/council-districts-simplified.geojson',
+            dataset: null,
+            bounds: true,
+            layerGroup: null,
+            featureOpts: {
+                style: function (feature) {
+                    return {color: 'rgba(255,0,255,.5)', fillOpacity: 0.1};
+                }
+            },
+            active: 'all',
+            filters: [
+                ( dataset ) => {
+                    dataset.features = dataset.features.filter(item => {
+                        return ( layers.districts.active == 'all' ) ? false : item.properties.NAME == layers.districts.active
+                    });
+                    return dataset;
+                }
+            ]
+        },
+        cityLimits: {
+            source: domain+'/atl-city-limits.geojson',
+            dataset: null,
+            bounds: true,
+            layerGroup: null,
+            featureOpts: {
+                style: function (feature) {
+                    return {color: 'rgba(255,0,255,.5)', fillOpacity: 0.1};
+                }
+            },
+            filters: [
+                ( dataset ) => {
+                    dataset.features = dataset.features.filter(item => {
+                        return ( layers.districts.active == 'all' ) ? true : false
+                    });
+                    return dataset;
+                }
+            ]
+        },
+        incidents: {
+            source: domain+'/citizen/summary-2022.json',
+            dataset: null,
+            bounds: false,
+            tempDataset: {
+                features: []
+            },
+            layerGroup: null,
+            sourceCallback: (geoJSON) => {
+                let data = geoJSON['Traffic Related'];
+                function isVRU(title) {
+                    title = title.toLowerCase();
+                    return (
+                            title.includes('pedestrian') ||
+                            title.includes('bicyclist') ||
+                            title.includes('struck by vehicle') ||
+                            title.includes('bicycle') ||
+                            title.includes('scooter') 
+                        );
+                        
+                }
+                let newGeoJSON = {
+                    type: "FeatureColection",
+                    features: data.map((item, index) => {
+                        return {
+                            type: "Feature",
+                            id: index,
+                            geometry: {
+                                type: "Point",
+                                coordinates: item.location.reverse()
+                            },
+                            properties: {
+                                isVRU: isVRU(item.title),
+                                title: item.title,
+                                severity: item.severity,
+                                time: item.time,
+                                key: item.key
+                            }
+                        }
+                    })
+                };
+                // console.log({newGeoJSON})
+                return newGeoJSON;
+            },
+            featureOpts: {
+                pointToLayer: function(feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        color: 'transparent',
+                        fillColor: !feature.properties.isVRU ? 'rgba(54, 162, 235, .9)' : 'rgba(255, 99, 132, .9)',
+                        fillOpacity: 1,
+                        radius: 4
+                    })
+                },
+                onEachFeature: function(feature, layer) {
+                    var properties = feature.properties
+                    var d = new Date(properties.time).toLocaleString('en-us');
+                    layer.bindPopup(`<div><b>${properties.title}</b><br>${d}<br/><a href="https://citizen.com/${properties.key}" target="_blank">Additional Details</a></div>`);
+                }
+            },
+            active: 'all',
+            filters: [
+                ( dataset ) => {
+                    dataset.features = dataset.features.filter(item => {
+                        var properties = item.properties;
+                        var type = layers.incidents.active;
+                        if( type == 'all' )  { return true; }
+                        if( type == 'cars' ) { return !properties.isVRU; }
+                        if( type == 'vru' ) { return properties.isVRU; }
+                    })
+                    
+                    return dataset;
+                },
+                (dataset) => {
+                    if( layers.districts.active != 'all' && layers.districts.dataset != null ) {
+                        dataset.features = dataset.features.filter(item => {
+                            var feature = layers.districts.dataset.features.filter((feature) => {
+                                return feature.properties.NAME == layers.districts.active
+                            });
+                            var pt = turf.point(item.geometry.coordinates);
+                            return turf.booleanPointInPolygon(pt, feature[0])
+                        })
+                    }
+                    
+                    return dataset;
+                },
+                (dataset) => {
+                    dataset.features = dataset.features.filter(item => {
+                        var title = item.properties.title.toLowerCase();
+                        return ( !title.includes('mistaken') &&
+                                !title.includes('robbed') &&
+                                !title.includes('unfounded') &&
+                                !title.includes('blocking') &&
+                                !title.includes('locked') &&
+                                !title.includes('elevator') &&
+                                !title.includes('mailbox')
+                            )
+                    })
+                    return dataset;
+                },
+                (dataset) => {
+                    let dayList = []
+                    let maxDay = new Date(minDate).getTime();
+                    dataset.features = dataset.features.filter(item => {
+                        var properties = item.properties;
+                        var d = new Date(properties.time);
+                        var startDate = new Date(minDate);
+                        var endDate = new Date(maxDate);
+                        var date = d.getDate();
+                        if( dayList.indexOf(d.toDateString()) == -1 ) {
+                            dayList.push(d.toDateString())
+                        }
+                        maxDay = Math.max(maxDay, d.getTime());
+                        return ( d >= startDate && d < endDate ) ? true : false;
+                    })
+                    // Get number of days in range
+                    days = Math.round((new Date(maxDate) - new Date(minDate))/(1000*60*60*24));
+                    // Get days
+                    daysSinceVRUCrash = Math.round((new Date(maxDate) - new Date(maxDay))/(1000*60*60*24));
 
-    let updateMap = function() {
-        incidentsGroup.eachLayer((layer) => {
-            layer.remove();
-        });
-        councilGroups.eachLayer((layer) => {
-            layer.remove();
-        });
-        let tempCouncilGeoJSON = councilFeatures;
-        if( councilDistrict != '' )
-        {
-            tempCouncilGeoJSON = councilFeatures.features.filter((feature) => {
-                return feature.properties.NAME == councilDistrict
-            });
+                    incidentCount = dataset.features.length;
+                    crashFreeDays = days - (dayList.length);
+                    return dataset;
+                }
+            ]
         }
-        let districts = L.geoJSON(tempCouncilGeoJSON, {
-            style: function (feature) {
-                return {color: 'rgba(255,0,255,0.3)', fillOpacity: 0.2};
-            }
-        }).addTo(map1);
-        councilGroups.addLayer(districts);
-
-        map1.fitBounds( districts.getBounds(), { padding: [ 30, 30]} );
-
-        var tempIncidents = incidents['Traffic Related'];
-        Object.keys(filters).forEach(filter => {
-            tempIncidents = tempIncidents.filter(item => {
-                return filters[filter](item);
-            })
-        })
-        incidentCount = tempIncidents.length;
-        tempIncidents.forEach((incident) => {
-            var title = incident.title.toLowerCase();
-
-            var marker = L.circle(incident.location, {
-                color: 'transparent',
-                fillColor: !isVRU(title) ? 'rgba(54, 162, 235, 1)' : 'rgba(255, 99, 132, 1)',
-                fillOpacity: 1,
-                radius: 100
-            }).addTo(map1);
-            incidentsGroup.addLayer(marker);
-            var d = new Date(incident.time).toLocaleString('en-us');
-            marker.bindPopup(`<div><b>${incident.title}</b><br>${d}<br/><a href="https://citizen.com/${incident.key}" target="_blank">Additional Details</a></div>`);
-        })
-        
+    };
+    let mapHelper = new MapHelper()
+    function updateMapHandler() {
+        layers = mapHelper.updateMap(layers);
     }
-
-    let filters = {
-        incidentType: function( item )
-        {
-            if( incidentType == 'all' )  { return true; }
-            if( incidentType == 'cars' ) { return !isVRU(item.title); }
-            if( incidentType == 'vru' ) { return isVRU(item.title); }
-        },
-        incidentDateStart: function( item )
-        {
-            var d = new Date(item.time);
-            var startDate = new Date(minDate);
-            return ( d >= startDate ) ? true : false;
-        },
-        incidentDateEnd: function( item )
-        {
-            var d = new Date(item.time);
-            var endDate = new Date(maxDate);
-            return ( d < endDate ) ? true : false;
-        },
-        councilDistricts: function( item )
-        {
-            var include = true;
-            if( councilDistrict != '' )
-            {
-                var feature = councilFeatures.features.filter((feature) => {
-                    return feature.properties.NAME == councilDistrict
-                });
-                var pt = turf.point([item.location[1], item.location[0]]);
-                include = turf.booleanPointInPolygon(pt, feature[0])
-            }
-            return include            
-        },
-        excluded: function( item )
-        {
-            return !item.title.toLowerCase().includes('unfounded');
-        }
-    }
-
-    function mapFocus() { map1.scrollWheelZoom.enable(); }
-    function mapBlur() { map1.scrollWheelZoom.disable(); }
-
 
     onMount( async () => {
         if( browser ) {
-            var accessToken = 'pk.eyJ1IjoiYWR0cml2ZXR0ZSIsImEiOiJja3hqcm10bmUwc3hzMnZwZXRiajNydHk3In0.70J9PWirbAZ71d6vwcRXvg';
-            var mapboxTiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=' + accessToken, {
-                attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-                tileSize: 512,
-                zoomOffset: -1
-            });
-            map1 = L.map('map1', {
-                attributionControl: true,
-                zoomControl: true,
-                gestureHandling: true,
-                dragging: true,
-                zoomSnap: 0,
-                zoomDelta: 0.5,
-                minZoom: 11,
-                maxZoom: 15
-            })
-            .addLayer(mapboxTiles)
-            .setView([33.776, -84.42], 12);
-            councilGroups = L.layerGroup();
-            incidentsGroup = L.layerGroup();
-            
-            
-            get( domain+'/council-districts-simplified.geojson', function(councilGeoJSON) 
-            {
-                councilFeatures = councilGeoJSON;
-                var districts = L.geoJSON(councilGeoJSON, {
-                    style: function (feature) {
-                        return {color: 'rgba(255,0,255,.5)', fillOpacity: 0.2};
-                    }
-                }).addTo(map1);
-                councilGroups.addLayer(districts);
-
-                map1.fitBounds( districts.getBounds(), { padding: [ 30, 30]} );
-
-                councilDistricts = councilGeoJSON.features.map(function(feature, index) {
-                    return {
-                        id: feature.properties.NAME,
-                        name: feature.properties.GEOTYPE + ' ' + feature.properties.NAME
-                    }
-                });
-                councilDistricts = councilDistricts.sort((a, b) => {
-                    return parseInt(a.id) > parseInt(b.id) ? 1: -1;
-                })
-                
-                // map.sexMaxBounds( mapLayers['districts'].getBounds())
-            });
-
-            get( domain+'/citizen/summary-2022.json', function(incidentJSON) 
-            {
-                incidents = incidentJSON;
-                console.log(incidents);
-                updateMap(incidents['Traffic Related']);
-
-
-            });
+          var response =  mapHelper.initMapLayers( layers, mapEl, map );
+          response.then(data => {
+            layers = data;
+          })
         }
     });
 </script>

@@ -56,12 +56,21 @@
 <div class="col-12 mt-3 text-center">
     <a href="https://www.census.gov/quickfacts/fact/table/atlantacitygeorgia/POP010220" target="_blank">Source: US Census Bureau.</a> Numbers primarily cover 2015-2019
 </div>
+<!-- <div class="col-12 mt-3 text-center">
+    <div class="block">
+        <div class="title text-center">CDIA Districts (Census blocks that are at or below 80% of the regions average income)</div>
+        <div class="content">
+            <CDIAMap />
+        </div>
+    </div>
+</div> -->
 
 <script>
     // export let ready;
     import { get } from "$lib/_helpers";
     import { onMount } from 'svelte';
     import Chart from "chart.js/auto/auto.js";
+    // import CDIAMap from "$lib/CDIAMap.svelte"
 // let chartReady = ( typeof Chart != 'undefined');
 let population = '';
 let domain = 'https://civics.city/atlanta/data';

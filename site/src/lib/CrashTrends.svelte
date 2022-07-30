@@ -2,7 +2,7 @@
     <div class="block">
         <div class="title text-center">Crash Trend</div>
         <div class="content">
-            <div id="crashes" class="chart">
+            <div class="chart">
                 <canvas id="crashChart"></canvas>
             </div>
         </div>
@@ -13,7 +13,7 @@
     <div class="block">
         <div class="title text-center">Crash Trends Age</div>
         <div class="content">
-            <div id="crashes" class="chart">
+            <div class="chart">
                 <canvas id="crashChart1"></canvas>
             </div>
             
@@ -25,7 +25,7 @@
     <div class="block">
         <div class="title text-center">Crash Trend Factors</div>
         <div class="content">
-            <div id="crashes" class="chart">
+            <div class="chart">
                 <canvas id="crashChart2"></canvas>
             </div>
         </div>
@@ -36,13 +36,26 @@
     <div class="block">
         <div class="title text-center">Crash Trend Characteristics</div>
         <div class="content">
-            <div id="crashes" class="chart">
+            <div class="chart">
                 <canvas id="crashChart3"></canvas>
             </div>
         </div>
     </div>
     <p class="text-end"><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank">GDOT Crash Data</a></small></p>
 </div>
+<div class="col-12 mt-4">
+    <div class="block">
+        <div class="title text-center">Crash Trend Injuries</div>
+        <div class="content">
+            <div class="chart">
+                <canvas id="crashChart4"></canvas>
+            </div>
+        </div>
+    </div>
+    <p class="text-end"><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank">GDOT Crash Data</a></small></p>
+</div>
+
+
 <style type="text/css">
 
 .chart canvas {
@@ -57,11 +70,11 @@
 </style>
 
 <script>
-    import { get } from "$lib/_helpers";
-    import Chart from "chart.js/auto/auto.js";
-    import { onMount } from 'svelte';
-
-let domain = 'https://civics.city/atlanta/data';
+import { get } from "$lib/_helpers";
+import Chart from "chart.js/auto/auto.js";
+import { onMount } from 'svelte';
+    
+let domain = 'https://s3.amazonaws.com/civics.city/atlanta/data';
 var d = new Date();
 var currYear = d.getFullYear();
 var currMonth = (d.getMonth() + 1 ).toString().padStart(2, '0');
@@ -69,21 +82,23 @@ var currMonth = (d.getMonth() + 1 ).toString().padStart(2, '0');
 onMount(() => {
     Chart.defaults.color = 'white';
     Chart.defaults.font.size = 16;
-    Chart.overrides.line.borderColor = [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(153, 192, 86, 1)',
-            'rgba(75, 162, 132, 1)',
-            'rgba(255, 102, 64, 1)',
-            'rgba(54, 192, 64, 1)',
-            'rgba(255,255,255, 1)',
-            'rgba(0, 99, 255, 1)',
-            'rgba(255, 0, 126, 1)'
-        ];
+    var colors = [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+        'rgba(153, 192, 86, 1)',
+        'rgba(75, 162, 132, 1)',
+        'rgba(255, 102, 64, 1)',
+        'rgba(54, 192, 64, 1)',
+        'rgba(255,255,255, 1)',
+        'rgba(0, 99, 255, 1)',
+        'rgba(255, 0, 126, 1)'
+    ];
+    Chart.overrides.line.borderColor = colors;
+    Chart.overrides.bar.backgroundColor = colors;
     get( domain+'/gdot/total-summary.json?1', function(results) 
     {
         
@@ -236,6 +251,47 @@ onMount(() => {
                 labels: Object.keys(data),
                 datasets: Object.values(charsDataset)
             },
+            options: {
+                elements: {
+                    point: {
+                        borderColor: 'rgba(255, 255, 255, 0.7)'
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        // max: 300,
+                        title: {
+                            text: 'Incidents',
+                            display: true
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 40
+                        }
+                    }
+                }
+            }
+        });
+// console.log(Object.keys(datasets));
+        var injuryGroups = ["(O) No Injury", "(C) Possible Injury / Complaint", "(B) Suspected Minor/Visible Injury", "(A) Suspected Serious Injury", "(K) Fatal Injury"]
+        var injuryDataset = Object.fromEntries(Object.entries(datasets).filter(item => {
+            return injuryGroups.includes(item[0])
+        }))
+        var ctx4 = document.querySelector('#crashChart4').getContext('2d');
+        new Chart(ctx4, {
+            type: 'line',
+            data: {
+                labels: Object.keys(data),
+                datasets: Object.values(injuryDataset).reverse()
+            },
+            
             options: {
                 elements: {
                     point: {

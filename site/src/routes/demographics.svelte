@@ -1,9 +1,15 @@
 <svelte:head>
 	<title>Demographics | Civics.City Atlanta</title>
 	<meta property="og:image" content="https://atlanta.civics.city/default.jpg">
-	<meta name="description" content="Government Impacts Everyone">
+	<meta name="description" content="Atlanta Demographics">
     <meta property="og:title" content="Demographics | Civics.City Atlanta">
     <meta property="og:url" content="https://atlanta.civics.city/demographics">
+	<link
+		rel="stylesheet"
+		href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css"
+		type="text/css"
+	/>
+	<script src="//unpkg.com/leaflet-gesture-handling"></script>
 </svelte:head>
 
 <script context="module">

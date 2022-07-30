@@ -1,7 +1,8 @@
 <script>
 	import CrashMap from '$lib/CrashMap.svelte';
-	import CrashMapHistory from '$lib/CrashMapHistory.svelte';
+	import CrashMapHistory from '$lib/CrashMapHistoryBackup.svelte';
 	import CrashTrends from '$lib/CrashTrends.svelte';
+	// import TrafficVolumeGDOT from '$lib/TrafficVolumeGDOT.svelte';
 	export const prerender = true;
 	import { GoogleAnalytics } from '@beyonk/svelte-google-analytics';
 </script>
@@ -12,7 +13,7 @@
 	<meta property="og:title" content="Atlanta Crash Dashboard | Civics.City Atlanta" />
 	<meta property="og:description" content="The State of Road Safety in Atlanta" />
 	<meta property="og:url" content="https://atlanta.civics.city/mobility" />
-	<meta property="og:image" content="https://atlanta.civics.city/civics-city-social-crash.jpg" />
+	<meta property="og:image" content="https://atlanta.civics.city/mobility.png" />
 
 	<script
 		src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
@@ -36,7 +37,8 @@
 			<h1>Atlanta Crash Dashboard</h1>
 		</div>
 		<CrashMap />
-		<CrashMapHistory />
+		<!-- <CrashMapHistory /> -->
+		<!-- <TrafficVolumeGDOT /> -->
 		<CrashTrends />
 	</div>
 </div>

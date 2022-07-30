@@ -13,7 +13,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							City Council
 						  </a>
 						  <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
@@ -24,23 +24,12 @@
 						
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							Reports
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Issues
 						  </a>
 						  <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-							<li><a sveltekit:reload class="nav-link" href="/moving-atlanta-traffic-forward">Moving ATL Traffic Forward</a></li>
-							<li><a sveltekit:reload class="nav-link" href="/crime-wave">Understanding Crime Trends</a></li>
-						  </ul>
-						
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							Dashboards
-						  </a>
-						  <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-							<li><a sveltekit:reload class="nav-link" href="/demographics">Demographics</a></li>
-							<li><a sveltekit:reload class="nav-link" href="/crime">Crime</a></li>
-							<li><a sveltekit:reload class="nav-link" href="/mobility">Transportation</a></li>
+							<li><a sveltekit:reload class="nav-link" href="/public-safety">Crime & Safety</a></li>
+							<li><a sveltekit:reload class="nav-link" href="/transportation">Transportation</a></li>
 						  </ul>
 						
 					</li>
@@ -60,14 +49,20 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-12 col-lg-6">
-				<h5>About</h5>
+				<div class="fs-5"><b>About</b></div>
 				<p>Citizens deserve easy, accessible access to their city government, on a wide range of devices. That access should be organized and formatted in a citizen-directed way. This is the beginning of an attempt to aggregate some of the important information of the city in such a way.</p>
 				
 			</div>
 			<div class="col-12 col-lg-6">
-				<h5>Disclaimer</h5>
+				<div class="fs-5"><b>Disclaimer</b></div>
 				<p>Every attempt is made to ensure everything is accurate and up-to-date, however no warranty is made about the accuracy of the information. This is a personal project. Errors may happen.</p>
 				<p>&copy; 2022 <a href="mailto:andrew.trivette+civics@gmail.com">Andrew Trivette</a> All Rights Reserved</p>
+			</div>
+		</div>
+		<div class="row mt-5">
+			<div class="col-12 text-center">
+				<div class="fs-5"><b>Related Projects</b></div>
+				<p><img src="https://kurious.io/icons/maskable_icon.png" alt="kurious.io" class="rounded-circle me-2" width="60" /><a href="https://www.kurious.io" target="_blank">kurious.io</a> tackles challenging civic and philosophical topics in short-form, approachable ways</p>
 			</div>
 		</div>
 	</div>
