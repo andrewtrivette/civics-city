@@ -11,7 +11,7 @@
     import DistrictDemographics from "$lib/DistrictDemographics.svelte";
     import DistrictMap from "$lib/DistrictMap.svelte";
     import DistrictCouncil from "$lib/DistrictCouncil.svelte";
-    import CrimeDistrictSummary from "$lib/CrimeDistrictSummary.svelte";
+    import CrimeSummary from "$lib/CrimeSummary.svelte";
     export const prerender = true;
     import { GoogleAnalytics } from '@beyonk/svelte-google-analytics'
     export let params;
@@ -44,7 +44,7 @@
             <div class="block">
                 <div class="title">District Crime Trends</div>
                 <div class="content">
-                    <CrimeDistrictSummary type="district" region={id} />
+                    <CrimeSummary type="district" region={id} />
                 </div>
                 
             </div>

@@ -1,9 +1,26 @@
 <div class="block">
     <div class="title">District Statistics</div>
     <div class="content">
-        <div>{size}</div>
-        <div>{population}</div>
-        <div>{density}</div>
+        <div class="row text-center justify-content-center">
+            <div class="col-12 col-lg-6 mb-3">
+                <div class="kpi">
+                    <div class="value">{size}</div>
+                    <div class="label">Acres</div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 mb-3">
+                <div class="kpi">
+                    <div class="value">{population}</div>
+                    <div class="label">Population</div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 mb-3">
+                <div class="kpi">
+                    <div class="value">{density}</div>
+                    <div class="label">People/Acre</div>
+                </div>
+            </div>
+        </div>
         <div><br><canvas id="demoChart" width="400" height="250"></canvas></div>
         <div class="right-align citation"><a href="https://atlantaregional.org/browse/?browse=type&type=data-maps" target="_blank" rel="noreferer noopener">Source ARC GIS</a></div>
     </div>
@@ -39,9 +56,9 @@ function init() {
             'Other': atts.OTHER_P
         };
         var pop = atts.TOTAL;
-        size = new Intl.NumberFormat().format(parseInt(atts.ACRE))+' Acres';
-        population = 'Population: ' + new Intl.NumberFormat().format(parseInt(pop));
-        density = (parseInt(pop)/parseInt(atts.ACRE)).toFixed(2)+' People/Acre';
+        size = new Intl.NumberFormat().format(parseInt(atts.ACRE));
+        population = new Intl.NumberFormat().format(parseInt(pop));
+        density = (parseInt(pop)/parseInt(atts.ACRE)).toFixed(2);
 
         var ctx = document.querySelector('#demoChart').getContext('2d');
         new Chart(ctx, {
