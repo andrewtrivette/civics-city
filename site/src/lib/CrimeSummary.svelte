@@ -1,11 +1,11 @@
 
-        <div class="text-center">2009 - 2021 Crime Trends</div>
+        <div class="text-center">2009 - 2021 Crime Trends {(perCapita == true ? 'Per Capita' : '')}</div>
         <div  class="chart">
             <canvas id="crimeChart"></canvas>
         </div>
     <br/>
     <hr>
-        <div class="text-center mb-2">Crime Trend By Month</div>
+        <div class="text-center mb-2">Crime Trend By Month {(perCapita == true ? 'Per Capita' : '')}</div>
         <div class="row mb-3">
             <div class="col-12 col-lg-6">
                 <select class="form-select" name="type" bind:value={types} on:change={updateYoYHandler}>
@@ -32,7 +32,7 @@
                 <div class="col-6 mb-3">
                     <div class="kpi">
                         <div class="value">{(tempDataset[item].data.reduce((a,b) => { return a+b[1] }, 0)).toLocaleString('en-US')}</div>
-                        <div class="label">{tempDataset[item].label+(perCapita == true ? ' Per Capita' : '')}</div>
+                        <div class="label">{tempDataset[item].label+(perCapita == true ? ' Per 10,000' : '')}</div>
                     </div>
                     
                 </div>
@@ -67,37 +67,24 @@ let aggChart = null;
 let tempDataset = {};
 const updateYoYHandler = function() {
     let tempDatasets = {};
-    tempDatasets[currYear] = Object.fromEntries( 
-        Object.entries( aggDatasets[currYear] ).filter(([key, value]) => {
-            if( types == 'group' )
-            {
-                return [`${currYear}_People`, `${currYear}_Property`].includes(key)
-            }
-            else if( types == 'aggregate' )
-            {
-                return `${currYear}_Total` == key
-            }
-            else {
-                return key == currYear+' '+types;
-            }
-        })
-    );
-    tempDatasets[prevYear] = Object.fromEntries(
-        Object.entries( aggDatasets[prevYear] ).filter(([key, value]) => {
-            if( types == 'group' )
-            {
-                return [`${prevYear}_People`, `${prevYear}_Property`].includes(key)
-            }
-            else if( types == 'aggregate' )
-            {
-                return `${prevYear}_Total` == key
-            }
-            else
-            {
-                return key == prevYear+' '+types;
-            }
-        })
-    );
+    Object.keys(aggDatasets).forEach((tempKey) => {
+        tempDatasets[tempKey] = Object.fromEntries( 
+            Object.entries( aggDatasets[tempKey] ).filter(([key, value]) => {
+                if( types == 'group' )
+                {
+                    return [`${tempKey}_People`, `${tempKey}_Property`].includes(key)
+                }
+                else if( types == 'aggregate' )
+                {
+                    return `${tempKey}_Total` == key
+                }
+                else {
+                    return key == tempKey+' '+types;
+                }
+            })
+        );
+    })
+    
     tempDataset = ( yoY == 'yoy' ) ? Object.assign({}, tempDatasets[currYear], tempDatasets[prevYear]) : tempDatasets[yoY];
     console.log({yoY, tempDataset});
     var ctx = document.querySelector('#crimeChart2').getContext('2d');
@@ -123,7 +110,7 @@ const updateYoYHandler = function() {
                 y: {
                     beginAtZero: true,
                     title: {
-                        text: 'Police Incidents'+(perCapita == true ? ' Per Capita' : ''),
+                        text: 'Police Incidents'+(perCapita == true ? ' Per 10,000' : ''),
                         display: true
                     }
                 }
@@ -244,7 +231,7 @@ onMount(() => {
                     y: {
                         beginAtZero: true,
                         title: {
-                            text: 'Police Incidents'+(perCapita == true ? ' Per Capita' : ''),
+                            text: 'Police Incidents'+(perCapita == true ? ' Per 10,000' : ''),
                             display: true
                         }
                     }
@@ -261,20 +248,27 @@ onMount(() => {
         });
     });
 
-
-    get( `${domain}/COBRA/${currYear}-aggregate.json`, function(data) 
-    {
-        // console.log(`${currYear}-aggregate`, data, currMonth)
-        aggData = data;
-        if( data[currMonth] )
-        {
-            delete data[currMonth]
-        }
+    const processData = ( year, data ) => {
         var monthKeys = Object.keys(aggData);
 
-        aggDatasets[currYear][`${currYear}_People`] = { label: `${currYear} Crime Against People`, data: [], tension: 0.2, population: population[currYear] };
-        aggDatasets[currYear][`${currYear}_Property`] = { label: `${currYear} Crime Against Property`, data: [], tension: 0.2, population: population[currYear] };
-        aggDatasets[currYear][`${currYear}_Total`] = { label: `${currYear} Sum`, data: [], tension: 0.2, population: population[currYear] };
+        aggDatasets[year][`${year}_People`] = { 
+            label: `${year} Crimes Against People`, 
+            data: [], 
+            tension: 0.2, 
+            population: population[year] 
+        };
+        aggDatasets[year][`${year}_Property`] = { 
+            label: `${year} Crimes of Poverty`, 
+            data: [], 
+            tension: 0.2, 
+            population: population[year] 
+        };
+        aggDatasets[year][`${year}_Total`] = { 
+            label: `${year} Sum`, 
+            data: [], 
+            tension: 0.2, 
+            population: population[year] 
+        };
         var max = 0;
         var totalsMax = 0;
         monthKeys.forEach((monthKey) => {
@@ -309,12 +303,12 @@ onMount(() => {
                 var total = 0;
                 Object.keys(monthField).forEach((crimeKey) => {
                     var crime = monthField[crimeKey];
-                    crimeKey = `${currYear} ${crimeKey}`
-                    if( !aggDatasets[currYear].hasOwnProperty(crimeKey) )
+                    crimeKey = `${year} ${crimeKey}`
+                    if( !aggDatasets[year].hasOwnProperty(crimeKey) )
                     {
-                        aggDatasets[currYear][crimeKey] = { label: crimeKey, data: [], tension: 0.2, population: population[currYear] }
+                        aggDatasets[year][crimeKey] = { label: crimeKey, data: [], tension: 0.2, population: population[year] }
                     }
-                    var val = (perCapita == true) ? crime/population[currYear]*10000 : crime
+                    var val = (perCapita == true) ? crime/population[year]*10000 : crime
                     max = Math.max(max, val);
 
                     if( crimeKey.includes('AGG ASSAULT') || crimeKey.includes('ROBBERY') || crimeKey.includes('HOMICIDE') || crimeKey.includes('MANSLAUGHTER') )
@@ -328,84 +322,43 @@ onMount(() => {
                         totalsMax = Math.max(totalsMax, totalProperty);
                     }
                     total += val;
-                    aggDatasets[currYear][crimeKey].data.push([monthKey, val])
-                    aggDatasets[currYear][crimeKey].data.sort(( a, b ) => {
+                    aggDatasets[year][crimeKey].data.push([monthKey, val])
+                    aggDatasets[year][crimeKey].data.sort(( a, b ) => {
                         return parseInt(a[0]) - parseInt(b[0])
                     })
                 })
-                aggDatasets[currYear][`${currYear}_Total`].data.push([monthKey, total])
-                aggDatasets[currYear][`${currYear}_Total`].data.sort(( a, b ) => {
+                aggDatasets[year][`${year}_Total`].data.push([monthKey, total])
+                aggDatasets[year][`${year}_Total`].data.sort(( a, b ) => {
                     return parseInt(a[0]) - parseInt(b[0])
                 })
 
-                aggDatasets[currYear][`${currYear}_People`].data.push([monthKey, totalPeople])
-                aggDatasets[currYear][`${currYear}_People`].data.sort(( a, b ) => {
+                aggDatasets[year][`${year}_People`].data.push([monthKey, totalPeople])
+                aggDatasets[year][`${year}_People`].data.sort(( a, b ) => {
                     return parseInt(a[0]) - parseInt(b[0])
                 })
-                aggDatasets[currYear][`${currYear}_Property`].data.push([monthKey, totalProperty])
-                aggDatasets[currYear][`${currYear}_Property`].data.sort(( a, b ) => {
+                aggDatasets[year][`${year}_Property`].data.push([monthKey, totalProperty])
+                aggDatasets[year][`${year}_Property`].data.sort(( a, b ) => {
                     return parseInt(a[0]) - parseInt(b[0])
                 })
                 // datasets.push([year[0], sum])
             
         });
 
+    }
+
+    get( `${domain}/COBRA/${currYear}-aggregate.json`, function(data) 
+    {
+        // console.log(`${currYear}-aggregate`, data, currMonth)
+        aggData = data;
+        if( data[currMonth] )
+        {
+            delete data[currMonth]
+        }
+        processData( currYear, data )
+
         get(`${domain}/COBRA/${prevYear}-aggregate.json`, function(data) {
 
-            // var monthKeys = Object.keys(data);
-            var max = 0;
-            aggDatasets[prevYear][`${prevYear}_People`] = { label: `${prevYear} Crime Against People`, data: [], tension: 0.2, population: population[prevYear] };
-            aggDatasets[prevYear][`${prevYear}_Property`] = { label: `${prevYear} Crime Against Property`, data: [], tension: 0.2, population: population[prevYear] };
-            aggDatasets[prevYear][`${prevYear}_Total`] = { label: `${prevYear} Sum`, data: [], tension: 0.2, population: population[prevYear] };
-            
-            monthKeys.forEach((monthKey) => {
-                var totalProperty = 0;
-                var totalPeople = 0;
-                var total = 0;
-                var month = data[monthKey];
-                var monthField = month['sum']
-                if( type != 'all' && region != null ) {
-                    monthField = month[type][region];
-                }
-                Object.keys(monthField).forEach((crimeKey) => {
-                    var crime = monthField[crimeKey];
-                    crimeKey = `${prevYear} ${crimeKey}`
-                    if( !aggDatasets[prevYear].hasOwnProperty(crimeKey) )
-                    {
-                        aggDatasets[prevYear][crimeKey] = { label: crimeKey, data: [], tension: 0.2, population: population[prevYear] }
-                    }
-                    var val = (perCapita == true) ? crime/population[prevYear]*10000 : crime;
-                    if( crimeKey.includes('AGG ASSAULT') || crimeKey.includes('ROBBERY') || crimeKey.includes('HOMICIDE')|| crimeKey.includes('MANSLAUGHTER') )
-                    {
-                        totalPeople += val;
-                        totalsMax = Math.max(totalsMax, totalPeople);
-                    }
-                    else
-                    {
-                        totalProperty += val;
-                        totalsMax = Math.max(totalsMax, totalProperty);
-                    }
-                    total += val;
-
-                    aggDatasets[prevYear][crimeKey].data.push([monthKey, val])
-                    aggDatasets[prevYear][crimeKey].data.sort(( a, b ) => {
-                        return parseInt(a[0]) - parseInt(b[0])
-                    })
-                })
-                aggDatasets[prevYear][`${prevYear}_Total`].data.push([monthKey, total])
-                aggDatasets[prevYear][`${prevYear}_Total`].data.sort(( a, b ) => {
-                    return parseInt(a[0]) - parseInt(b[0])
-                })
-                aggDatasets[prevYear][`${prevYear}_People`].data.push([monthKey, totalPeople])
-                aggDatasets[prevYear][`${prevYear}_People`].data.sort(( a, b ) => {
-                    return parseInt(a[0]) - parseInt(b[0])
-                })
-                aggDatasets[prevYear][`${prevYear}_Property`].data.push([monthKey, totalProperty])
-                aggDatasets[prevYear][`${prevYear}_Property`].data.sort(( a, b ) => {
-                    return parseInt(a[0]) - parseInt(b[0])
-                })
-            });
-            
+            processData( prevYear, data)
             updateYoYHandler();
             
         })
