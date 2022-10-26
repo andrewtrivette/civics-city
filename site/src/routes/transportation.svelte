@@ -9,13 +9,16 @@
 		<div class="col-12 text-center mb-4">
 			<h1>Atlanta Transportation</h1>
         </div>
-        <div class="col-12 col-lg-4">
+        <div class="col-12 col-lg-4 mb-4">
             <a sveltekit:reload class="link-card" href="/mobility">Atlanta Crash Dashboard</a>
         </div>
-        <div class="col-12 col-lg-4">
+        <div class="col-12 col-lg-4 mb-4">
+            <a sveltekit:reload class="link-card" href="/crash-data-history">Atlanta Crash Historical Trends</a>
+        </div>
+        <div class="col-12 col-lg-4 mb-4">
             <a sveltekit:reload class="link-card" href="/mobility-infrastructure">Mobility Infrastructure</a>
         </div>
-        <div class="col-12 col-lg-4">
+        <div class="col-12 col-lg-4 mb-4">
             <a sveltekit:reload class="link-card" href="/moving-atlanta-traffic-forward">Moving Atlanta Traffic Forward</a>
         </div>
     </div>

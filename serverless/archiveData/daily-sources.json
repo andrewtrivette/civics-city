@@ -79,5 +79,35 @@
 		"source": "https://services.arcgis.com/jIL9msH9OI208GCb/ArcGIS/rest/services/HOLC_Neighborhood_Redlining/FeatureServer/0/query?where=City%3D%27Atlanta%27&f=geojson&outFields=*",
 		"destination": "data/redlining.geojson",
 		"note": "source: ArcGIS Living Atlas https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/announcements/redlining-data-now-in-arcgis-living-atlas/ "
+	},
+	{
+		"type": "daily",
+		"source": "https://services2.arcgis.com/zLeajbicrDRLQcny/arcgis/rest/services/CapitalDeliveryProjects_View_Public/FeatureServer/0/query?where=PROJECT_STATUS%20%3D%20%27Active%27&f=geojson&outFields=*",
+		"destination": "data/atldot-active-projects.geojson"
+	},
+	{
+		"type": "daily",
+		"source": "https://services2.arcgis.com/zLeajbicrDRLQcny/arcgis/rest/services/CapitalDeliveryProjects_View_Public/FeatureServer/0/query?f=geojson&where=1%3D1&outFields=*",
+		"destination": "data/atldot-projects.geojson"
+	},
+	{
+		"type": "daily",
+		"source": "https://services2.arcgis.com/zLeajbicrDRLQcny/arcgis/rest/services/CapitalDeliveryProjects_View_Public/FeatureServer/0/query?f=geojson&where=(PROJECT_CATEGORY%20%3D%20%2707%20-%20Sidewalks%20%26%20Mobility%20Improvements%27)%20AND%20(PROJECT_STATUS%20%3D%20%27Active%27)&outFields=*",
+		"destination": "data/atldot-active-projects-cycling-pedestrian.geojson"
+	},
+	{
+		"type": "daily",
+		"source": "https://services2.arcgis.com/zLeajbicrDRLQcny/arcgis/rest/services/CapitalDeliveryProjects_View_Public/FeatureServer/0/query?f=geojson&where=(PROJECT_CATEGORY%20%3D%20%2707%20-%20Sidewalks%20%26%20Mobility%20Improvements%27)&outFields=*",
+		"destination": "data/atldot-projects-cycling-pedestrian.geojson"
+	},
+	{
+		"type": "daily",
+		"source": "https://services2.arcgis.com/zLeajbicrDRLQcny/ArcGIS/rest/services/Bicycle_Routes_2019/FeatureServer/0/query?where=1%3D1&f=geojson&outFields=*",
+		"destination": "data/atldot-bike-lanes.geojson"
+	},
+	{
+		"type": "manual",
+		"source": "https://services2.arcgis.com/zLeajbicrDRLQcny/ArcGIS/rest/services/CityLimits_DPW/FeatureServer/0/query?where=1%3D1&f=geojson&outFields=*",
+		"destination": "data/atl-city-limits.geojson"
 	}
 ]

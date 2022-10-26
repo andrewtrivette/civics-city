@@ -24,10 +24,12 @@
         </div>
     </div>
 </div>
+<CrimeTimeOfDay />
 <GoogleAnalytics properties={[ 'UA-1097544-80' ]} />
 
 <script>
 import CrimeSummary from '$lib/CrimeSummary.svelte';
+import CrimeTimeOfDay from '$lib/CrimeTimeOfDay.svelte';
 export const prerender = true;
 import { GoogleAnalytics } from '@beyonk/svelte-google-analytics'
 

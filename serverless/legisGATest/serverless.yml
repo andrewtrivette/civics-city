@@ -1,0 +1,14 @@
+service: legisGA
+
+frameworkVersion: '2 || 3'
+
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  lambdaHashingVersion: 20201221
+  timeout: 300
+
+functions:
+  test:
+    handler: handler.handler

@@ -288,6 +288,13 @@ aside.action::before {
     width: 100%;
     aspect-ratio: 16/9;
 }
+#myTab .nav-link {
+    color:rgba(54, 162, 235, 1)
+}
+.active {
+    box-shadow: none;
+    background-color: rgba(0,0,0,0.5);
+}
 /* .leaflet-pane {
     inset: 0;
     pointer-events: none;

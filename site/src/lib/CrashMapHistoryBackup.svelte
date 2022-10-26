@@ -1,6 +1,6 @@
 
 <div class="col-12 mt-4 text-center">
-    <h2>GDOT Crash Data Heatmap</h2>
+    <h2>Crash Heatmap</h2>
 </div>
 <div class="col-12 col-lg-4 mt-4">
     <div class="block">

@@ -1,8 +1,7 @@
 <script>
-	import CrashMap from '$lib/CrashMap.svelte';
-	import CrashMapHistory from '$lib/CrashMapHistoryBackup.svelte';
+
+	import CrashMapHistory from '$lib/CrashMapHistory.svelte';
 	import CrashTrends from '$lib/CrashTrends.svelte';
-	// import TrafficVolumeGDOT from '$lib/TrafficVolumeGDOT.svelte';
 	export const prerender = true;
 	import { GoogleAnalytics } from '@beyonk/svelte-google-analytics';
 </script>
@@ -34,12 +33,10 @@
 <div class="container mt-4">
 	<div class="row">
 		<div class="col-12 text-center">
-			<h1>Atlanta Crash Dashboard</h1>
+			<h1>Atlanta Crash Historical Trends</h1>
 		</div>
-		<CrashMap />
-		<!-- <div class="col-12 text-center mt-4">
-            <a href="/crash-data-history/" class="btn btn-primary">Crash Historical Trends</a>
-        </div> -->
+		<CrashMapHistory />
+		<CrashTrends />
 	</div>
 </div>
 <GoogleAnalytics properties={['UA-1097544-80']} />

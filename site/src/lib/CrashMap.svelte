@@ -97,13 +97,6 @@
     .bg-vru {
         background-color: rgba(255, 99, 132, 1);
     }
-    #myTab .nav-link {
-        color:rgba(54, 162, 235, 1)
-    }
-    .active {
-        box-shadow: none;
-        background-color: rgba(0,0,0,0.5);
-    }
 </style>
 
 <script>

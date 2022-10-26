@@ -12,6 +12,7 @@
 
 <script>
     import CrimeWave from '$lib/CrimeWave.svelte';
+    
     export const prerender = true;
     import { GoogleAnalytics } from '@beyonk/svelte-google-analytics'
 </script>
