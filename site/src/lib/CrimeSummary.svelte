@@ -1,5 +1,5 @@
 
-        <div class="text-center">2009 - 2021 Crime Trends {(perCapita == true ? 'Per Capita' : '')}</div>
+        <div class="text-center">2009 - {currYear} Crime Trends {(perCapita == true ? 'Per Capita' : '')}</div>
         <div  class="chart">
             <canvas id="crimeChart"></canvas>
         </div>
@@ -19,7 +19,9 @@
             <div class="col-12 col-lg-6">
                 <select class="form-select" name="isYoY" bind:value={yoY} on:change={updateYoYHandler}> 
                     <option value="yoy" selected>{prevYear} vs {currYear} YTD</option>
+                    <option value="prevyoy" selected>{prevYear-1} vs {currYear-1} YTD</option>
                     <option value={currYear.toString()}>{currYear} YTD</option>
+                    <option value={prevYear.toString()}>{prevYear}</option>
                 </select>
             </div>
         </div>
@@ -39,7 +41,7 @@
             {/each}
         </div>
         <div class="text-end">
-            <small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank">Source: APD Crime Data</a></small>
+            <small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank" rel="noreferrer">Source: APD Crime Data</a></small>
         </div>
 
 
@@ -48,7 +50,7 @@
     export let region;
     export let perCapita;
     import { get } from "$lib/_helpers";
-    import Chart from "chart.js/auto/auto.js";
+    import Chart from "chart.js/auto";
     import { onMount } from 'svelte';
 
 let domain = 'https://s3.amazonaws.com/civics.city/atlanta/data';
@@ -63,6 +65,7 @@ let aggData = {};
 let aggDatasets = {};
 aggDatasets[currYear] = {};
 aggDatasets[prevYear] = {};
+aggDatasets[prevYear-1] = {};
 let aggChart = null;
 let tempDataset = {};
 const updateYoYHandler = function() {
@@ -85,7 +88,24 @@ const updateYoYHandler = function() {
         );
     })
     
-    tempDataset = ( yoY == 'yoy' ) ? Object.assign({}, tempDatasets[currYear], tempDatasets[prevYear]) : tempDatasets[yoY];
+    switch(yoY) {
+        case 'yoy':
+            tempDataset = Object.assign(
+                {}, 
+                tempDatasets[currYear], 
+                tempDatasets[prevYear] ) 
+            break;
+        case 'prevyoy':
+            tempDataset = Object.assign(
+                {}, 
+                tempDatasets[currYear-1], 
+                tempDatasets[prevYear-1] ) 
+            break;
+        default: 
+            tempDataset = tempDatasets[yoY]
+    }
+
+
     console.log({yoY, tempDataset});
     var ctx = document.querySelector('#crimeChart2').getContext('2d');
     if( aggChart != null )
@@ -129,6 +149,8 @@ const updateYoYHandler = function() {
 
 onMount(() => {
     var population = {
+        2024: 532695,
+        2023: 532695,
         2022: 532695,
         2021: 524100,
         2020: 515400,
@@ -249,7 +271,7 @@ onMount(() => {
     });
 
     const processData = ( year, data ) => {
-        var monthKeys = Object.keys(aggData);
+        var monthKeys = Object.keys(data);
 
         aggDatasets[year][`${year}_People`] = { 
             label: `${year} Crimes Against People`, 
@@ -357,10 +379,12 @@ onMount(() => {
         processData( currYear, data )
 
         get(`${domain}/COBRA/${prevYear}-aggregate.json`, function(data) {
-
             processData( prevYear, data)
-            updateYoYHandler();
-            
+            get(`${domain}/COBRA/${prevYear-1}-aggregate.json`, function(data) {
+
+                processData( prevYear-1, data)
+                updateYoYHandler();
+            });
         })
     });
 })

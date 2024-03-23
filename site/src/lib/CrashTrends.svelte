@@ -7,7 +7,7 @@
             </div>
         </div>
     </div>
-    <p class="text-end"><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank">GDOT Crash Data</a></small></p>
+    <p class="text-end"><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank" rel="noreferrer">GDOT Crash Data</a></small></p>
 </div>
 <div class="col-12 mt-4">
     <div class="block">
@@ -19,7 +19,7 @@
             
         </div>
     </div>
-    <p class="text-end"><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank">GDOT Crash Data</a></small></p>
+    <p class="text-end"><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank" rel="noreferrer">GDOT Crash Data</a></small></p>
 </div>
 <div class="col-12 mt-4">
     <div class="block">
@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <p class="text-end"><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank">GDOT Crash Data</a></small></p>
+    <p class="text-end"><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank" rel="noreferrer">GDOT Crash Data</a></small></p>
 </div>
 <div class="col-12 mt-4">
     <div class="block">
@@ -41,7 +41,7 @@
             </div>
         </div>
     </div>
-    <p class="text-end"><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank">GDOT Crash Data</a></small></p>
+    <p class="text-end"><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank" rel="noreferrer">GDOT Crash Data</a></small></p>
 </div>
 <div class="col-12 mt-4">
     <div class="block">
@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-    <p class="text-end"><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank">GDOT Crash Data</a></small></p>
+    <p class="text-end"><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank" rel="noreferrer">GDOT Crash Data</a></small></p>
 </div>
 
 
@@ -71,7 +71,7 @@
 
 <script>
 import { get } from "$lib/_helpers";
-import Chart from "chart.js/auto/auto.js";
+import Chart from "chart.js/auto";
 import { onMount } from 'svelte';
     
 let domain = 'https://s3.amazonaws.com/civics.city/atlanta/data';

@@ -5,7 +5,7 @@ frameworkVersion: '2 || 3'
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs16.x
   lambdaHashingVersion: 20201221
   timeout: 300
 
@@ -15,3 +15,5 @@ functions:
     events:
       # Invoke Lambda function every day at 1am
       - schedule: cron(0 1 * * ? *)
+  archiveHandler:
+    handler: archive.run

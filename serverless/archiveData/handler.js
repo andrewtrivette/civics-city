@@ -1,5 +1,6 @@
 var https = require('https');
 const aws = require('aws-sdk');
+var fs = require('fs');
 const s3 = new aws.S3({ apiVersion: '2006-03-01' });
 
 exports.handler = (event, context, callback) => {
@@ -51,8 +52,20 @@ exports.handler = (event, context, callback) => {
                             res.on('end', () => {
                                 try {
     
-                                    fs.writeFileSync('./'+source['destination'], rawData); 
-                                    resolve(); 
+                                    // fs.writeFileSync('./'+source['destination'], rawData); 
+
+                                    var opts = {
+                                        ACL: 'public-read',
+                                        Body: rawData, 
+                                        Bucket: 'civics.city', 
+                                        Key: 'atlanta/'+source['destination'],
+                                        ContentType: 'application/json'
+                                    };
+                                    s3.putObject(opts, (err, data) => {
+                                        if( err ) reject(err);
+                        
+                                        resolve(data);
+                                    }); 
                                     
                                 } catch (e) {
                                     console.error(e.message);
@@ -60,7 +73,7 @@ exports.handler = (event, context, callback) => {
                             })
                         });
                         console.log(Date.now())
-                        resolve(source);
+                        // resolve(source);
                     }, 500*i );
                 })
             );

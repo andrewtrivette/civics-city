@@ -1,0 +1,20 @@
+service: report
+
+frameworkVersion: '2 || 3'
+
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+  timeout: 29
+  httpApi:
+    cors: true
+
+functions:
+  signed:
+    handler: handler.handler
+    events:
+      - httpApi:
+          method: GET
+          path: /{proxy+}

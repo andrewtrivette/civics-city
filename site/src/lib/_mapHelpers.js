@@ -28,6 +28,7 @@ export default class MapHelper {
             let features = L.geoJSON(tempDataset, layers[key].featureOpts).addTo(this.map);
             layers[key].layerGroup.addLayer(features);
             if( Object.keys(features._layers).length > 0 && layers[key].bounds == true ) {
+                // console.log({ features, bounds: features.getBounds() })
                 this.map.fitBounds( features.getBounds(), { padding: [ 30, 30]} );
             }
         });
@@ -54,6 +55,7 @@ export default class MapHelper {
         })
         .addLayer(mapboxTiles)
         .setView([33.776, -84.42], 12);
+
         let promises = [];
         Object.entries(layers).forEach(([key, layer]) => {
             promises.push(new Promise((resolve, reject) => {

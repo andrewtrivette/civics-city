@@ -49,15 +49,15 @@
             <p>{totalFutureMiles.toFixed(2)} Future Miles</p>
         </div>
     </div>
-    <div><small><a href="https://atldot.atlantaga.gov/resources-2/capital-delivery" target="_blank">Source: ATL DoT</a></small></div>
+    <div><small><a href="https://atldot.atlantaga.gov/resources-2/capital-delivery" target="_blank" rel="noreferrer">Source: ATL DoT</a></small></div>
 </div>
 <div class="col-12 col-lg-9 my-4">
     <ul class="nav" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-          <a class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" href="#" role="tab" aria-controls="home" aria-selected="true">Map</a>
+          <a class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" role="tab" aria-controls="home" aria-selected="true">Map</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="profile-tab"  data-bs-toggle="tab" data-bs-target="#list" href="" role="tab" aria-controls="profile" aria-selected="false">List</a>
+          <a class="nav-link" id="profile-tab"  data-bs-toggle="tab" data-bs-target="#list" role="tab" aria-controls="profile" aria-selected="false">List</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -138,7 +138,7 @@
     import { onMount } from 'svelte';
 
     import 'leaflet/dist/leaflet.css';
-    import { browser } from "$app/env";
+    import { browser } from "$app/environment";
     import MapHelper from "$lib/_mapHelpers"
     import * as turf from '@turf/turf';
 

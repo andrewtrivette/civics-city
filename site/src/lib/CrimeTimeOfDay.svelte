@@ -48,8 +48,8 @@
                 </div>
             </div>
 
-            <p><small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank">Source: APD Crime Data</a></small></p>
-            <p><small><a href="https://worldpopulationreview.com/us-cities/atlanta-ga-population" target="_blank">US Census Yearly Population Estimates</a></small></p>
+            <p><small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank" rel="noreferrer">Source: APD Crime Data</a></small></p>
+            <p><small><a href="https://worldpopulationreview.com/us-cities/atlanta-ga-population" target="_blank" rel="noreferrer">US Census Yearly Population Estimates</a></small></p>
             
             
         </div>

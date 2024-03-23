@@ -2,12 +2,9 @@
 <div>Additional Historical Context: https://storymaps.arcgis.com/stories/c25357151d31453ca3e4180674c550c4</div>
 <style>
     #map {
-        height: 350px;
-        background-color: transparent;
+        height: 750px;
+        background-color: black;
         backdrop-filter: blur(5px);
-    }
-    #map.map-tall {
-        height: 500px;
     }
 </style>
 
@@ -18,7 +15,7 @@
     import { onMount } from 'svelte';
 
     import 'leaflet/dist/leaflet.css';
-    import { browser } from "$app/env";
+    import { browser } from "$app/environment";
     let domain = 'https://civics.city/atlanta/data';
 
     onMount( async () => {
@@ -27,10 +24,22 @@
             var map = L.map('map', {
                 attributionControl: false,
                 gestureHandling: true,
-                dragging: false
-            }).setView([33.776, -84.42], 11);
+                dragging: false,
+                zoomSnap: 0,
+                zoomDelta: 0.5
+            });
             var mapLayers = {};
 
+            get( domain+'/atl-city-limits.geojson', function(cityGeoJSON) 
+            {
+                // console.log(roadGeoJSON)
+                mapLayers['cityLimits'] = L.geoJSON( cityGeoJSON, {
+                    style: function() {
+                        return { color: 'rgba(255,0,255,0.25)' }
+                    }
+                }).addTo(map);
+                map.fitBounds( mapLayers['cityLimits'].getBounds(), { padding: [ 30, 30]} );
+            });
             // Show GA Highways
             get( domain+'/highways.geojson', function(roadGeoJSON) 
             {
@@ -40,32 +49,42 @@
                         return { color: 'rgba(255,255,255,0.025)' }
                     }
                 }).addTo(map);
+
             });
 
             get( domain+'/redlining.geojson', function(councilGeoJSON) 
             {
                 mapLayers['districts'] = L.geoJSON(councilGeoJSON, {
                     style: function (feature) {
-                        return {stroke: false, fillColor: 'rgb(255,255,255)', fillOpacity: .5};
+                        var grade = {
+                            A: 'rgb(0,255,0)',
+                            B: 'rgb(0,0,200)',
+                            C: 'rgb(255,125, 125)',
+                            D: 'rgb(255,0, 0)'
+                        }
+                        return {
+                            stroke: false, 
+                            fillColor: grade[feature.properties.HOLC_grade], fillOpacity: 1
+                        };
                     },
-                    filter: function(feature) {
-                        return ( feature.properties.HOLC_grade == 'D' )
-                    }
+                    // filter: function(feature) {
+                    //     return ( feature.properties.HOLC_grade == 'D' )
+                    // }
                 }).addTo(map);
-
-                map.fitBounds( mapLayers['districts'].getBounds() );
-
             });
             get( domain+'/cdia.geojson', function(councilGeoJSON) 
             {
                 mapLayers['districts'] = L.geoJSON(councilGeoJSON, {
                     style: function (feature) {
                         return {stroke: false, fillColor: 'rgb(255,0,255)', fillOpacity: 0.5};
+                    },
+                    onEachFeature: function(feature, layer) {
+                        var properties = Object.entries(feature.properties).reduce(( prevValue, currValue ) => {
+                            return (['id', 'ref'].indexOf(currValue[0])) ? prevValue+'<tr><td>'+currValue.join('</td><td>')+'</tr>' : prevValue;
+                        }, '');
+                        layer.bindPopup('<table>'+properties+'</table>', {maxWidth: 600})
                     }
                 }).addTo(map);
-
-                map.fitBounds( mapLayers['districts'].getBounds() );
-
             });
         }
     });

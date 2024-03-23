@@ -22,8 +22,8 @@
                     <div class="chart">
                         <canvas id="crimeWaveChart" width="400" height="200"></canvas>
                     </div>
-                    <p class="text-end"><small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank">Source: APD Crime Data</a>
-                    <a href="https://worldpopulationreview.com/us-cities/atlanta-ga-population" target="_blank">US Census Yearly Population Estimates</a></small></p>
+                    <p class="text-end"><small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank" rel="noreferrer">Source: APD Crime Data</a>
+                    <a href="https://worldpopulationreview.com/us-cities/atlanta-ga-population" target="_blank" rel="noreferrer">US Census Yearly Population Estimates</a></small></p>
                 </div>
             </div>
         </div>
@@ -39,8 +39,8 @@
                     <div class="chart">
                         <canvas id="crimeChart" width="400" height="200"></canvas>
                     </div>
-                    <p class="text-end"><small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank">Source: APD Crime Data</a>
-                    <a href="https://worldpopulationreview.com/us-cities/atlanta-ga-population" target="_blank">US Census Yearly Population Estimates</a></small></p>
+                    <p class="text-end"><small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank" rel="noreferrer">Source: APD Crime Data</a>
+                    <a href="https://worldpopulationreview.com/us-cities/atlanta-ga-population" target="_blank" rel="noreferrer">US Census Yearly Population Estimates</a></small></p>
                 </div>
             </div>
         </div>
@@ -68,13 +68,13 @@
                     <div class="chart">
                         <canvas id="crimeVsOfficerChart" width="400" height="200"></canvas>
                     </div>
-                    <p class="text-end"><small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank">Source: APD Crime Data</a> | <a href="https://crime-data-explorer.fr.cloud.gov/pages/le/pe" target="_blank">FBI CDE Officer Employment</a></small></p>
+                    <p class="text-end"><small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank" rel="noreferrer">Source: APD Crime Data</a> | <a href="https://crime-data-explorer.fr.cloud.gov/pages/le/pe" target="_blank" rel="noreferrer">FBI CDE Officer Employment</a></small></p>
                 </div>
             </div>
         </div>
         <div class="col-12 col-lg-8 mt-4 text-lg">
             <p>There is no direct correlary between the number of cops we have on the streets and the number of crimes.</p>
-            <p>This is unsurprising. Studies have shown that <a href="https://www.washingtonpost.com/politics/2020/06/07/over-past-60-years-more-spending-police-hasnt-necessarily-meant-less-crime/" target="_blank">crime has decreased</a> over the last several decades regardless of <a href="https://www.ojp.gov/ncjrs/virtual-library/abstracts/relationship-between-police-presence-and-crime-deterrence" target="_blank">head counts.</a> <a href="https://www.washingtonpost.com/politics/2020/06/07/over-past-60-years-more-spending-police-hasnt-necessarily-meant-less-crime/" target="_blank">Spending doesn't have a direct correlation either.</a></p>
+            <p>This is unsurprising. Studies have shown that <a href="https://www.washingtonpost.com/politics/2020/06/07/over-past-60-years-more-spending-police-hasnt-necessarily-meant-less-crime/" target="_blank" rel="noreferrer">crime has decreased</a> over the last several decades regardless of <a href="https://www.ojp.gov/ncjrs/virtual-library/abstracts/relationship-between-police-presence-and-crime-deterrence" target="_blank" rel="noreferrer">head counts.</a> <a href="https://www.washingtonpost.com/politics/2020/06/07/over-past-60-years-more-spending-police-hasnt-necessarily-meant-less-crime/" target="_blank" rel="noreferrer">Spending doesn't have a direct correlation either.</a></p>
             <p>Cops serve important civil functions, and many find an increased presence of cops comforting. But cops are not the only factor in crime rates. To the extent they are a factor, it's far more important <b>how</b> officers are deployed, and <b>what tools</b> they are given.</p>
             <p>Violent altercations amongst friends, nearly 1,800 guns being stolen from the cars of irresponsible gun owners, these are things no number of cops will completely prevent. Our safety is dependent on far more social factors than just enforcement.</p>
         </div>
@@ -89,8 +89,8 @@
                     <div class="chart">
                         <canvas id="crimeWaveChart2" width="400" height="200"></canvas>
                     </div>
-                    <p class="text-end"><small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank">Source: APD Crime Data</a>
-                    <a href="https://datacommons.org/tools/timeline#statsVar=UnemploymentRate_Person&place=geoId%2F13&chart=%7B%22unemploymentRate%22%3A%7B%22delta%22%3Afalse%7D%7D" target="_blank">BLS Unemployment</a></small></p>
+                    <p class="text-end"><small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank" rel="noreferrer">Source: APD Crime Data</a>
+                    <a href="https://datacommons.org/tools/timeline#statsVar=UnemploymentRate_Person&place=geoId%2F13&chart=%7B%22unemploymentRate%22%3A%7B%22delta%22%3Afalse%7D%7D" target="_blank" rel="noreferrer">BLS Unemployment</a></small></p>
                 </div>
             </div>
         </div>
@@ -107,7 +107,7 @@
                     <div class="chart">
                         <canvas id="crimeProtestsChart" width="400" height="200"></canvas>
                     </div>
-                    <p class="text-end"><small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank">Source: APD Crime Data</a></p>
+                    <p class="text-end"><small><a href="https://www.atlantapd.org/i-want-to/crime-data-downloads" target="_blank" rel="noreferrer">Source: APD Crime Data</a></p>
                 </div>
             </div>
         </div>
@@ -159,24 +159,24 @@
             <p>So what does the data tell us? It suggests that in a tumultuous period, we've seen a small increase after decades of decreasing crime. We've seen that there is no one simple cause, and no one simple solution.</p>
             <p><b>The data helps us separate legitimate concerns from fearmongering.</b></p>
             <p>From there, we go beyond the data. We bring our assumptions about human motivations and behaviors. <b>Assumptions that may be wrong, or incredibly limited.</b> Keeping an open mind and listening to experts would serve us well.</p>
-            <p>We would do well to challenge our own ideas around <a href="https://kurious.io/c/risk/#intro" target="_blank">risk</a>, and <a href="https://kurious.io/c/poor-lazy/" target="_blank">poverty</a> for instance.</p>
+            <p>We would do well to challenge our own ideas around <a href="https://kurious.io/c/risk/#intro" target="_blank" rel="noreferrer">risk</a>, and <a href="https://kurious.io/c/poor-lazy/" target="_blank" rel="noreferrer">poverty</a> for instance.</p>
             <p>One particularly illuminating local voice on this topic is George Chidi. He has done the work, and amplifies the experts. Here are a few relevant articles of his that should be required reading for anyone interested in working towards a safer Atlanta.</p>
-            <p><a href="https://theatlantaobjective.substack.com/p/hitting-close-to-home" target="_blank">Hitting Close To Home</a></p>
-            <p><a href="https://theatlantaobjective.substack.com/p/the-thomas-abt-interview" target="_blank">Ten Steps to Stop The Killing</a></p>
-            <p><a href="https://www.atlantamagazine.com/great-reads/the-source-of-violent-crime-in-atlanta-isnt-mysterious-its-desperation-born-by-inequality/" target="_blank">The source of violent crime in Atlanta isn’t mysterious</a></p>
-            <p><a href="https://theatlantaobjective.substack.com/p/why-theyre-all-black" target="_blank">Why They're All Black</a></p>
+            <p><a href="https://theatlantaobjective.substack.com/p/hitting-close-to-home" target="_blank" rel="noreferrer">Hitting Close To Home</a></p>
+            <p><a href="https://theatlantaobjective.substack.com/p/the-thomas-abt-interview" target="_blank" rel="noreferrer">Ten Steps to Stop The Killing</a></p>
+            <p><a href="https://www.atlantamagazine.com/great-reads/the-source-of-violent-crime-in-atlanta-isnt-mysterious-its-desperation-born-by-inequality/" target="_blank" rel="noreferrer">The source of violent crime in Atlanta isn’t mysterious</a></p>
+            <p><a href="https://theatlantaobjective.substack.com/p/why-theyre-all-black" target="_blank" rel="noreferrer">Why They're All Black</a></p>
             <p>And let's not use our fear of crime as a distraction from the immense amount of actual suffering our neighbors deal with every day: <a href="https://theatlantaobjective.substack.com/p/downtown-dis-harmony">Downtown Dis-Harmony</a></p>
         </div>
     </div>
 </div>
 
 <script>
-    // export let ready;
-    import Chart from "chart.js/auto/auto.esm";
-    import annotationPlugin from 'chartjs-plugin-annotation';
+    export let aggregate;
+    import Chart from "chart.js/auto";
+    // import annotationPlugin from 'chartjs-plugin-annotation';
     import { get } from "$lib/_helpers";
     import { onMount } from 'svelte';
-    import { browser } from "$app/env";
+    import { browser } from "$app/environment";
     
 let domain = 'https://civics.city/atlanta/data';
 var d = new Date();
@@ -192,6 +192,7 @@ var homicideRisk = {
     2021: 0
 };
 onMount(() => {
+    console.log({aggregate});
     init();
 });
 var crimeWave = {};
@@ -199,7 +200,7 @@ var crimeWave = {};
 function init() {
     if( browser )
     {
-        Chart.register(annotationPlugin);
+        // Chart.register(annotationPlugin);
         var population = {
             2022: 532695,
             2021: 524100,
@@ -232,258 +233,256 @@ function init() {
             "2021":1603
         };
 
-        get( domain+'/COBRA/year-aggregate.json', function(data) 
+        let data = aggregate.year;
+        if( data[currYear] )
         {
-            if( data[currYear] )
-            {
-                delete data[currYear]
-            }
-            var yearKeys = Object.keys(data);
-            var datasets = {};
-            var totalCrimes = {};
-            yearKeys.forEach((yearKey) => {
-                var year = data[yearKey];
-                totalCrimes[yearKey] = 0;
-                Object.keys(year.sum).forEach((crimeKey) => {
-                    if( ['ROBBERY-RESIDENCE', 'ROBBERY-PEDESTRIAN', 'ROBBERY-COMMERCIAL'].indexOf(crimeKey) != -1 )
+            delete data[currYear]
+        }
+        var yearKeys = Object.keys(data);
+        var datasets = {};
+        var totalCrimes = {};
+        yearKeys.forEach((yearKey) => {
+            var year = data[yearKey];
+            totalCrimes[yearKey] = 0;
+            Object.keys(year.sum).forEach((crimeKey) => {
+                if( ['ROBBERY-RESIDENCE', 'ROBBERY-PEDESTRIAN', 'ROBBERY-COMMERCIAL'].indexOf(crimeKey) != -1 )
+                {
+                    if( !year.sum.hasOwnProperty('ROBBERY') )
                     {
-                        if( !year.sum.hasOwnProperty('ROBBERY') )
-                        {
-                            year.sum.ROBBERY = 0;
-                        }
-                        year.sum.ROBBERY += year.sum[crimeKey];
-                        delete year.sum[crimeKey];
+                        year.sum.ROBBERY = 0;
                     }
-                    if( ['BURGLARY-RESIDENCE', 'BURGLARY-NONRES'].indexOf(crimeKey) != -1 )
+                    year.sum.ROBBERY += year.sum[crimeKey];
+                    delete year.sum[crimeKey];
+                }
+                if( ['BURGLARY-RESIDENCE', 'BURGLARY-NONRES'].indexOf(crimeKey) != -1 )
+                {
+                    if( !year.sum.hasOwnProperty('BURGLARY') )
                     {
-                        if( !year.sum.hasOwnProperty('BURGLARY') )
-                        {
-                            year.sum.BURGLARY = 0;
-                        }
-                        year.sum.BURGLARY += year.sum[crimeKey];
-                        delete year.sum[crimeKey];
+                        year.sum.BURGLARY = 0;
+                    }
+                    year.sum.BURGLARY += year.sum[crimeKey];
+                    delete year.sum[crimeKey];
+                }
+                
+            });
+            Object.keys(year.sum).forEach((crimeKey) => {
+                var crime = year.sum[crimeKey];
+                var val = crime/population[yearKey]*10000;
+                totalCrimes[yearKey] += val;
+                if( !datasets.hasOwnProperty(crimeKey) )
+                {
+                    datasets[crimeKey] = { label: crimeKey, data: [], tension: 0.2 };
+                    if( [ 'AGG ASSAULT', 'HOMICIDE'].indexOf(crimeKey) != -1 ) {
+                        crimeWave[crimeKey] = { label: crimeKey, data: [], tension: 0.2 };
                     }
                     
-                });
-                Object.keys(year.sum).forEach((crimeKey) => {
-                    var crime = year.sum[crimeKey];
-                    var val = crime/population[yearKey]*10000;
-                    totalCrimes[yearKey] += val;
-                    if( !datasets.hasOwnProperty(crimeKey) )
-                    {
-                        datasets[crimeKey] = { label: crimeKey, data: [], tension: 0.2 };
-                        if( [ 'AGG ASSAULT', 'HOMICIDE'].indexOf(crimeKey) != -1 ) {
-                            crimeWave[crimeKey] = { label: crimeKey, data: [], tension: 0.2 };
-                        }
-                        
-                    }
-
-                    datasets[crimeKey].data.push([yearKey, val]);
-
-                    if( ['2019', '2020', '2021'].indexOf(yearKey) != -1
-                        && [ 'AGG ASSAULT', 'HOMICIDE'].indexOf(crimeKey) != -1 )
-                    {
-                        crimeWave[crimeKey].data.push([yearKey, val]);
-                    }
-                })
-                // datasets.push([year[0], sum])
-            });
-            // console.log(Object.values(datasets));
-            console.log({crimeWave});
-            function capitaToPercent(val, year) {
-                var p = (val*10000)/population[year];
-                
-                return p.toFixed(2);
-            }
-            homicideRisk[2019] = capitaToPercent( crimeWave['HOMICIDE'].data[0][1], 2019 );
-            homicideRisk[2021] = capitaToPercent( crimeWave['HOMICIDE'].data[1][1], 2021 );
-            assault[2019] = capitaToPercent( crimeWave['AGG ASSAULT'].data[0][1], 2019 );
-            assault[2021] = capitaToPercent( crimeWave['AGG ASSAULT'].data[1][1], 2021 );
-            Chart.defaults.color = 'white';
-            Chart.defaults.font.size = 16;
-            Chart.overrides.line.borderColor = [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-                'rgba(153, 192, 86, 1)',
-                'rgba(75, 162, 132, 1)',
-                'rgba(255, 102, 64, 1)',
-                'rgba(54, 192, 64, 1)',
-                'rgba(255,255,255, 1)',
-                'rgba(0, 99, 255, 1)',
-                'rgba(255, 0, 126, 1)'
-            ];
-
-            var ctx = document.querySelector('#crimeChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: Object.keys(data),
-                    datasets: Object.values(datasets)
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    elements: {
-                        point: {
-                            borderColor: 'rgba(255, 255, 255, 0.7)'
-                        }
-                    },
-                    scales: {
-                        y: {beginAtZero: true,
-                            max: 300,
-                            title: {
-                                text: 'Police Incidents per 10,000',
-                                display: true
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                padding: 40
-                            }
-                        }
-                    }
                 }
-            });
 
-            var ctx = document.querySelector('#crimeWaveChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['2019', '2020', '2021'],
-                    datasets: Object.values(crimeWave)
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    elements: {
-                        point: {
-                            borderColor: 'rgba(255, 255, 255, 0.7)'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 50,
-                            title: {
-                                text: 'Police Incidents per 10,000',
-                                display: true
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                padding: 40
-                            }
-                        }
-                    }
+                datasets[crimeKey].data.push([yearKey, val]);
+
+                if( ['2019', '2020', '2021'].indexOf(yearKey) != -1
+                    && [ 'AGG ASSAULT', 'HOMICIDE'].indexOf(crimeKey) != -1 )
+                {
+                    crimeWave[crimeKey].data.push([yearKey, val]);
                 }
-            });
-            delete datasets['AUTO THEFT'];
-            delete datasets['LARCENY-FROM VEHICLE'];
-            delete datasets['LARCENY-NON VEHICLE'];
-            delete datasets['ROBBERY'];
-            delete datasets['BURGLARY'];
-            delete datasets['MANSLAUGHTER'];
-            var ctx = document.querySelector('#crimeWaveChart2').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: Object.keys(data),
-                    datasets: Object.values(datasets)
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    elements: {
-                        point: {
-                            borderColor: 'rgba(255, 255, 255, 0.7)'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 65,
-                            title: {
-                                text: 'Police Incidents per 10,000',
-                                display: true
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                padding: 40
-                            }
-                        }
-                    }
-                }
-            });
-            
-    // console.log({totalCrimes})
-            Object.keys(officerCount).forEach((key) => {
-                officerCount[key] = officerCount[key]/population[key]*10000;
             })
+            // datasets.push([year[0], sum])
+        });
+        // console.log(Object.values(datasets));
+        console.log({crimeWave});
+        function capitaToPercent(val, year) {
+            var p = (val*10000)/population[year];
+            
+            return p.toFixed(2);
+        }
+        homicideRisk[2019] = capitaToPercent( crimeWave['HOMICIDE'].data[0][1], 2019 );
+        homicideRisk[2021] = capitaToPercent( crimeWave['HOMICIDE'].data[1][1], 2021 );
+        assault[2019] = capitaToPercent( crimeWave['AGG ASSAULT'].data[0][1], 2019 );
+        assault[2021] = capitaToPercent( crimeWave['AGG ASSAULT'].data[1][1], 2021 );
+        Chart.defaults.color = 'white';
+        Chart.defaults.font.size = 16;
+        Chart.overrides.line.borderColor = [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(153, 192, 86, 1)',
+            'rgba(75, 162, 132, 1)',
+            'rgba(255, 102, 64, 1)',
+            'rgba(54, 192, 64, 1)',
+            'rgba(255,255,255, 1)',
+            'rgba(0, 99, 255, 1)',
+            'rgba(255, 0, 126, 1)'
+        ];
 
-            var ctx = document.querySelector('#crimeVsOfficerChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: Object.keys(totalCrimes),
-                    datasets: [ {
-                        yAxisID: 'yAxis2',
-                        label: 'Total Crimes',
-                        data: Object.values(totalCrimes)
-                    },
-                    {
-                        yAxisID: 'yAxis',
-                        label: 'Officers Per Capita',
-                        data: Object.values(officerCount)
-                    }]
+        var ctx = document.querySelector('#crimeChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Object.keys(data),
+                datasets: Object.values(datasets)
+            },
+            options: {
+                maintainAspectRatio: false,
+                elements: {
+                    point: {
+                        borderColor: 'rgba(255, 255, 255, 0.7)'
+                    }
                 },
-                options: {
-                    maintainAspectRatio: false,
-                    elements: {
-                        point: {
-                            borderColor: 'rgba(255, 255, 255, 0.7)'
+                scales: {
+                    y: {beginAtZero: true,
+                        max: 300,
+                        title: {
+                            text: 'Police Incidents per 10,000',
+                            display: true
                         }
-                    },
-                    scales: {
-                        yAxis: {
-                            beginAtZero: true,
-                            max: 55,
-                            position: 'right',
-                            title: {
-                                text: 'Officers per 10,000',
-                                display: true,
-                                color: 'rgba(54, 162, 235, 1)'
-                            }
-                        },
-                        yAxis2: {
-                            beginAtZero: true,
-                            max: 1000,
-                            title: {
-                                text: 'Police Incidents per 10,000',
-                                display: true
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                padding: 40
-                            }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 40
                         }
                     }
                 }
-            });
+            }
+        });
+
+        var ctx = document.querySelector('#crimeWaveChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['2019', '2020', '2021'],
+                datasets: Object.values(crimeWave)
+            },
+            options: {
+                maintainAspectRatio: false,
+                elements: {
+                    point: {
+                        borderColor: 'rgba(255, 255, 255, 0.7)'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 50,
+                        title: {
+                            text: 'Police Incidents per 10,000',
+                            display: true
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 40
+                        }
+                    }
+                }
+            }
+        });
+        delete datasets['AUTO THEFT'];
+        delete datasets['LARCENY-FROM VEHICLE'];
+        delete datasets['LARCENY-NON VEHICLE'];
+        delete datasets['ROBBERY'];
+        delete datasets['BURGLARY'];
+        delete datasets['MANSLAUGHTER'];
+        var ctx = document.querySelector('#crimeWaveChart2').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Object.keys(data),
+                datasets: Object.values(datasets)
+            },
+            options: {
+                maintainAspectRatio: false,
+                elements: {
+                    point: {
+                        borderColor: 'rgba(255, 255, 255, 0.7)'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 65,
+                        title: {
+                            text: 'Police Incidents per 10,000',
+                            display: true
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 40
+                        }
+                    }
+                }
+            }
+        });
+        
+// console.log({totalCrimes})
+        Object.keys(officerCount).forEach((key) => {
+            officerCount[key] = officerCount[key]/population[key]*10000;
+        })
+
+        var ctx = document.querySelector('#crimeVsOfficerChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Object.keys(totalCrimes),
+                datasets: [ {
+                    yAxisID: 'yAxis2',
+                    label: 'Total Crimes',
+                    data: Object.values(totalCrimes)
+                },
+                {
+                    yAxisID: 'yAxis',
+                    label: 'Officers Per Capita',
+                    data: Object.values(officerCount)
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                elements: {
+                    point: {
+                        borderColor: 'rgba(255, 255, 255, 0.7)'
+                    }
+                },
+                scales: {
+                    yAxis: {
+                        beginAtZero: true,
+                        max: 55,
+                        position: 'right',
+                        title: {
+                            text: 'Officers per 10,000',
+                            display: true,
+                            color: 'rgba(54, 162, 235, 1)'
+                        }
+                    },
+                    yAxis2: {
+                        beginAtZero: true,
+                        max: 1000,
+                        title: {
+                            text: 'Police Incidents per 10,000',
+                            display: true
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 40
+                        }
+                    }
+                }
+            }
         });
 
         var promises = [];
@@ -509,19 +508,8 @@ function init() {
             });
             return datasets;
         }
-        promises.push(new Promise((resolve, reject) => {
-            get( domain+'/COBRA/2020-aggregate.json', function(data) 
-            {
-                
-                resolve(processData(data, '2020'));
-            });
-        }));
-        promises.push(new Promise((resolve, reject) => {
-            get( domain+'/COBRA/2019-aggregate.json', function(data) 
-            {
-                resolve(processData(data, '2019'));
-            });
-        }));
+        let data2020 = processData(aggregate['2020'], '2020')
+        let data2019 = processData(aggregate['2019'], '2019')
         var gaUnemployment = [
             3.1,
             3.5,
@@ -536,88 +524,95 @@ function init() {
             5.3,
             5.6
         ];
-        Promise.all( promises ).then((data) => {
-            console.log({data});
-            Chart.overrides.line.borderColor = [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-                'rgba(153, 192, 86, 1)',
-                'rgba(75, 162, 132, 1)',
-                'rgba(255, 102, 64, 1)',
-                'rgba(54, 192, 64, 1)',
-                'rgba(255,255,255, 1)',
-                'rgba(0, 99, 255, 1)',
-                'rgba(255, 0, 126, 1)'
-            ];
 
-            var ctx = document.querySelector('#crimeProtestsChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    // labels: Object.keys(data[0]),
-                    datasets: Object.values( data[0] ).concat( Object.values( data[1]), [{
-                    yAxisID: 'yAxis2',
-                    label: '2020 Unemployment',
-                    data: Object.values(gaUnemployment)
-                }] )
+        Chart.overrides.line.borderColor = [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(153, 192, 86, 1)',
+            'rgba(75, 162, 132, 1)',
+            'rgba(255, 102, 64, 1)',
+            'rgba(54, 192, 64, 1)',
+            'rgba(255,255,255, 1)',
+            'rgba(0, 99, 255, 1)',
+            'rgba(255, 0, 126, 1)'
+        ];
+
+        var ctx = document.querySelector('#crimeProtestsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                // labels: Object.keys(data[0]),
+                datasets: Object.values( data2020 ).concat( 
+                    Object.values( data2019 ), 
+                    [
+                        {
+                            yAxisID: 'yAxis2',
+                            label: '2020 Unemployment',
+                            data: Object.values(gaUnemployment)
+                        }
+                    ]
+                )
+            },
+            options: {
+                maintainAspectRatio: false,
+                elements: {
+                    point: {
+                        borderColor: 'rgba(255, 255, 255, 0.7)'
+                    }
                 },
-                options: {
-                    maintainAspectRatio: false,
-                    elements: {
-                        point: {
-                            borderColor: 'rgba(255, 255, 255, 0.7)'
+                scales: {
+                    yAxis2: {
+                        beginAtZero: true,
+                        max: 20,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: '% Unemployment (2020)',
+                            color: 'rgba(153, 102, 255, 1)'
                         }
                     },
-                    scales: {
-                        yAxis2: {
-                            beginAtZero: true,
-                            max: 20,
-                            position: 'right',
-                            title: {
-                                display: true,
-                                text: '% Unemployment (2020)',
-                                color: 'rgba(153, 102, 255, 1)'
-                            }
-                        },
-                        yAxis: {beginAtZero: true,
-                            max: 300,
-                            title: {
-                                text: 'Police Incidents per 10,000',
-                                display: true
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                padding: 40
-                            }
-                        },
-                        annotation: {
-                            annotations: {
-                                line1: {
-                                    type: 'box',
-                                    xMin: '06',
-                                    xMax: '07',
-                                    borderColor: 'rgb(255, 99, 132)',
-                                    backgroundColor: 'rgba(255, 99, 132, 0.1)',
-                                    borderWidth: 2,
-                                    label: {
-                                        content: 'Protests',
-                                        enabled: true,
-                                        color: '#fff'
-                                    }
-                                }
-                            }
+                    yAxis: {
+                        beginAtZero: true,
+                        max: 300,
+                        title: {
+                            text: 'Police Incidents per 10,000',
+                            display: true
                         }
                     }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 40
+                        }
+                    },
+                    // annotation: {
+                    //     annotations: {
+                    //         box1: {
+                    //             type: 'box',
+                    //             xMin: 6,
+                    //             xMax: 7,
+                    //             // yMin: 0,
+                    //             // yMax: 500,
+                    //             // yAxisID: 'yAxis',
+                    //             borderColor: 'rgb(255, 99, 132)',
+                    //             backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                    //             borderWidth: 2,
+                    //             label: {
+                    //                 content: 'Protests',
+                    //                 color: '#fff',
+                    //                 display: true
+                    //             }
+                    //         }
+                    //     }
+                    // }
                 }
-            });
+            }
         });
     }
 }

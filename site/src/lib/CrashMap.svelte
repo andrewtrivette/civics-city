@@ -1,5 +1,6 @@
 <div class="col-12 mt-4 text-center">
-    <h2>Recent Crashes - 911 Reported</h2>
+    <h2>911 Crash Reports</h2>
+    <p>Archive: June 28, 2022 - July 11, 2023</p>
 </div>
 <div class="col-12 col-lg-3 mt-4">
     <div class="block">
@@ -23,7 +24,7 @@
             </div>
             <div class="input-group mb-2">
                 <label class="input-group-text" for="incidentDateEnd">End</label>
-                <input class="form-control" id="incidentDateEnd" name="incidentDateEnd" type="date" bind:value={maxDate} max={new Date().toISOString().split('T')[0]}  on:change={updateMapHandler} />
+                <input class="form-control" id="incidentDateEnd" name="incidentDateEnd" type="date" bind:value={maxDate} max={'2023-07-11'}  on:change={updateMapHandler} />
                 
             </div>
             <select class="form-select" name="incidentCouncil" bind:value={layers.districts.active} on:change={updateMapHandler}>
@@ -42,10 +43,7 @@
         <div class="title">Average Incidents/Day</div>
         <div class="content text-center"><h2>{(incidentCount/days).toFixed(2).toLocaleString('en-US')}</h2></div>
     </div>
-    <div class="block">
-        <div class="title text-center">Days Since a Crash</div>
-        <div class="content text-center"><h2>{daysSinceVRUCrash}</h2></div>
-    </div>
+
     <div class="block">
         <div class="title text-center"># of Days without a Crash</div>
         <div class="content text-center"><h2>{crashFreeDays} of {days}</h2></div>
@@ -58,7 +56,7 @@
           <a class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" href="#" role="tab" aria-controls="home" aria-selected="true">Map</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="profile-tab"  data-bs-toggle="tab" data-bs-target="#list" href="" role="tab" aria-controls="profile" aria-selected="false">List</a>
+          <a class="nav-link" id="profile-tab"  data-bs-toggle="tab" data-bs-target="#list" href="#" role="tab" aria-controls="profile" aria-selected="false">Data</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -69,8 +67,8 @@
             <table>
                 {#each layers.incidents.tempDataset.features as item (item.properties.key) }
                     <tr>
-                        <td><a href="https://citizen.com/{item.properties.key}" target="_blank">{item.properties.title}</a></td>
-                        <td>{new Date(item.properties.time).toLocaleString('en-US', { timeZone: 'America/New_York'})}</td>
+                        <td><a href="https://citizen.com/{item.properties.key}" target="_blank" rel="noreferrer">{item.properties.title}</a></td>
+                        <td>{new Date(item.properties.time).toLocaleString('en-US', { timeZone: 'America/New_York', timeZoneName: 'short'})}</td>
                     </tr>
                 {/each}
             </table>
@@ -78,7 +76,7 @@
     </div>
 </div>
 <div class="col-12">
-    <p class="text-end"><small>Updated Daily</small> | <small>Source: 911 reports via <a href="https://citizen.com" target="_blank">Citizen.com</a></small></p>
+    <p class="text-end"><small>Updated Daily</small> | <small>Source: 911 reports via <a href="https://citizen.com" target="_blank" rel="noreferrer">Citizen.com</a></small></p>
     <hr /> 
 </div>
 
@@ -104,11 +102,11 @@
     import * as turf from '@turf/turf';
     import 'leaflet/dist/leaflet.css';
     import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
-    import { browser } from "$app/env";
+    import { browser } from "$app/environment";
     import MapHelper from "$lib/_mapHelpers"
 
     let minDate = "2022-06-28";
-    let maxDate = new Date().toLocaleDateString('id', { timeZone: 'America/New_York', month: '2-digit', day: '2-digit', year: 'numeric'}).split('/').reverse().join('-')
+    let maxDate = '2023-07-11';
     let days = (new Date(maxDate) - new Date(minDate))/(1000*60*60*24);
     console.log({days})
     let incidentCount = 0;
@@ -216,7 +214,7 @@
                 onEachFeature: function(feature, layer) {
                     var properties = feature.properties
                     var d = new Date(properties.time).toLocaleString('en-us');
-                    layer.bindPopup(`<div><b>${properties.title}</b><br>${d}<br/><a href="https://citizen.com/${properties.key}" target="_blank">Additional Details</a></div>`);
+                    layer.bindPopup(`<div><b>${properties.title}</b><br>${d}<br/><a href="https://citizen.com/${properties.key}" target="_blank" rel="noreferrer">Additional Details</a></div>`);
                 }
             },
             active: 'all',
@@ -277,7 +275,7 @@
                     // Get number of days in range
                     days = Math.round((new Date(maxDate) - new Date(minDate))/(1000*60*60*24));
                     // Get days
-                    daysSinceVRUCrash = Math.round((new Date(maxDate) - new Date(maxDay))/(1000*60*60*24));
+                    daysSinceVRUCrash = Math.round(( new Date(maxDate) - new Date(maxDay))/(1000*60*60*24));
 
                     incidentCount = dataset.features.length;
                     crashFreeDays = days - (dayList.length);

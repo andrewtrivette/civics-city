@@ -75,7 +75,7 @@
 		"destination": "data/cdia.geojson"
 	},
 	{
-		"type": "daily",
+		"type": "yearly",
 		"source": "https://services.arcgis.com/jIL9msH9OI208GCb/ArcGIS/rest/services/HOLC_Neighborhood_Redlining/FeatureServer/0/query?where=City%3D%27Atlanta%27&f=geojson&outFields=*",
 		"destination": "data/redlining.geojson",
 		"note": "source: ArcGIS Living Atlas https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/announcements/redlining-data-now-in-arcgis-living-atlas/ "
@@ -109,5 +109,10 @@
 		"type": "manual",
 		"source": "https://services2.arcgis.com/zLeajbicrDRLQcny/ArcGIS/rest/services/CityLimits_DPW/FeatureServer/0/query?where=1%3D1&f=geojson&outFields=*",
 		"destination": "data/atl-city-limits.geojson"
+	},
+	{
+		"type": "manual",
+		"source": "https://arcgis.atlantaregional.com/arcgis/rest/services/OpenData/FeatureServer/196/query?f=json&returnGeometry=true&spatialRel=esriSpatialRelIntersects&geometry=%7B%22xmin%22%3A-9412149.91493721%2C%22ymin%22%3A3972279.4859449957%2C%22xmax%22%3A-9392582.035696229%2C%22ymax%22%3A3991847.365185976%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D&geometryType=esriGeometryEnvelope&inSR=102100&outFields=*&outSR=102100&resultType=tile&quantizationParameters=%7B%22mode%22%3A%22view%22%2C%22originPosition%22%3A%22upperLeft%22%2C%22tolerance%22%3A38.218514142537465%2C%22extent%22%3A%7B%22xmin%22%3A2179703.1771919355%2C%22ymin%22%3A1326960.866019711%2C%22xmax%22%3A2259279.0621472336%2C%22ymax%22%3A1413955.8697672114%2C%22spatialReference%22%3A%7B%22wkid%22%3A102667%2C%22latestWkid%22%3A2240%7D%7D%7D",
+		"destination": "data/neighhborhood-demographics.geojson"
 	}
 ]

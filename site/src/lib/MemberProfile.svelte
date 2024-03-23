@@ -66,7 +66,7 @@
                     {#each voteList as vote (vote)}
                         <div class="row pb-3 mb-3 border-bottom border-1 border-info">
                             <div class="col-12 col-lg-8">
-                                <a class="text-white" href="http://atlantacityga.iqm2.com/Citizens/Detail_LegiFile.aspx?Frame=SplitView&MeetingID={vote.MeetingID}&ID={vote.ResolutionID}" target="_blank" rel="noopener">{vote.ResolutionShortTitle}</a>
+                                <a class="text-white" href="http://atlantacityga.iqm2.com/Citizens/Detail_LegiFile.aspx?Frame=SplitView&MeetingID={vote.MeetingID}&ID={vote.ResolutionID}" target="_blank" rel="noopener noreferrer">{vote.ResolutionShortTitle}</a>
                             </div>
                             <div class="col-6 col-lg-2">
                                 <span class="d-md-none">Vote: </span>

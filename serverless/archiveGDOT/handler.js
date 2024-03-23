@@ -16,7 +16,7 @@ exports.handler = async (event) => {
 
 
 
-    var response = await fetch('https://gdot.numetric.net/crash-data', {
+    var response = await fetch('https://gdot.aashtowaresafety.net/crash-data#/', {
         credentials: 'include',
         headers: {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'
@@ -34,7 +34,7 @@ exports.handler = async (event) => {
             "returnFormat":{
                 "format":"Array"
             },
-            "size":100000,
+            "size":10000,
             "defaultFilters":[
                 {
                     "coordinates":[
@@ -106,7 +106,7 @@ exports.handler = async (event) => {
 
         // console.log(JSON.stringify(body));
 
-        var response = await fetch('https://gdot.numetric.net/api/query/search', {
+        var response = await fetch('https://gdot.aashtowaresafety.net/api/query/search', {
             credentials: 'include',
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36',

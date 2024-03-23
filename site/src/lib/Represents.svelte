@@ -32,7 +32,7 @@
                     <i class="material-icons right">my_location</i>
                 </button> 
                 {#if !findLocationActive }
-                    <a id="clearLocation" on:click={clearLocation}><span class="px-3">Clear</span></a>
+                    <a id="clearLocation" on:click={clearLocation} on:keypress={clearLocation}><span class="px-3">Clear</span></a>
                 {/if}
             </div>
         </div>
@@ -135,7 +135,7 @@
     import 'leaflet/dist/leaflet.css';
     import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
     import { onMount } from 'svelte';
-    import { browser } from "$app/env";
+    import { browser } from "$app/environment";
 
     let currLocation = null;
 
@@ -258,7 +258,7 @@
                 geoJSON.features.forEach(function(feature, index) {
                     if( turf.booleanPointInPolygon(pt, feature) )
                     {
-                        npuRep = '<span>, your NPU is <a href="https://www.atlantaga.gov/government/departments/city-planning/office-of-zoning-development/neighborhood-planning-unit-npu" target="_blank">NPU '+feature.properties.NAME+'</a>';
+                        npuRep = '<span>, your NPU is <a href="https://www.atlantaga.gov/government/departments/city-planning/office-of-zoning-development/neighborhood-planning-unit-npu" target="_blank" rel="noreferrer">NPU '+feature.properties.NAME+'</a>';
                     }
                 });
             });
@@ -270,7 +270,7 @@
                 geoJSON.features.forEach(function(feature, index) {
                     if( turf.booleanPointInPolygon(pt, feature) )
                     {
-                        repPrecinct = '<span>, and your police precinct is <a href="https://www.atlantapd.org/community/apd-zones/zone-'+feature.properties.ZONE+'" target="_blank">Precinct '+feature.properties.ZONE+'</a>';
+                        repPrecinct = '<span>, and your police precinct is <a href="https://www.atlantapd.org/community/apd-zones/zone-'+feature.properties.ZONE+'" target="_blank"  rel="noreferrer">Precinct '+feature.properties.ZONE+'</a>';
                     }
                 });
             });

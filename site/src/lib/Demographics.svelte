@@ -26,8 +26,8 @@
                 <canvas id="genderChart" width="400" height="200"></canvas>
             </div>
             <br><hr/><br>
-            <p><a href="https://opendata.atlantaregional.com/datasets/coaplangis::cdia?geometry=-85.412%2C33.543%2C-83.343%2C33.943">Poverty Map (CDIA's) <i class="material-icons tiny">open_in_new</i></a></p>
-            <p><a href="https://garc.maps.arcgis.com/apps/webappviewer/index.html?id=c36bb3b8c0744aa7a04a52031473790a" target="_blank">Gentrification Risk Map <i class="material-icons tiny">open_in_new</i></a></p>
+            <p><a href="https://opendata.atlantaregional.com/datasets/coaplangis::cdia?geometry=-85.412%2C33.543%2C-83.343%2C33.943" target="_blank"  rel="noreferrer">Poverty Map (CDIA's) <i class="material-icons tiny">open_in_new</i></a></p>
+            <p><a href="https://garc.maps.arcgis.com/apps/webappviewer/index.html?id=c36bb3b8c0744aa7a04a52031473790a" target="_blank" rel="noreferrer">Gentrification Risk Map <i class="material-icons tiny">open_in_new</i></a></p>
         </div>
     </div>
 </div>
@@ -54,7 +54,7 @@
     </div>
 </div>
 <div class="col-12 mt-3 text-center">
-    <a href="https://www.census.gov/quickfacts/fact/table/atlantacitygeorgia/POP010220" target="_blank">Source: US Census Bureau.</a> Numbers primarily cover 2015-2019
+    <a href="https://www.census.gov/quickfacts/fact/table/atlantacitygeorgia/POP010220" target="_blank" rel="noreferrer">Source: US Census Bureau.</a> Numbers primarily cover 2015-2019
 </div>
 <!-- <div class="col-12 mt-3 text-center">
     <div class="block">
@@ -69,7 +69,7 @@
     // export let ready;
     import { get } from "$lib/_helpers";
     import { onMount } from 'svelte';
-    import Chart from "chart.js/auto/auto.js";
+    import Chart from "chart.js/auto";
     // import CDIAMap from "$lib/CDIAMap.svelte"
 // let chartReady = ( typeof Chart != 'undefined');
 let population = '';

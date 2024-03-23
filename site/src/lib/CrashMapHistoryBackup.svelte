@@ -51,7 +51,7 @@
         <div class="title">Average Incidents/Day</div>
         <div class="content text-center"><h2>{(incidentCount/365).toFixed(2).toLocaleString('en-US')}</h2></div>
     </div>
-    <p><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank">GDOT Crash Data</a></small></p>
+    <p><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank"  rel="noreferrer">GDOT Crash Data</a></small></p>
 </div>
 <div class="col-12 col-lg-8 my-4">
     <div bind:this={mapEl} class="map"></div>
@@ -75,7 +75,7 @@
 
     import 'leaflet/dist/leaflet.css';
     import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
-    import { browser } from "$app/env";
+    import { browser } from "$app/environment";
     import * as turf from '@turf/turf';
 
     let domain = 'https://civics.city/atlanta/data';

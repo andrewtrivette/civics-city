@@ -28,8 +28,8 @@
     }
     
     .hero .content {
-        max-width: 1600px;
-        margin: 0px;
+        max-width: 1320px;
+        margin: 0px auto;
         z-index: 2;
         position: absolute;
         inset: 30px 10%;
@@ -47,18 +47,15 @@
     .hero h4 {
         background-color: rgba(20, 0, 20, 0.7);
         padding: 20px 30px;
-        font-size: clamp( 2rem, 3vw, 3rem);
+        font-size: clamp( 1.5rem, 2.5vw, 2.3rem);
         backdrop-filter: blur(5px);
         margin: 10px;
-        transform: rotate(-0.5deg);
-        box-shadow: 4px 4px 4px black;
         text-align: center;
         color: white;
         align-self: flex-start;
     }
     .hero h4 {
         font-size: clamp( 1rem, 2.2vw, 2rem);
-        transform: rotate(0.5deg);
         align-self: flex-end;
         justify-self:flex-end;
     }

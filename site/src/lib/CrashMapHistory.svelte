@@ -1,4 +1,5 @@
 <div class="col-12 mt-4 text-center">
+    <p>2013 - 2021 Data</p>
     <h2>Crash Heatmap</h2>
 </div>
 <div class="col-12 col-lg-4 mt-4">
@@ -50,7 +51,7 @@
         <div class="title">Average Incidents/Day</div>
         <div class="content text-center"><h2>{Math.round(incidentCount/365).toLocaleString('en-US')}</h2></div>
     </div>
-    <p><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank">GDOT Crash Data</a></small></p>
+    <p><small>Source: <a href="http://www.dot.ga.gov/DS/Crash" target="_blank" rel="noreferrer">GDOT Crash Data</a></small></p>
 </div>
 <div class="col-12 col-lg-8 my-4">
     <div id="map" class="map-tall" on:blur={mapBlur} on:focus={mapFocus}></div>
@@ -76,7 +77,7 @@
     import { onMount } from 'svelte';
 
     import 'leaflet/dist/leaflet.css';
-    import { browser } from "$app/env";
+    import { browser } from "$app/environment";
     import * as turf from '@turf/turf';
 
     let domain = 'https://civics.city/atlanta/data';

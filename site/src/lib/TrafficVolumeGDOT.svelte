@@ -25,7 +25,7 @@
     import { onMount } from 'svelte';
 
     import 'leaflet/dist/leaflet.css';
-    import { browser } from "$app/env";
+    import { browser } from "$app/environment";
     import * as turf from '@turf/turf';
 
     let domain = 'https://civics.city/atlanta/data';

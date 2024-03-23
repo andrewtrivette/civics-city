@@ -21,7 +21,7 @@
                                     <b>{item.Meeting.Department.Name}</b>
                                     <br>{item.Meeting.Date[4]}, {item.Meeting.Date[3]}<br>
                                     {#if item.hasOwnProperty('Agenda') }
-                                        <b><a sveltekit:reload href="/meeting/?agenda={item.Meeting.ID}">Agenda</a></b>
+                                        <b><a data-sveltekit-reload href="/meeting/?agenda={item.Meeting.ID}">Agenda</a></b>
                                     {/if}
                                 </div>
                             </div>
@@ -48,9 +48,9 @@
                                     <b>{item.Meeting.Department.Name}</b>
                                     <br>{item.Meeting.Date[4]}, {item.Meeting.Date[3]}<br>
                                     {#if item.hasOwnProperty('Minutes') }
-                                        <b><a sveltekit:reload href="/meeting/?minutes={item.Meeting.ID}">Minutes</a></b>
+                                        <b><a data-sveltekit-reload href="/meeting/?minutes={item.Meeting.ID}">Minutes</a></b>
                                     {:else}
-                                        <b><a sveltekit:reload href="/meeting/?agenda={item.Meeting.ID}">Agenda</a></b>
+                                        <b><a data-sveltekit-reload href="/meeting/?agenda={item.Meeting.ID}">Agenda</a></b>
                                     {/if}
                                 </div>
                             </div>

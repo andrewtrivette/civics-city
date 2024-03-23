@@ -18,7 +18,9 @@ var council = [
     2084
 ].map(item => '/member/'+item)
 var districts = [1,2,3,4,5,6,7,8,9,10,11,12].map(item => '/district/'+item);
-var entries = council.concat(districts, ['/meeting/']);
+
+var entries = council.concat(districts);
+
 const handleError = ({ status, path, referrer, referenceType }) => {
 	// if (path.startsWith('/blog')) throw new Error('Missing a blog page!');
 	console.warn(`${status} ${path}${referrer ? ` (${referenceType} from ${referrer})` : ''}`);
@@ -28,24 +30,14 @@ const handleError = ({ status, path, referrer, referenceType }) => {
 const config = {
 	kit: {
 		adapter: adapter({
-			// default options are shown
-			pages: 'atlanta',
-			assets: 'atlanta',
 			fallback: null,
-			precompress: false
+			precompress: false,
+            strict: false
 		}),
-        trailingSlash: 'always',
-		// hydrate the <div id="svelte"> element in src/app.html
-		// target: '#svelte',
         prerender: {
-            enabled: true,
             entries: entries,
-            onError: handleError,
-            default: true
-        },
-        // paths: {
-        //     base: '/atlanta'
-        // }
+            handleHttpError: handleError
+        }
 	}
 };
 

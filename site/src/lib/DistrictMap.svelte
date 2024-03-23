@@ -17,7 +17,7 @@
     import { onMount } from 'svelte';
 
     import 'leaflet/dist/leaflet.css';
-    import { browser } from "$app/env";
+    import { browser } from "$app/environment";
     let domain = 'https://civics.city/atlanta/data';
 
     onMount( async () => {
