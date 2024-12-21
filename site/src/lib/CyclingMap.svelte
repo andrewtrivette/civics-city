@@ -7,8 +7,12 @@
                 <label class="form-check-label existing" for="current">Include Current</label>
             </div>
             <div class="form-check mb-2">
-                <input class="form-check-input" name="projectType" id="future" type="checkbox" bind:group={layers.lanes.active} value={"future"} on:change={updateMapHandler}  />
-                <label class="form-check-label planned" for="future">Include Planned</label>
+                <input class="form-check-input" name="projectType" id="funded" type="checkbox" bind:group={layers.lanes.active} value={"funded"} on:change={updateMapHandler}  />
+                <label class="form-check-label funded" for="funded">Include Funded</label>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" name="projectType" id="planned" type="checkbox" bind:group={layers.lanes.active} value={"planned"} on:change={updateMapHandler}  />
+                <label class="form-check-label planned" for="planned">Include Planned</label>
             </div>
         </div>
         <div class="title">Type</div>
@@ -25,12 +29,6 @@
                 <input class="form-check-input" name="laneType" id="currentPaths" type="checkbox" bind:group={layers.lanes.active} value={"paths"} on:change={updateMapHandler} />
                 <label class="form-check-label" for="currentPaths">Multi-use Paths</label>
             </div>
-            {#if layers.lanes.active.includes('future') }
-            <div class="form-check mb-2">
-                <input class="form-check-input" name="laneType" id="completeStreets" type="checkbox" bind:group={layers.lanes.active} value={"complete"} on:change={updateMapHandler} />
-                <label class="form-check-label" for="completeStreets">Complete Streets</label>
-            </div>
-            {/if}
         </div>
         <div class="title">District</div>
         <div class="content">            
@@ -75,43 +73,38 @@
                     <th>Year Installed</th>
                 </tr>
                 {#each layers.lanes.tempDataset.features as item (item.id) }
-                    {#if item.properties.LENGTH_MILES != null }
+                    {#if item.properties.LengthMi != null }
                     <tr>
-                        <th>{item.properties.NAME}</th>
-                        <td>{item.properties.LENGTH_MILES.toFixed(2)}</td>
-                        <td>{item.properties.PROTECTION}</td>
-                        <td>{(item.properties.STATUS == 'Existing') ? item.properties.YEAR_INSTALLED: ''}</td>
+                        <th>{item.properties.Name}</th>
+                        <td>{item.properties.LengthMi.toFixed(2)}</td>
+                        <td>{item.properties.Protection}</td>
+                        <td>{(item.properties.Status == 'Existing') ? item.properties.YearInstalled: ''}</td>
                     </tr>
                     {/if}
                 {/each}
             </table>
             {/if}
-            {#if layers.projects.tempDataset.features.length > 0 }
-            <h3>Projects</h3>
-            <table>
-                <tr>
-                    <th>Name</th>
-                    <th>length(miles)</th>
-                    <th>Construction Start</th>
-                    <th>Construction End</th>
-                </tr>
-                {#each layers.projects.tempDataset.features as item (item.id) }
-                    <tr>
-                        <th>{item.properties.FUNDING_PROJECT_NAME}</th>
-                        <td>{item.properties.LENGTH_MI.toFixed(2)}</td>
-                        <td>{new Date(item.properties.CONSTRUCTION_START_DATE).toDateString()}</td>
-                        <td>{new Date(item.properties.CONSTRUCTION_COMPLETION_DATE).toDateString()}</td>
-                    </tr>
-                {/each}
-            </table>
-            {/if}
+           
         </div>
     </div>
 </div>
 <div class="col-12">
     <hr />
 </div>
-
+<div class="col-12">
+    <table>
+        <tr>
+            <th>Year</th>
+            <th>Length (miles)</th>
+        </tr>
+        {#each Object.entries(years) as [year, miles]}
+            <tr>
+                <th>{year}</th>
+                <td>{miles.toFixed(2)}</td>
+            </tr>
+        {/each}
+    </table>
+</div>
 
 <style>
     .map,
@@ -122,11 +115,14 @@
         padding: 10px;
         overflow-y: scroll;
     }
-    .existing {
-        border-bottom: 3px solid rgba(255, 99, 132, 1);
-    }
     .planned {
-        border-bottom: 3px solid rgba(54, 162, 235, 1);
+        border-bottom: 3px solid rgb(255, 99, 132);
+    }
+    .existing {
+        border-bottom: 3px solid rgb(54, 217, 235);
+    }
+    .funded {
+        border-bottom: 3px solid rgb(226, 235, 54);
     }
     th, td {
         padding: 10px;
@@ -147,6 +143,12 @@
     let map = null;
     let totalCurrentMiles = 0;
     let totalFutureMiles = 0;
+    let years = {};
+    let laneColors = {
+        'Existing': 'rgb(54, 217, 235)',
+        'Planned': 'rgb(255, 99, 132)',
+        'Funded': 'rgb(226, 235, 54)'
+    }
 
     let layers = {
         districts: {
@@ -192,7 +194,7 @@
             ]
         },
         lanes: {
-            source: domain+'/atldot-bike-lanes.geojson',
+            source: domain+'/bike-facilities.geojson',
             dataset: null,
             layerGroup: null,
             sourceCallback: (geoJSON) => {
@@ -204,41 +206,45 @@
             },
             featureOpts: {
                 style: function (feature) {
-                    return {color: (feature.properties.STATUS == 'Existing') ? 'rgba(255, 99, 132, .8)':'rgba(54, 162, 235, .8)', fillOpacity: 0.2};
+                    return {color: laneColors[feature.properties.Status], fillOpacity: 0.2, opacity: feature.properties.Protection == 'High' ? 1 : 0.5};
                 },
                 onEachFeature: function(feature, layer) {
                     var properties = Object.entries(feature.properties).reduce(( prevValue, currValue ) => {
                         return (['id', 'ref'].indexOf(currValue[0])) ? prevValue+'<tr><td>'+currValue.join('</td><td>')+'</tr>' : prevValue;
                     }, '');
                     layer.bindPopup('<table>'+properties+'</table>', {maxWidth: 600})
+
+                    var year = feature.properties.YearInstalled;
+                    if( year != null ) {
+                        if( !years.hasOwnProperty(year) ) {
+                            years[year] = 0;
+                        }
+                        years[year] += feature.properties.LengthMi;    
+                    }
+                    
                 }
             },
             active: ['protected', 'paths', 'current'],
             filters: [
                 ( dataset ) => {
-                    // Removing duplicates
-                    dataset.features = dataset.features.filter( item => {
-                        var id = item.properties.OBJECTID;
-                        return (![190, 164, 187, 188].includes(id))
-                    })
-                    return dataset;
-                },
-                ( dataset ) => {
                     totalCurrentMiles = 0;
                     totalFutureMiles = 0;
+                    years = {};
                     dataset.features = dataset.features.filter(item => {
-                        var status = item.properties.STATUS;
-                        var type = item.properties.FACILITY_TYPE;
+                        var status = item.properties.Status;
+                        var type = item.properties.FacilityType;
                         var include = false;
                         // console.log(layers.lanes.active);
                         if( status == 'Existing' && layers.lanes.active.includes('current') ) {
                             include = true;
                         }
-                        if( ( ['Funded', 'Planned'].includes(status)) && layers.lanes.active.includes('future')) {
+                        if( status == 'Planned' && layers.lanes.active.includes('planned')) {
                             include = true;
                         }
-                        if( type == 'Shared Lane Markings' 
-                            || type == 'Sharrows') {
+                        if( status == 'Funded' && layers.lanes.active.includes('funded') ) {
+                            include = true;
+                        }
+                        if( ['UNKNOWN', 'Shared Lane Markings', 'Sharrows', null, 'Undefined', ].includes(type) ) {
                             include = false
                         }
                         return include;
@@ -249,8 +255,8 @@
                     
                     dataset.features = dataset.features.filter(item => {
                         var include = false;
-                        var protection = item.properties.PROTECTION;
-                        var onroad = item.properties.ON_OFFROAD;
+                        var protection = item.properties.Protection;
+                        var onroad = item.properties.OnRoad;
                         let laneType = layers.lanes.active;
                         if( laneType.includes('protected') 
                             && protection == 'High' 
@@ -268,12 +274,12 @@
                         }
                         if( include == true )
                         {
-                            if( item.properties.STATUS == 'Existing') {
-                                totalCurrentMiles += item.properties.LENGTH_MILES;
+                            if( item.properties.Status == 'Existing') {
+                                totalCurrentMiles += item.properties.LengthMi;
                             }
                             else
                             {
-                                totalFutureMiles += item.properties.LENGTH_MILES;
+                                totalFutureMiles += item.properties.LengthMi;
                             }
                         }
                         return include;
@@ -288,96 +294,6 @@
                                 return feature.properties.NAME == layers.districts.active
                             });
                             var line = turf.lineString(item);
-                            return turf.booleanIntersects(item, feature)
-                        })
-                    }
-                    
-                    return dataset;
-                },
-            ]
-        },
-        projects: {
-            source: domain+'/atldot-projects.geojson',
-            dataset: null,
-            layerGroup: null,
-            sourceCallback: (geoJSON) => {
-                console.log('projects', geoJSON);
-                return geoJSON;
-            },
-            tempDataset: {
-                features: []
-            },
-            featureOpts: {
-                style: function (feature) {
-                    return {color: 'rgba(54, 162, 235, .8)', fillOpacity: 0.2};
-                },
-                onEachFeature: function(feature, layer) {
-                    var properties = Object.entries(feature.properties).reduce(( prevValue, currValue ) => {
-                        return (!['id', 'ref', 'NEIGHBORHOOD', 'COUNCIL_DISTRICT'].includes(currValue[0])) ? prevValue+'<tr><td>'+currValue.join('</td><td>')+'</tr>' : prevValue;
-                    }, '');
-                    layer.bindPopup('<table>'+properties+'</table>', {maxWidth: 600})
-                }
-            },
-            active: [],
-            filters: [
-                // ( dataset ) => {
-                //     dataset.features = dataset.features.filter( item => {
-                //         return (!item.properties.FUNDING_PROJECT_NAME.includes('Right of Way acqusition and Install Lighting'))
-                //     })
-                //     return dataset;
-                // },
-                ( dataset ) => {
-                    dataset.features = dataset.features.filter(item => {
-                        var category = item.properties.PROJECT_STATUS;
-                        var include = false;
-                        let projectType = layers.lanes.active;
-
-                        if( projectType.includes('future') 
-                            && category.includes('Active') && !category.includes('don\'t map')) { 
-                            include = true;
-                        }
-
-                        
-                        return include;
-                    })
-                    return dataset;
-                },
-                ( dataset ) => {
-                    dataset.features = dataset.features.filter(item => {
-                        var category = item.properties.PROJECT_CATEGORY;
-                        var include = false;
-                        let projectType = layers.lanes.active;
-                        // if( (projectType.includes('protected') || projectType.includes('unprotected') )
-                        //     && category.includes('Complete')) { 
-                        //     include = true;
-                        // }
-                        if( projectType.includes('paths') 
-                            && category.includes('Trails')) { 
-                            include = true;
-                        }
-                        if( projectType.includes('complete') 
-                            && category.includes('Complete')) { 
-                            include = true;
-                        }
-                        if( projectType.includes('protected') && (item.properties.FUNDING_PROJECT_NAME.includes('Cycle') || item.properties.FUNDING_PROJECT_NAME.includes('Mobility') ) ) {
-                            include = true;
-                        }
-                        if( include == true )
-                        {
-                            totalFutureMiles += item.properties.LENGTH_MI;
-                            console.log( item.properties.FUNDING_PROJECT_NAME, item.properties.LENGTH_MI)
-                        }
-                        
-                        return include;
-                    })
-                    return dataset;
-                },
-                (dataset) => {
-                    if( layers.districts.active != 'all' && layers.districts.dataset != null ) {
-                        dataset.features = dataset.features.filter(item => {
-                            var feature = layers.districts.dataset.features.find((feature) => {
-                                return feature.properties.NAME == layers.districts.active
-                            });
                             return turf.booleanIntersects(item, feature)
                         })
                     }
